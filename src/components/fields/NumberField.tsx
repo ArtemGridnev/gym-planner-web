@@ -1,49 +1,31 @@
 import { InputAdornment, TextField, type TextFieldProps } from "@mui/material";
 
-type NumberFieldProps = Omit<TextFieldProps, 'onChange'> & {
-  onChange: NonNullable<TextFieldProps['onChange']>;
-  value: number | string;
-  min?: number;
-  max?: number;
-  decimals?: number;
-  step?: number;
-  unit?: string;
+type NumberFieldProps = Omit<TextFieldProps, 'onChange' | 'value' | 'type'> & {
+  value?: number;
+  onChange?: (value?: number) => void;
+  unit?: React.ReactNode;
+  slotProps?: TextFieldProps['slotProps'];
 };
 
-export default function NumberField({ min, max, decimals, step = 1, unit, onChange, value, ...props }: NumberFieldProps) {
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = +event.target.value;
-
-    if (min !== undefined && newValue < min) event.target.value = min.toString();
-    if (max !== undefined && newValue > max) event.target.value = max.toString();
-
-    if (decimals !== undefined) {
-        const valueDecimals = newValue.toString().split('.')[1];
-
-        if (valueDecimals?.length > decimals) {
-            event.target.value = newValue.toString().split('.')[0] + '.' + valueDecimals.slice(0, decimals);
-        }
-    }
-
-    onChange(event);
-  };
+export default function NumberField({ value, onChange, unit, slotProps, ...props }: NumberFieldProps) {
+  console.log('slotProps?.input', slotProps?.input)
 
   return (
     <TextField
       {...props}
-      value={value ?? ""}
       type="number"
+      onChange={(e) => {
+        const v = e.target.value;
+        onChange?.(v === "" ? undefined : Number(v));
+      }}
+      value={value ?? ""}
       slotProps={{ 
+        ...slotProps,
         input: {
-            inputProps: {
-                ...(min ? { min } : {}),
-                ...(max ? { max } : {}),
-                step
-            },
-            ...(unit ? { endAdornment: <InputAdornment position="end">{unit}</InputAdornment> } : {})
+          ...slotProps?.input,
+          ...(unit ? { endAdornment: <InputAdornment position="end">{unit}</InputAdornment> } : {})
         }
       }}
-      onChange={handleChange}
     />
-  );
+  ); 
 }

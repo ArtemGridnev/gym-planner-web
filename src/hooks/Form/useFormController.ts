@@ -1,25 +1,39 @@
 import { useEffect, useState } from "react";
 import { type FieldValues } from "react-hook-form";
 import { useQuery, type UseMutationResult } from "@tanstack/react-query";
-import type { FormProps } from "../../components/form/Form";
-import type { FormFieldSchema } from "../../types/form/formFieldSchema";
 
 type UpdatePayload<T> = Partial<T> & { id: number };
+
+type CreateMutation<T> = Pick<
+    UseMutationResult<unknown, unknown, T>,
+    'mutate' | 'isPending' | 'isError' | 'isSuccess' | 'error'
+>;
+
+type UpdateMutation<T> = Pick<
+    UseMutationResult<unknown, unknown, T>,
+    'mutate' | 'isPending' | 'isError' | 'isSuccess' | 'error'
+>;
 
 export type UseFormControllerProps<
     TForm extends FieldValues,
     TPayload = TForm
 > = {
-    createMutation: UseMutationResult<unknown, unknown, TPayload>;
-    updateMutation: UseMutationResult<unknown, unknown, UpdatePayload<TPayload>>;
-    formFields: FormFieldSchema[];
+    createMutation: CreateMutation<TPayload>;
+    updateMutation: UpdateMutation<UpdatePayload<TPayload>>;
     formDataToPayload?: (data: TForm) => TPayload;
     editQueryKey: (id: number) => unknown[];
     editQueryFn: (id: number) => Promise<TForm | undefined>;
 };
 
+export type FormStates = {
+    disabled?: boolean;
+    isLoading?: boolean;
+    success?: string | null,
+    error?: string | null
+};
+
 type ReturnValue<TForm extends FieldValues> = {
-    formStates: Omit<FormProps, 'submitButtonText'>;
+    formStates: FormStates;
     isUpdate: boolean;
     initialValues?: TForm;
     create: () => void;
@@ -32,7 +46,6 @@ export default function useFormController<
     props: UseFormControllerProps<TForm, TForm>
 ): ReturnValue<TForm>;
 
-// 2️⃣ Overload: form !== payload (mapper REQUIRED)
 export default function useFormController<
     TForm extends FieldValues,
     TPayload
@@ -49,7 +62,6 @@ export default function useFormController<
     createMutation,
     updateMutation,
     formDataToPayload,
-    formFields,
     editQueryKey,
     editQueryFn,
 }: UseFormControllerProps<TForm, TPayload>) {
@@ -73,6 +85,8 @@ export default function useFormController<
         setSuccess(null);
         setIsLoading(false);
         setInitialValues(undefined);
+        setEditId(null);
+        setDisabled(false);
     };
 
     const edit = async (id: number) => {
@@ -84,8 +98,6 @@ export default function useFormController<
     
     const create = () => {
         resetFormState();
-        setEditId(null)
-        setDisabled(false);
     };
 
     const onSuccess = (data: TForm) => {
@@ -138,16 +150,14 @@ export default function useFormController<
 
     return {
         formStates: {
-            formFields,
             initialValues,
             onSuccess,
             disabled,
             isLoading,
             success,
             error
-        } as Omit<FormProps, 'submitButtonText'>,
+        } as FormStates,
         isUpdate: !!editId,
-        initialValues,
         create,
         edit,
     };

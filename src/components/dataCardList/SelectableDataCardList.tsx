@@ -6,7 +6,7 @@ export type SelectableDataCardListRowProps = DataCardListRowProps & {
     id: string
 };
 
-type SelectableDataCardListProps = Omit<DataCardListProps, 'rows' | 'onChange'> & {
+export type SelectableDataCardListProps = Omit<DataCardListProps, 'rows' | 'onChange'> & {
     rows: SelectableDataCardListRowProps[];
     selected: string[];
     onChange: (id: string, checked: boolean) => void;
@@ -37,6 +37,9 @@ export default function SelectableDataCardList({ columns, rows, selected, onChan
                         value={row.id} 
                         checked={selected.includes(row.id)}
                         onChange={(e) => onChange(row.id, e.target.checked)} 
+                        slotProps={{ 
+                            input: { 'aria-label': `Select Card ${row.id}` } 
+                        }}
                     />
                     <Box sx={{ flexGrow: 1 }}>
                         <DataCardListItem columns={columns} row={row} />

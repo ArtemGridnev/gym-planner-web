@@ -4,9 +4,10 @@ import type { Exercise } from "../../types/exercise";
 import { FitnessCenterOutlined } from "@mui/icons-material";
 import useExercises from "../../queries/exercises/hooks/useExercises";
 import useInfiniteScroll from "../useInfiniteScroll";
+import useSelectableListState from "../useSelectableListState";
 
 type useExercisesSelectProps = {
-    onSubmit: (ids: Exercise[]) => void;
+    onSubmit: (exercises: Exercise[]) => void;
 };
 
 export default function useExercisesSelect({ onSubmit }: useExercisesSelectProps) {
@@ -20,8 +21,6 @@ export default function useExercisesSelect({ onSubmit }: useExercisesSelectProps
     } = useExercises({ filters });
 
     const loadMoreRef = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
-
-    const [selected, setSelected] = useState<Record<string, Exercise>>({});
 
     const rows = useMemo<SelectableDataCardListRowProps[] | null>(() => {
         if (!data) return null;
@@ -41,29 +40,16 @@ export default function useExercisesSelect({ onSubmit }: useExercisesSelectProps
         }));
     }, [data]);
 
+    const {
+        selected,
+        handleCheck,
+        cleanSelected
+    } = useSelectableListState<Exercise>({ list: data?.pages.flat() });
+
     const handleSubmit = () => {
         onSubmit(Object.values(selected));
     };
 
-    const handleCheck = (id: string, checked: boolean) => {
-        setSelected(prev => {
-            const selected = { ...prev };
-
-            if (checked) {
-                const exercise = data?.pages.flat().find(ex => ex.id === +id);
-                if (exercise) selected[id] = exercise;
-            } else {
-                delete selected[id];
-            }
-
-            return selected;
-        });
-    };
-
-    const cleanSelected = () => {
-        setSelected({});
-    };
-    
     return {
         rows,
         isPending,

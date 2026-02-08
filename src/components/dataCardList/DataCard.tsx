@@ -25,7 +25,9 @@ export default function DataCard({ icon: Icon, title, children, menuItems, onCli
                 borderWidth: 1,
                 borderStyle: 'solid',
                 borderRadius: (theme) => theme.shape.borderRadius,
+                ...(onClick && { cursor: 'pointer' })
             }}
+            {...(onClick && { onClick: () => onClick() })}
         >
             {Icon && (
                 <Icon 
@@ -33,25 +35,17 @@ export default function DataCard({ icon: Icon, title, children, menuItems, onCli
                         width: '1.5rem',
                         height: '1.5rem',
                         color: 'text.secondary',
-                        ...(onClick && { cursor: 'pointer' })
                     }}
-                    {...(onClick && { onClick: () => onClick() })}
                  />
             )}
-            <Box 
-                sx={{ 
-                    flexGrow: 1,
-                    ...(onClick && { cursor: 'pointer' })
-                }}
-                {...(onClick && { onClick: () => onClick() })}
-            >
+            <Box sx={{ flexGrow: 1 }}>
                 <Typography variant="body1" sx={{ marginBottom: '0.75rem' }}>{title}</Typography>
                 {children}
             </Box>
             {menuItems && (
-                <Box onClick={(e) => e.preventDefault()}>
+                <Box onClick={(e) => e.stopPropagation()}>
                     <ButtonMenu items={menuItems}>
-                        <IconButton>
+                        <IconButton aria-label={`Actions for ${title}`}>
                             <MoreVertOutlined />
                         </IconButton>
                     </ButtonMenu>

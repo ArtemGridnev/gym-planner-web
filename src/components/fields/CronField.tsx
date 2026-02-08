@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import ToggleButtonGroup from "./ToggleButtonGroup";
+import { Typography } from "@mui/material";
 
 type CronFieldProps = {
     fields: ('weekDays')[];
     onChange: (cron: string) => void;
     value: string;
+    label: string;
     disabled?: boolean;
 };
 
-export default function CronField({ fields, onChange, value, disabled }: CronFieldProps) {
+export default function CronField({ fields, onChange, value, label, disabled }: CronFieldProps) {
     const [weekDays, setWeekDays] = useState<string[]>([]);
 
     useEffect(() => {
@@ -32,6 +34,7 @@ export default function CronField({ fields, onChange, value, disabled }: CronFie
 
     return (
         <>
+            <Typography variant="subtitle1" component="label">{label}</Typography>
             {fields.map((field) => {
                 switch (field) {
                     case 'weekDays':
