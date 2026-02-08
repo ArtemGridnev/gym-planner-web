@@ -1,15 +1,17 @@
 import { useEffect, useRef } from "react";
 
-type useInfiniteScrollProps = {
+export type useInfiniteScrollProps = {
     hasNextPage: boolean;
     isFetchingNextPage: boolean;
     fetchNextPage: () => void;
+    rootMargin?: string;
 };
 
 export default function useInfiniteScroll({
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
+    rootMargin = "200px"
 }: useInfiniteScrollProps) {
     const ref = useRef<HTMLDivElement | null>(null);
 
@@ -22,9 +24,7 @@ export default function useInfiniteScroll({
                     fetchNextPage();
                 }
             },
-            {
-                rootMargin: "200px",
-            }
+            { rootMargin }
         );
 
         const el = ref.current;

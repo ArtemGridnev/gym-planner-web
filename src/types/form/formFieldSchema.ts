@@ -38,9 +38,6 @@ export type PasswordField = {
 
 export type NumberField = {
     type: "number";
-    min?: number;
-    max?: number;
-    decimals?: number;
     step?: number;
     unit?: string;
 };

@@ -25,25 +25,42 @@ export const getExerciseFormFields = (
         label: "Weight",
         name: "weight",
         type: "number",
-        decimals: 3,
         step: 2.5,
-        unit: 'kg'
+        unit: 'kg',
+        rules: {
+            min: { value: 0, message: "Weight cannot be negative." },
+            max: { value: 5000, message: "Weight cannot exceed 5000 kg." },
+            validate: {
+                decimals: (value: number) => {
+                    return Number.isInteger(value * 10000) || "Weight must have at most 4 decimal places.";
+                }
+            }
+        }
     },
     {
         label: "Reps",
         name: "reps",
-        type: "number"
+        type: "number",
+        rules: {
+            max: { value: 1000, message: "Reps cannot exceed 1000." }
+        }
     },
     {
         label: "Sets",
         name: "sets",
-        type: "number"
+        type: "number",
+        rules: {
+            max: { value: 1000, message: "Sets cannot exceed 1000." }
+        }
     },
     {
         label: "Duration Seconds",
         name: "durationSeconds",
         type: "number",
-        unit: 'sec'
+        unit: 'sec',
+        rules: {
+            max: { value: 86400, message: "Duration cannot exceed 86400 seconds (24 hours)." }
+        }
     },
     {
         label: "Description",

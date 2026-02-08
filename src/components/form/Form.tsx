@@ -1,17 +1,15 @@
-import { Box, Button, CircularProgress } from "@mui/material";
+import { Box } from "@mui/material";
 import Alerts from "../Alerts.tsx";
-import type { FormFieldSchema } from "../../types/form/formFieldSchema.ts";
 import FormField from "./FormField.tsx";
 import FormProvider, { type FormProviderProps } from "./FormProvider.tsx";
+import LoadingButton from "../LoadingButton.tsx";
+import type { FormStates } from "../../hooks/form/useFormController.ts";
+import type { FormFieldSchema } from "../../types/form/formFieldSchema.ts";
 
-export type FormProps = Omit<FormProviderProps, 'children'> & {
+export type FormProps = Omit<FormProviderProps, 'children'> & FormStates & {
     formFields: FormFieldSchema[];
     submitButtonText: string;
-    disabled?: boolean;
-    isLoading?: boolean;
-    success?: string | null,
-    error?: string | null
-};
+}; 
 
 export default function Form({ initialValues, onSuccess, formFields, submitButtonText, disabled, isLoading, success, error }: FormProps) {
     return (
@@ -35,9 +33,9 @@ export default function Form({ initialValues, onSuccess, formFields, submitButto
                             key={index}
                         ></FormField>
                     ))} 
-                    <Button type="submit" variant="contained" disabled={isLoading || disabled}>
-                        {isLoading ? <CircularProgress size={20} color="inherit" /> : submitButtonText}
-                    </Button>
+                    <LoadingButton type="submit" variant="contained" disabled={disabled} isLoading={isLoading}>
+                        {submitButtonText}
+                    </LoadingButton>
                 </Box>
             </FormProvider>
         </>

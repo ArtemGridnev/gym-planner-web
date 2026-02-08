@@ -19,7 +19,7 @@ const exercisesColumns: DataCardListColumnProps[] = [
 type ExercisesSelectModalProps = {
     open: boolean;
     onClose: () => void;
-    onSubmit: (ids: Exercise[]) => void;
+    onSubmit: (exercises: Exercise[]) => void;
 };
 
 export default function ExercisesSelectModal({ open, onClose, onSubmit }: ExercisesSelectModalProps) {
@@ -82,13 +82,14 @@ export default function ExercisesSelectModal({ open, onClose, onSubmit }: Exerci
                 <Box 
                     sx={{
                         display: 'flex',
-                        justifyContent: 'space-between',
+                        color: 'text.secondary',
                         alignItems: 'center',
-                        color: 'text.secondary'
+                        gap: 2
                     }}
                 >
-                    <Typography variant="body2">{Object.values(selected).map(ex => ex.name).join(', ')}</Typography>
-                    <Button variant="contained" onClick={() => handleSubmit()}>Submit</Button>
+                    <Typography variant="body2" sx={{ flexGrow: 1 }}>{Object.values(selected).map(ex => ex.name).join(', ')}</Typography>
+                    <Button sx={{ flexShrink: 0 }} variant="outlined" onClick={() => cleanSelected()}>Clean Selections</Button>
+                    <Button sx={{ flexShrink: 0 }} variant="contained" onClick={() => handleSubmit()}>Submit</Button>
                 </Box>
             </Modal.Footer>
         </Modal>

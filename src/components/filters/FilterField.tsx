@@ -27,9 +27,6 @@ export default function FilterField(props: FilterFieldProps) {
         case 'number':
             return (
                 <NumberField
-                    type={type}
-                    onChange={({ target: { value: inputValue } }) => onChange(name, inputValue)}
-                    value={value}
                     {...otherProps}
                     {...inputProps}
                 />  

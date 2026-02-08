@@ -2,6 +2,7 @@ import { Box, Typography, type BoxProps } from "@mui/material";
 import type { MenuItemProps } from "../menu/MenuItem";
 import type { ElementType } from "react";
 import DataCardListItem from "./DataCardListItem";
+import type { DataCardProps } from "./DataCard";
 
 export type DataCardListColumnProps = {
     field: string;
@@ -9,12 +10,8 @@ export type DataCardListColumnProps = {
     fullWidth?: boolean;
 };
 
-export type DataCardListRowProps = {
-    icon?: ElementType;
-    title: string;
+export type DataCardListRowProps = DataCardProps & {
     data: Record<string, null | string | number>;
-    menuItems?: MenuItemProps[];
-    onClick?: () => void;
 };
 
 export type DataCardListProps = BoxProps & {
@@ -27,19 +24,19 @@ export default function DataCardList({ columns, rows, noDataMessage = "No items 
     return (
         <Box 
             sx={{
-                containerName: 'CardListContainer',
-                containerType: 'inline-size'
+                containerName: "CardListContainer",
+                containerType: "inline-size"
             }}
             {...props}
         >
-            {rows.length === 0 && <Typography variant="h6" sx={{ textAlign: 'center', }}>{noDataMessage}</Typography>}
+            {rows.length === 0 && <Typography variant="h6" sx={{ textAlign: "center", }}>{noDataMessage}</Typography>}
             <Box
                 sx={{
-                    display: 'grid',
-                    gap: '1rem',
-                    gridTemplateColumns: 'repeat(2, 1fr)',
-                    '@container CardListContainer (max-width: 700px)': {
-                        gridTemplateColumns: '1fr',
+                    display: "grid",
+                    gap: "1rem",
+                    gridTemplateColumns: "repeat(2, 1fr)",
+                    "@container CardListContainer (max-width: 700px)": {
+                        gridTemplateColumns: "1fr",
                     },
                 }}
             >

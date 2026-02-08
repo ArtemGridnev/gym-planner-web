@@ -1,6 +1,6 @@
+import type { FormFieldSchema } from "../../types/form/formFieldSchema";
 import { TextField } from "@mui/material";
 import PasswordField from "../fields/PasswordField";
-import type { FormFieldSchema } from "../../types/form/formFieldSchema";
 import Select from "../fields/Select";
 import SearchSelect from "../fields/SearchSelect";
 import NumberField from "../fields/NumberField";
@@ -33,54 +33,55 @@ export default function FormField(props: FormFieldProps) {
 
                 switch (type) {
                     case "number":
-                        return <NumberField {...field} {...commonProps} type={type} />;
+                        const min = typeof rules?.min === 'number' ? rules.min : (typeof rules?.min === 'object' ? rules.min?.value : undefined); 
+                        const max = typeof rules?.max === 'number' ? rules.max : (typeof rules?.max === 'object' ? rules.max?.value : undefined);
+
+                        return (
+                            <NumberField 
+                                slotProps={{ input: { inputProps: { min, max } } }}
+                                {...field} 
+                                {...commonProps} 
+                            />
+                        );
                     case "select":
                         return <Select {...field} {...commonProps} options={props.options} />;
                     case "searchSelect":
                         return (
                             <SearchSelect
+                                {...field}
                                 {...commonProps}
                                 input={commonProps}
-                                value={field.value}
-                                onChange={field.onChange}
-                                onBlur={field.onBlur}
                                 options={props.options}
                             />
                         );
                     case "searchSelectMultiple":
                         return (
                             <SearchSelectMultiple
+                                {...field}
                                 input={commonProps}
-                                value={field.value}
-                                onChange={field.onChange}
-                                onBlur={field.onBlur}
                                 options={props.options}
                             />
                         );
                     case "password":
                         return (
                             <PasswordField
+                                {...field}
                                 {...commonProps}
-                                value={field.value}
-                                onChange={field.onChange}
-                                onBlur={field.onBlur}
                             />
                         );
                     case "cron":
                         return (
                             <CronField
-                                fields={props.fields}
-                                onChange={field.onChange}
-                                value={field.value}
+                                {...field}
+                                {...props}
                             />
                         );
                     case "textarea":
                         return (
                             <TextField
+                                {...field}  
                                 {...commonProps}
                                 type={type}
-                                onChange={field.onChange}
-                                onBlur={field.onBlur}
                                 value={field.value ?? ""}
                                 multiline
                                 minRows={4.5}
@@ -91,10 +92,9 @@ export default function FormField(props: FormFieldProps) {
                     case "email":
                         return (
                             <TextField
+                                {...field}
                                 {...commonProps}
                                 type={type}
-                                onChange={field.onChange}
-                                onBlur={field.onBlur}
                                 value={field.value ?? ""}
                             />
                         );
