@@ -33,11 +33,11 @@ export default function useLogin() {
         setIsLoading(false);
     };
 
-    return ({
+    return {
         formFields,
         handleSubmit,
         isLoading,
         success,
         error
-    });
+    };
 }

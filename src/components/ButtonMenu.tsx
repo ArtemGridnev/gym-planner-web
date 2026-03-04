@@ -26,7 +26,7 @@ export default function ButtonMenu({ items, children }: IconButtonMenuProps) {
 
     return (
         <>
-            <Box onClick={(e) => toggleMenu(e)}>
+            <Box onClick={(e) => toggleMenu(e)} sx={{ cursor: 'pointer' }}>
                 {children}
             </Box>
             <Menu anchorEl={anchorEl} items={items} open={open} onItemClick={onItemClick} onClose={() => closeMenu()}></Menu>

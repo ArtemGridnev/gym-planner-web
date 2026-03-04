@@ -29,11 +29,11 @@ export default function useRegister() {
         setLoading(false);
     };
 
-    return ({
+    return {
         formFields,
         handleSubmit,
         loading,
         success,
         error
-    });
+    };
 }

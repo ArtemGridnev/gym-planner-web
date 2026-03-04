@@ -29,7 +29,7 @@ export function SortableItem({ id, children }: SortableItemProps) {
         sx={{
             position: 'relative',
             display: 'flex',
-            gap: '0.5rem',
+            gap: 1,
             alignItems: 'center',
             transition,
             ...transformStyle,

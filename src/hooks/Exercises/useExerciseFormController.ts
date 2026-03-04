@@ -4,7 +4,6 @@ import useCreateExercise from "../../queries/exercises/hooks/useCreateExercise";
 import useUpdateExercise from "../../queries/exercises/hooks/useUpdateExercise";
 import type { ExerciseCategory } from "../../types/exerciseCategory";
 import useFormController from "../form/useFormController";
-import useExerciseFormFields from "./useExerciseFormFields";
 
 export type ExerciseFormData = {
     category: ExerciseCategory;
@@ -17,12 +16,9 @@ export type ExerciseFormData = {
 };
 
 export default function useExerciseFormController() {
-    const exerciseFormFields = useExerciseFormFields();
-
     return useFormController<ExerciseFormData, CreateExercisePayload>({
         createMutation: useCreateExercise(),
         updateMutation: useUpdateExercise(),
-        formFields: exerciseFormFields,
         formDataToPayload: exerciseFormDataToCreatePayload,
         editQueryKey: (id: number) => ['train', id],
         editQueryFn: async (id: number) => {

@@ -12,7 +12,7 @@ export function SortableItemSkeleton({ children }: SortableItemProps) {
         sx={{
             position: 'relative',
             display: 'flex',
-            gap: '0.5rem',
+            gap: 1,
             alignItems: 'center'
         }} 
     >
@@ -20,8 +20,8 @@ export function SortableItemSkeleton({ children }: SortableItemProps) {
             <Skeleton 
                 variant="rectangular"
                 sx={{
-                    width: '1.5rem',
-                    height: '1.5rem'
+                    width: 3,
+                    height: 3
                 }} 
             />
         </Box>

@@ -28,8 +28,9 @@ export type UseFormControllerProps<
 export type FormStates = {
     disabled?: boolean;
     isLoading?: boolean;
-    success?: string | null,
-    error?: string | null
+    success?: string | null;
+    error?: string | null;
+    onSuccess: (data: FieldValues) => void;
 };
 
 type ReturnValue<TForm extends FieldValues> = {

@@ -9,7 +9,7 @@ export type MenuItemProps = {
 
 export default function MenuItem({ icon: Icon, text, onClick }: MenuItemProps) {
     return (
-        <MenuItemMui sx={{ gap: '0.5rem' }} onClick={() => onClick()}>
+        <MenuItemMui sx={{ gap: 1 }} onClick={() => onClick()}>
             {Icon && <Icon sx={{ color: 'text.secondary' }} />}
             {text}
         </MenuItemMui>

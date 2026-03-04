@@ -20,7 +20,7 @@ export default function DataCardListItemSkeleton({ icon, columns, menuItems }: D
                 <Box
                     sx={{
                         display: 'grid',
-                        gap: '1rem',
+                        gap: 2,
                         gridTemplateColumns: 'repeat(2, 1fr)',
                         containerType: 'inline-size',
                         '@container DataCardContainer (max-width: 300px)': {

@@ -22,7 +22,7 @@ export default function DataCardListItem({ columns, row }: DataCardListItemProps
                 <Box
                     sx={{
                         display: 'grid',
-                        gap: '1rem',
+                        gap: 2,
                         gridTemplateColumns: 'repeat(2, 1fr)',
                         containerType: 'inline-size',
                         '@container DataCardContainer (max-width: 300px)': {

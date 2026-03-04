@@ -18,7 +18,7 @@ export default function FormModal({ open = true, title, onClose, children }: For
         >
             <Modal.Header>{title}</Modal.Header>
             <Modal.Content>
-                <Box sx={{ p: '0.75rem' }}>
+                <Box sx={{ p: 2 }}>
                     {children}
                 </Box>
             </Modal.Content>

@@ -9,7 +9,7 @@ type SearchSelectProps = Omit<AutocompleteProps<SearchSelectOption, true, false,
     input?: TextFieldProps;
 };
 
-export default function SearchSelectMultiple({ options, onChange, value: rawValue, input }: SearchSelectProps) {
+export default function SearchSelectMultiple({ options, onChange, value: rawValue, input, ...props }: SearchSelectProps) {
     const [selectOptions, setSelectOptions] = useState<SearchSelectOption[]>([]);
 
     const map = useMemo(() => {
@@ -49,6 +49,7 @@ export default function SearchSelectMultiple({ options, onChange, value: rawValu
             onChange={(_, options) => {
                 onChange(options);
             }}
+            size={input?.size || 'medium'}
             value={value}
             renderInput={(params) => <TextField {...input} {...params} />}
             renderValue={(value, getTagProps) =>
@@ -61,11 +62,14 @@ export default function SearchSelectMultiple({ options, onChange, value: rawValu
                   />
                 ))
             }
+            {...props}
             sx={{
                 "& .MuiAutocomplete-input": {
-                    width: "auto !important",
-                }
+                    width: "auto !important"
+                },
+                ...props.sx
             }}
+            
         />
     );
 }

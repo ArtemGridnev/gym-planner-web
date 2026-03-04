@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
-import Card from "../../../components/dashboard/content/card/Card";
-import CardHeader from "../../../components/dashboard/content/card/CardHeader";
-import CardContent from "../../../components/dashboard/content/card/CardContent";
+import Card from "../../../components/layout/card/Card";
+import CardHeader from "../../../components/layout/card/CardHeader";
+import CardContent from "../../../components/layout/card/CardContent";
 import { AddOutlined, DeleteOutline, FitnessCenterOutlined } from "@mui/icons-material";
 import { useNavigate, useParams } from "react-router-dom";
 import type { Train } from "../../../types/train";
@@ -95,7 +95,7 @@ export default function Train() {
                     <Box 
                         sx={{ 
                             height: '100%',
-                            padding: '1rem',
+                            padding: 2,
                             overflowY: loading ? 'hidden' : 'auto'
                         }}
                     >

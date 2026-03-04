@@ -17,7 +17,7 @@ export default function SelectableDataCardList({ columns, rows, selected, onChan
         <Box
             sx={{
                 display: 'flex',
-                gap: '1rem',
+                gap: 2,
                 flexDirection: 'column'
             }}
             {...props}
@@ -28,7 +28,7 @@ export default function SelectableDataCardList({ columns, rows, selected, onChan
                     sx={{
                         position: 'relative',
                         display: 'flex',
-                        gap: '0.5rem',
+                        gap: 1,
                         alignItems: 'center',
                     }}
                     key={row.id}

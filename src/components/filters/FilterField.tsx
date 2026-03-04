@@ -60,6 +60,7 @@ export default function FilterField(props: FilterFieldProps) {
 
             return (
                 <SearchSelectMultiple 
+                    sx={inputProps?.sx}
                     input={inputProps}
                     value={selected}
                     onChange={(selectedOptions) => onChange(name, selectedOptions.map(o => o.id).join(','))}

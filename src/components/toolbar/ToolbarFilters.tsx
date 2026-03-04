@@ -20,8 +20,9 @@ export default function ToolbarFilters({
             sx={{
                 display: "flex",
                 width: '100%',
-                minHeight: '2rem',
+                minHeight: 32,
                 gap: 2,
+                flexWrap: 'wrap',
             }}
         >
             {fields.length === 0 ? (
@@ -46,7 +47,7 @@ export default function ToolbarFilters({
                         key={index}
                         inputProps={{
                             placeholder: field.label,
-                            variant: 'standard',
+                            variant: 'outlined',
                             size: 'small',
                             ...(field.type === 'search' ? {
                                 slotProps: {
@@ -56,9 +57,7 @@ export default function ToolbarFilters({
                                 }
                             } : {}),
                             sx: {
-                                '& input': {
-                                    minWidth: `${field.label.length}ch`
-                                }
+                                width: { xs: '100%', sm: 'auto' },
                             }
                         }}
                     ></FilterField>
