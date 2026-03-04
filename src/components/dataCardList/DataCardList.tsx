@@ -1,8 +1,7 @@
-import { Box, Typography, type BoxProps } from "@mui/material";
-import type { MenuItemProps } from "../menu/MenuItem";
-import type { ElementType } from "react";
+import { Typography, type BoxProps } from "@mui/material";
 import DataCardListItem from "./DataCardListItem";
 import type { DataCardProps } from "./DataCard";
+import DataCardListBase from "./DataCardListBase";
 
 export type DataCardListColumnProps = {
     field: string;
@@ -22,28 +21,12 @@ export type DataCardListProps = BoxProps & {
 
 export default function DataCardList({ columns, rows, noDataMessage = "No items here… yet.", ...props }: DataCardListProps) {
     return (
-        <Box 
-            sx={{
-                containerName: "CardListContainer",
-                containerType: "inline-size"
-            }}
-            {...props}
-        >
-            {rows.length === 0 && <Typography variant="h6" sx={{ textAlign: "center", }}>{noDataMessage}</Typography>}
-            <Box
-                sx={{
-                    display: "grid",
-                    gap: "1rem",
-                    gridTemplateColumns: "repeat(2, 1fr)",
-                    "@container CardListContainer (max-width: 700px)": {
-                        gridTemplateColumns: "1fr",
-                    },
-                }}
-            >
+        <>
+            <DataCardListBase {...props}>
                 {rows.map((row, index) => (
                     <DataCardListItem columns={columns} row={row} key={index} />
                 ))}
-            </Box>
-        </Box>
+            </DataCardListBase>
+        </>
     );
 }

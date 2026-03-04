@@ -13,7 +13,7 @@ export default function SelectableDataCardListSkeleton({ columns, rows, icon, me
         <Box
             sx={{
                 display: 'flex',
-                gap: '1rem',
+                gap: 2,
                 flexDirection: 'column'
             }}
             {...props}
@@ -23,16 +23,16 @@ export default function SelectableDataCardListSkeleton({ columns, rows, icon, me
                     sx={{
                         position: 'relative',
                         display: 'flex',
-                        gap: '0.5rem',
+                        gap: 1,
                         alignItems: 'center',
                     }}
                 >
-                    <Box sx={{ padding: '0.56125rem'}}>
+                    <Box sx={{ padding: 1 }}>
                         <Skeleton
                             variant="rectangular"
                             sx={{
-                                width: '1.5rem',
-                                height: '1.5rem'
+                                width: 3,
+                                height: 3
                             }} 
                         />
                     </Box>

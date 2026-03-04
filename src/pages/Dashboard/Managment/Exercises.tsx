@@ -4,19 +4,9 @@ import ExercisesCard from "../../../components/exercises/ExercisesCard";
 import useDeleteExercise from "../../../queries/exercises/hooks/useDeleteExercise";
 import FormModal from "../../../components/form/FormModal";
 import Form from "../../../components/form/Form";
-import type { ExerciseCategory } from "../../../types/exerciseCategory";
 import useExerciseFormController from "../../../hooks/exercises/useExerciseFormController";
 import useInfiniteScroll from "../../../hooks/useInfiniteScroll";
-
-export type ExerciseFormData = {
-    category: ExerciseCategory;
-    name: string;
-    description: string | null;
-    sets: number | null;
-    reps: number | null;
-    durationSeconds: number | null;
-    weight: number | null;
-};
+import useExerciseFormFields from "../../../hooks/exercises/useExerciseFormFields";
 
 export default function Exercises() {
     const [filters, setFilters] = useState<Record<string, string>>();
@@ -36,6 +26,8 @@ export default function Exercises() {
     const {
         mutate: deleteExercise
     } = useDeleteExercise();
+
+    const exerciseFormFields = useExerciseFormFields();
 
     const {
         isUpdate,
@@ -67,8 +59,9 @@ export default function Exercises() {
                 title={isUpdate ? "Update Exercise" : "Create Exercise"}
                 onClose={() => setFormOpen(false)} 
             >
-                <Form 
+                <Form
                     {...formStates}
+                    formFields={exerciseFormFields}
                     submitButtonText={isUpdate ? "Update Exercise" : "Create Exercise"}
                 />
             </FormModal>

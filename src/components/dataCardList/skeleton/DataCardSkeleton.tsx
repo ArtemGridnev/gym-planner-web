@@ -1,7 +1,7 @@
-import { Box, IconButton, Skeleton, Typography } from "@mui/material";
-import ButtonMenu from "../../ButtonMenu";
-import { MoreVertOutlined } from "@mui/icons-material";
+import { Box, Skeleton, Typography } from "@mui/material";
+
 import { getRandomInt } from "../../../utils/random";
+import DataCardBase from "../DataCardBase";
 
 export type DataCardProps = {
     icon?: boolean;
@@ -11,30 +11,18 @@ export type DataCardProps = {
 
 export default function DataCardSkeleton({ icon, children, menuItems }: DataCardProps) {
     return (
-        <Box 
-            sx={{
-                display: 'flex',
-                background: 'white',
-                gap: '0.75rem',
-                padding: '0.75rem',
-                alignItems: 'flex-start',
-                borderColor: 'divider',
-                borderWidth: 1,
-                borderStyle: 'solid',
-                borderRadius: (theme) => theme.shape.borderRadius,
-            }}
-        >
+        <DataCardBase>
             {icon && (
                 <Skeleton 
                     variant="circular"  
                     sx={{
-                        width: '1.5rem',
-                        height: '1.5rem',
+                        width: 24,
+                        height: 24,
                     }}
                 />
             )}
             <Box sx={{ flexGrow: 1 }}>
-                <Typography variant="body1" sx={{ marginBottom: '0.75rem' }}>
+                <Typography variant="body1" sx={{ marginBottom: 1 }}>
                     <Skeleton sx={{
                         width: `${getRandomInt(25, 50)}%`
                     }} />
@@ -45,11 +33,11 @@ export default function DataCardSkeleton({ icon, children, menuItems }: DataCard
                 <Skeleton 
                     variant="circular"  
                     sx={{
-                        width: '2rem',
-                        height: '2rem',
+                        width: 32,
+                        height: 32,
                     }}
                 />
             )}
-        </Box>
+        </DataCardBase>
     );
 }

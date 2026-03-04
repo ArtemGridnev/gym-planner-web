@@ -64,7 +64,7 @@ export default function ExercisesSelectModal({ open, onClose, onSubmit }: Exerci
                             />
                         )}
                     </Toolbar>
-                    <Box sx={{ display: 'flex', padding: '1rem', gap: '1rem', flexDirection: 'column' }}>
+                    <Box sx={{ display: 'flex', padding: 2, gap: 2, flexDirection: 'column' }}>
                         {!isPending && rows && (
                             <SelectableDataCardList 
                                 selected={Object.keys(selected)}

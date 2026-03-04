@@ -7,9 +7,15 @@ type LoadingButtonProps = ButtonProps & {
 
 export default function LoadingButton({ isLoading, children, ...props }: LoadingButtonProps) {
     return (
-        <Button {...props} disabled={isLoading || props.disabled} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Button {...props} disabled={isLoading || props.disabled} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
             {children}
-            {isLoading && <CircularProgress size={16} color="inherit" sx={{ marginInlineStart: 1 }} />}
+            {isLoading && (
+                <CircularProgress 
+                    size={16} 
+                    color="inherit" 
+                    sx={{ position: 'absolute', right: 10 }}
+                />
+            )}
         </Button>
     );
 }

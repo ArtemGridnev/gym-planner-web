@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Train } from "../../types/train";
 import { getTrain } from "../../services/trainsService";
-import { updateTrainExercises as serviceUpdateTrainExercises, type TrainExerciseUpdate } from "../../services/trainExercisesService";
+import { updateTrainExercises as serviceUpdateTrainExercises } from "../../services/trainExercisesService";
 import type { Exercise } from "../../types/exercise";
 import type { TrainExercise } from "../../types/trainExercise";
 

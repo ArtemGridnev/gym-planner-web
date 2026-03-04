@@ -1,4 +1,4 @@
-import { Box, Divider, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import CardHeaderAction, { type CardHeaderActionProps } from "./CardHeaderAction";
 import { ArrowBackOutlined } from "@mui/icons-material";
 
@@ -13,8 +13,8 @@ export default function CardHeader({ title, actions, onBack }: CardHeaderProps) 
         <>
             <Box sx={{
                 display: 'flex',
-                minHeight: '60px',
-                padding: '0.75rem',
+                minHeight: 56,
+                padding: 1,
                 alignItems: 'center',
                 flexShrink: 0
             }}>
@@ -23,14 +23,13 @@ export default function CardHeader({ title, actions, onBack }: CardHeaderProps) 
                         <ArrowBackOutlined />
                     </IconButton>
                 )}
-                <Typography variant="h5" component="h1" sx={{ paddingInline: '0.5rem' }}>{title}</Typography>
+                <Typography variant="h5" component="h1" sx={{ paddingInline: 1 }}>{title}</Typography>
                 <Box sx={{ marginInlineStart: 'auto' }}>
                     {actions && actions.map((action) => (
                         <CardHeaderAction {...action} key={action.label} />
                     ))}
                 </Box>
             </Box>
-            <Divider />
         </>
     );
 }

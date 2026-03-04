@@ -1,13 +1,13 @@
-import { Box } from "@mui/material";
-import Card from "../dashboard/content/card/Card";
-import CardHeader from "../dashboard/content/card/CardHeader";
-import CardContent from "../dashboard/content/card/CardContent";
+import { Box, Typography } from "@mui/material";
+import Card from "../layout/card/Card";
+import CardHeader from "../layout/card/CardHeader";
+import CardContent from "../layout/card/CardContent";
 import Toolbar from "../toolbar/Toolbar";
 import ExercisesListFilters from "./ExercisesListFilters";
 import DataCardList, { type DataCardListColumnProps, type DataCardListRowProps } from "../dataCardList/DataCardList";
 import DataCardListSkeleton from "../dataCardList/skeleton/DataCardListSkeleton";
 import { AddOutlined, DeleteOutline, EditOutlined, FitnessCenterOutlined } from "@mui/icons-material";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import type { Exercise } from "../../types/exercise";
 import ToolbarLoadingIndicator from "../toolbar/ToolbarLoadingIndicator";
 import Alerts from "../Alerts";
@@ -71,6 +71,10 @@ export default function ExercisesCard({
         });
     }, [exercises]);
 
+    useEffect(() => {
+        console.log({ rows, isPending, hasNextPage });
+    }, [rows, isPending, hasNextPage]);
+
     return (
         <Card>
             <CardHeader 
@@ -95,10 +99,11 @@ export default function ExercisesCard({
                         <ExercisesListFilters onChange={(filters) => onFiltersChange(filters)} />
                         {isPending && rows && <ToolbarLoadingIndicator />}
                     </Toolbar>
-                    <Box sx={{ display: 'flex', padding: '1rem', gap: '1rem', flexDirection: 'column' }}>
-                        <Alerts error={error} />
-                        {!isPending && rows && <DataCardList columns={columns} rows={rows} />}
-                        {(isPending || hasNextPage) && <DataCardListSkeleton ref={loadMoreRef} columns={{ min: 3, max: 6 }} rows={6} icon={true} menuItems={true} />}
+                    <Box sx={{ display: 'flex', padding: 2, gap: 2, flexDirection: 'column' }}>
+                        <Alerts error={error} sx={{ mb: 2 }} />
+                        {!isPending && rows?.length === 0 && <Typography variant="h6" sx={{ textAlign: "center", }}>{"No items here… yet."}</Typography>}
+                        {rows && <DataCardList columns={columns} rows={rows} />}
+                        {((isPending && !rows) || hasNextPage) && <DataCardListSkeleton ref={loadMoreRef} columns={{ min: 3, max: 6 }} rows={6} icon={true} menuItems={true} />}
                     </Box>
                 </Box>
             </CardContent>

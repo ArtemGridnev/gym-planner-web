@@ -8,8 +8,6 @@ type NumberFieldProps = Omit<TextFieldProps, 'onChange' | 'value' | 'type'> & {
 };
 
 export default function NumberField({ value, onChange, unit, slotProps, ...props }: NumberFieldProps) {
-  console.log('slotProps?.input', slotProps?.input)
-
   return (
     <TextField
       {...props}

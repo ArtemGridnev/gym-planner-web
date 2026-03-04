@@ -1,7 +1,11 @@
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Box, Typography, type BoxProps } from "@mui/material";
 import { useAuthContext } from "../context/AuthProvider";
 
-export default function UserProfile() {
+type UserProfileProps = BoxProps & {
+    size?: 'small' | 'medium';
+};
+
+export default function UserProfile({ size = 'medium' }: UserProfileProps) {
     const { user } = useAuthContext();
 
     if (!user) return;
@@ -13,19 +17,26 @@ export default function UserProfile() {
             sx={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.5rem'
+                gap: 1
             }}
         >
-            <Avatar  />
+            <Avatar 
+                sx={{
+                    width: size === 'small' ? 32 : 40,
+                    height: size === 'small' ? 32 : 40,
+                }} 
+            />
             <Box
                 sx={{
                     display: 'flex',
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    alignContent: 'center',
+                    gap: size === 'small' ? 0.25 : 0.75
                 }}
             >
-                <Typography variant="body2">{userFullName}</Typography>
-                <Typography variant="caption" color="text.secondary">{user.email}</Typography>
+                <Typography variant="body2" sx={{ lineHeight: 1 }}>{userFullName}</Typography>
+                <Typography variant="caption" color="text.secondary" sx={{ lineHeight: 1 }}>{user.email}</Typography>
             </Box>
         </Box>
-    )
+    );
 }

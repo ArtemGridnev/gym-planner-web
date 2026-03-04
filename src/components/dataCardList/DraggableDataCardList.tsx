@@ -9,7 +9,7 @@ export type DraggableDataCardListRowProps = DataCardListRowProps & {
     id: string
 };
 
-type DraggableDataCardListProps = Omit<DataCardListProps, 'rows'> & {
+type DraggableDataCardListProps = Omit<DataCardListProps, 'rows' | 'onChange'> & {
     rows: DraggableDataCardListRowProps[];
     onChange: (rows: DraggableDataCardListRowProps[]) => void;
 };
@@ -37,7 +37,7 @@ export default function DraggableDataCardList({ columns, rows, onChange, noDataM
                 <Box
                     sx={{
                         display: 'flex',
-                        gap: '1rem',
+                        gap: 2,
                         flexDirection: 'column'
                     }}
                     {...props}

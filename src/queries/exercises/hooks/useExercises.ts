@@ -1,5 +1,5 @@
 import { type ExercisesQuery } from "../../../services/exercisesService";
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { exercisesQueryOptions } from "../options/useExercises.options";
 import { useMemo } from "react";
 

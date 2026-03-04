@@ -27,7 +27,8 @@ export default function LoginPage({ redirectPath = null } : LoginPageProps) {
                     sx={{
                         width: "100%",
                         maxWidth: "25rem",
-                        p: 2
+                        p: 2,
+                        borderRadius: 2,
                     }}
                 >
                     <Typography variant="h5" component="h1" gutterBottom>

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import Card from "../dashboard/content/card/Card";
+import Card from "../layout/card/Card";
 import type { Train } from "../../types/train";
 import { AddOutlined, DeleteOutline, EditOutlined, SportsMartialArtsOutlined } from "@mui/icons-material";
 import { cronToDays } from "../../utils/cron";
 import type { DataCardListColumnProps, DataCardListRowProps } from "../dataCardList/DataCardList";
 import { Box } from "@mui/material";
-import CardHeader from "../dashboard/content/card/CardHeader";
-import CardContent from "../dashboard/content/card/CardContent";
+import CardHeader from "../layout/card/CardHeader";
+import CardContent from "../layout/card/CardContent";
 import DataCardListSkeleton from "../dataCardList/skeleton/DataCardListSkeleton";
 import DataCardList from "../dataCardList/DataCardList";
 import Alerts from "../Alerts";
@@ -74,11 +74,11 @@ export default function TrainsCard({ trains, isLoading, error, onAdd, onEdit, on
                 <Box 
                     sx={{ 
                         height: '100%',
-                        padding: '1rem',
+                        padding: 2,
                         overflowY: isLoading ? 'hidden' : 'auto'
                     }}
                 >
-                    <Alerts error={error} />
+                    <Alerts error={error} sx={{ mb: 2 }} />
                     {isLoading && <DataCardListSkeleton columns={1} rows={8} icon={true} menuItems={true} />}
                     {trains && !isLoading && <DataCardList columns={columns} rows={rows} />}
                 </Box>

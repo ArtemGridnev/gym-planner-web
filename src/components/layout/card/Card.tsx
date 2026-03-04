@@ -13,10 +13,7 @@ export default function ContentCard({ children, width = '100%' }: ContentCardPro
                 width,
                 height: '100%',
                 background: 'white',
-                borderColor: 'divider', 
-                borderWidth: 1, 
-                borderStyle: 'solid',
-                borderRadius: (theme) => theme.shape.borderRadius,
+                borderRadius: 3,
                 flexDirection: 'column'
             }}
         >

@@ -1,4 +1,4 @@
-import { Modal as MuiModal, Paper, type ModalProps as MuiModalProps, Box, Typography, IconButton, Divider } from "@mui/material";
+import { Modal as MuiModal, Paper, type ModalProps as MuiModalProps, Box, Typography, IconButton } from "@mui/material";
 import { CloseOutlined } from "@mui/icons-material";
 import React from "react";
 
@@ -22,17 +22,23 @@ export default function Modal({ open, onClose, width, height, children }: ModalP
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    padding: '1rem'
+                    padding: { sm: 2 }
                 }}
             >
                 <Paper
                     sx={{
                         display: 'flex',
-                        width,
-                        maxWidth: '100%',
-                        height,
-                        maxHeight: '100%',
-                        borderRadius: (theme) => theme.shape.borderRadius,
+                        width: { 
+                            xs: '100dvw', 
+                            sm: width || 'auto' 
+                        },
+                        height: { 
+                            xs: '100dvh', 
+                            sm: height || 'auto' 
+                        },
+                        maxWidth: { sm: '100%' },
+                        maxHeight: { sm: '100%' },
+                        borderRadius: { xs: 0, sm: 2 },
                         flexDirection: 'column'
                     }}
                 >
@@ -63,13 +69,14 @@ Modal.Header = function Header({ children }: ModalHeaderProps) {
           sx={{
             display: 'flex',
             minHeight: 60,
-            p: '0.75rem',
+            px: 2,
+            py: 1,
             alignItems: 'center',
             justifyContent: 'space-between',
             flexShrink: 0
           }}
         >
-          <Typography px="0.5rem" variant="h6">
+          <Typography px="1" variant="h6">
             {children}
           </Typography>
   
@@ -77,7 +84,6 @@ Modal.Header = function Header({ children }: ModalHeaderProps) {
             <CloseOutlined />
           </IconButton>
         </Box>
-        <Divider />
       </>
     );
   };
@@ -94,11 +100,10 @@ Modal.Content = function Content({ children }: { children: React.ReactNode }) {
 Modal.Footer = function Footer({ children }: { children: React.ReactNode }) {
     return (
         <>
-            <Divider />
             <Box 
                 sx={{
                     minHeight: '60px',
-                    padding: '0.75rem',
+                    padding: 2,
                     flexShrink: 0
                 }}
             >

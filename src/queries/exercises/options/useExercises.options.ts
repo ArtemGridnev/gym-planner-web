@@ -8,6 +8,7 @@ export const exercisesQueryOptions = (filters?: Omit<ExercisesQuery, 'cursor'>):
         const [, filters] = queryKey as ['exercises', Omit<ExercisesQuery, 'cursor'> | undefined];
         return getExercises({
             ...filters,
+            limit: 12,
             cursor: pageParam as number ?? undefined
         });
     },
@@ -16,5 +17,6 @@ export const exercisesQueryOptions = (filters?: Omit<ExercisesQuery, 'cursor'>):
     },
     getNextPageParam: (lastPage) => {
         return lastPage.at(-1)?.id ?? null;
-    }
+    },
+    placeholderData: (previousData) => previousData,
 });

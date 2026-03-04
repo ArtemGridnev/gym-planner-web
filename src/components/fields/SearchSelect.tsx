@@ -45,7 +45,7 @@ export default function SearchSelect({ options, onChange, value, input, ...props
                 onChange(option);
             }}
             value={map.get(value?.id) ?? null}
-            renderInput={(params) => <TextField {...input} {...params}  />}
+            renderInput={(params) => <TextField {...params} {...input} />}
         />
     );
 }

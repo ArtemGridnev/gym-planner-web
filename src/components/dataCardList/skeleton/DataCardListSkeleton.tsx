@@ -1,5 +1,6 @@
 import { Box, type BoxProps } from "@mui/material";
 import DataCardListItemSkeleton from "./DataCardListItemSkeleton";
+import DataCardListBase from "../DataCardListBase";
 
 export type DataCardListSkeletonProps = BoxProps &{
     columns: number | { min: number, max: number };
@@ -10,27 +11,10 @@ export type DataCardListSkeletonProps = BoxProps &{
 
 export default function DataCardListSkeleton({ columns, rows, icon, menuItems, ...props }: DataCardListSkeletonProps) {
     return (
-        <Box 
-            sx={{
-                containerName: 'CardListContainer',
-                containerType: 'inline-size'
-            }}
-            {...props}
-        >
-            <Box
-                sx={{
-                    display: 'grid',
-                    gap: '1rem',
-                    gridTemplateColumns: 'repeat(2, 1fr)',
-                    '@container CardListContainer (max-width: 700px)': {
-                        gridTemplateColumns: '1fr',
-                    },
-                }}
-            >
-                {Array.from({ length: rows }).map((_, index) => (
-                    <DataCardListItemSkeleton columns={columns} key={index} icon={icon} menuItems={menuItems} />
-                ))}
-            </Box>
-        </Box>
+        <DataCardListBase {...props}>
+            {Array.from({ length: rows }).map((_, index) => (
+                <DataCardListItemSkeleton columns={columns} key={index} icon={icon} menuItems={menuItems} />
+            ))}
+        </DataCardListBase>
     );
 }

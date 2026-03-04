@@ -14,7 +14,7 @@ export default function DraggableDataCardListSkeleton({ columns, rows, icon, men
         <Box
             sx={{
                 display: 'flex',
-                gap: '1rem',
+                gap: 2,
                 flexDirection: 'column'
             }}
         >

@@ -28,7 +28,6 @@ export default function Trains() {
     } = useFormController<TrainData>({
         createMutation: useCreateTrain(),
         updateMutation: useUpdateTrain(),
-        formFields: trainFormFields,
         editQueryKey: (id: number) => ['train', id],
         editQueryFn: async (id: number) => {
             const train = await getTrain(id);
@@ -66,6 +65,7 @@ export default function Trains() {
             >
                 <Form
                     {...formStates}
+                    formFields={trainFormFields}
                     submitButtonText={isUpdate ? "Update Train" : "Create Train"}
                 />
             </FormModal>
