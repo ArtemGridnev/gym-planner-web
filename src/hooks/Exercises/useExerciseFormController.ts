@@ -2,7 +2,7 @@ import { getExercise, type CreateExercisePayload } from "../../services/exercise
 import { exerciseFormDataToCreatePayload, exerciseToFormData } from "../../utils/exerciseUtils";
 import useCreateExercise from "../../queries/exercises/hooks/useCreateExercise";
 import useUpdateExercise from "../../queries/exercises/hooks/useUpdateExercise";
-import type { ExerciseCategory } from "../../types/exerciseCategory";
+import type { ExerciseCategory } from "../../types/exercises/exerciseCategory";
 import useFormController from "../form/useFormController";
 
 export type ExerciseFormData = {

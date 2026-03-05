@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { getTrains } from "../../../services/trainsService";
+import type { Train } from "../../../types/trains/train";
 
 export default function useTrains() {
-    return useQuery({
+    return useQuery<Train[]>({
         queryKey: ['trains'],
         queryFn: getTrains
     });

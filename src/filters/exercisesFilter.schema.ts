@@ -1,4 +1,4 @@
-import type { ExerciseCategory } from '../types/exerciseCategory';
+import type { ExerciseCategory } from '../types/exercises/exerciseCategory';
 import type { FilterFieldSchema } from '../types/filterFieldSchema';
 import type { SearchSelectOption } from '../types/form/formFieldSchema';
 

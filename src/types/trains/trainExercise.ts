@@ -1,4 +1,4 @@
-import type { Exercise } from "./exercise";
+import type { Exercise } from "../exercises/exercise";
 
 export interface TrainExercise {
     id: number;

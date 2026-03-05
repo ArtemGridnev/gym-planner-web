@@ -4,14 +4,14 @@ import CardHeader from "../../../components/layout/card/CardHeader";
 import CardContent from "../../../components/layout/card/CardContent";
 import { AddOutlined, DeleteOutline, FitnessCenterOutlined } from "@mui/icons-material";
 import { useNavigate, useParams } from "react-router-dom";
-import type { Train } from "../../../types/train";
-import useTrain from "../../../hooks/trains/useTrain";
 import DraggableDataCardList, { type DraggableDataCardListRowProps } from "../../../components/dataCardList/DraggableDataCardList";
 import type { DataCardListColumnProps } from "../../../components/dataCardList/DataCardList";
 import { useEffect, useState } from "react";
 import ExercisesSelectModal from "../../../components/exercises/modals/ExercisesSelectModal";
-import Alerts from "../../../components/Alerts";
 import DraggableDataCardListSkeleton from "../../../components/dataCardList/skeleton/DraggableDataCardListSkeleton";
+import useTrain from "../../../queries/trains/hooks/useTrain";
+import useTrainExercisesController from "../../../hooks/trains/useTrainExercisesController";
+import AlertsStack from "../../../components/AlertsStack";
 
 const columns: DataCardListColumnProps[] = [
     { field: 'description', fullWidth: true },
@@ -24,14 +24,20 @@ const columns: DataCardListColumnProps[] = [
 export default function Train() {
     const navigate = useNavigate();
     const { id } = useParams();
+
     const {
-        loading,
-        train,
+        isPending,
+        data: train,
         error,
-        addTrainExercises,
+    } = useTrain({ id: +id! });
+
+    const {
+        error: exercisesError,
         updateTrainExercisesOrder,
+        addTrainExercises,
         deleteTrainExercise
-    } = useTrain(+id!);
+    } = useTrainExercisesController(train);
+
     const [rows, setRows] = useState<DraggableDataCardListRowProps[]>([]);
     const [formOpen, setFormOpen] = useState(false);
     
@@ -45,7 +51,7 @@ export default function Train() {
                 return {
                     id: trainExercise.id.toString(),
                     icon: FitnessCenterOutlined,
-                    title: `${exercise.name} - ${exercise.category?.name}`,
+                    title: `${exercise.name} - ${exercise.category?.name} - ${trainExercise.id}`,
                     data: {
                         id: exercise.id,
                         description: exercise.description,
@@ -76,6 +82,7 @@ export default function Train() {
                     }}
                 />
             )}
+
             <Card>
                 <CardHeader 
                     onBack={() => navigate('/managment/trains')}
@@ -85,9 +92,7 @@ export default function Train() {
                             icon: AddOutlined,
                             label: 'Add Exercises',
                             tooltip: 'Add Exercises',
-                            onClick: () => {
-                                setFormOpen(true);
-                            }
+                            onClick: () => setFormOpen(true)
                         }
                     ]}
                 />
@@ -96,7 +101,7 @@ export default function Train() {
                         sx={{ 
                             height: '100%',
                             padding: 2,
-                            overflowY: loading ? 'hidden' : 'auto'
+                            overflowY: isPending ? 'hidden' : 'auto'
                         }}
                     >
                         <Box
@@ -105,15 +110,20 @@ export default function Train() {
                                 margin: 'auto',
                             }}
                         >
-                            <Alerts error={error} />
-                            {loading && <DraggableDataCardListSkeleton columns={{ min: 3, max: 6 }} rows={8} icon={true} menuItems={true} />}
-                            {train?.exercises && !loading && (
+                            <AlertsStack 
+                                alerts={[
+                                    ...(error?.message ? [{ message: error.message, severity: 'error' as const }] : []),
+                                    ...(exercisesError?.message ? [{ message: exercisesError.message, severity: 'error' as const }] : []),
+                                ]} 
+                            />
+                            {isPending && <DraggableDataCardListSkeleton columns={{ min: 3, max: 6 }} rows={8} icon={true} menuItems={true} />}
+                            {train?.exercises && !isPending && (
                                 <DraggableDataCardList 
                                     columns={columns} 
                                     rows={rows}
                                     onChange={(orderedRows) => {
                                         setRows(orderedRows);
-                                        updateTrainExercisesOrder(orderedRows.map(row => ({ id: +row.id })))
+                                        updateTrainExercisesOrder(orderedRows.map(row => +row.id))
                                     }}
                                 />
                             )}

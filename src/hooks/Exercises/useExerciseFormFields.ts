@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { getExerciseFormFields } from "../../forms/exerciseFormFields.schema";
-import type { ExerciseCategory } from "../../types/exerciseCategory";
+import type { ExerciseCategory } from "../../types/exercises/exerciseCategory";
 import { useExerciseCategories } from "../../queries/exercises/hooks/useExerciseCategories";
 import type { SearchSelectOption } from "../../types/form/formFieldSchema";
 

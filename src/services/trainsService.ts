@@ -1,6 +1,6 @@
 import api from './api.ts';
 import { handleApiError } from '../utils/handleApiError.ts';
-import type { Train } from '../types/train.ts';
+import type { Train } from '../types/trains/train.ts';
 
 export const getTrains = async () => {
     try {
@@ -11,12 +11,12 @@ export const getTrains = async () => {
     }
 };
 
-export const getTrain = async (id: number): Promise<Train | undefined> => {
+export const getTrain = async (id: number): Promise<Train> => {
     try {
         const response = await api.get(`/trains/${id}`);
         return response.data;
     } catch (error: any) {
-        handleApiError(error);
+        throw handleApiError(error);
     }
 };
 

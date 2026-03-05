@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteTrain } from "../../../services/trainsService";
-import type { Train } from "../../../types/train";
+import type { Train } from "../../../types/trains/train";
 
 export default function useDeleteTrain() {
     const queryClient = useQueryClient();

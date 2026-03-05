@@ -8,7 +8,7 @@ import DataCardList, { type DataCardListColumnProps, type DataCardListRowProps }
 import DataCardListSkeleton from "../dataCardList/skeleton/DataCardListSkeleton";
 import { AddOutlined, DeleteOutline, EditOutlined, FitnessCenterOutlined } from "@mui/icons-material";
 import React, { useEffect, useMemo } from "react";
-import type { Exercise } from "../../types/exercise";
+import type { Exercise } from "../../types/exercises/exercise";
 import ToolbarLoadingIndicator from "../toolbar/ToolbarLoadingIndicator";
 import Alerts from "../Alerts";
 

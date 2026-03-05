@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import type { SelectableDataCardListRowProps } from "../../components/dataCardList/SelectableDataCardList";
-import type { Exercise } from "../../types/exercise";
+import type { Exercise } from "../../types/exercises/exercise";
 import { FitnessCenterOutlined } from "@mui/icons-material";
 import useExercises from "../../queries/exercises/hooks/useExercises";
 import useInfiniteScroll from "../useInfiniteScroll";

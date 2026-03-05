@@ -2,7 +2,7 @@ import type { DataCardListColumnProps } from "../../dataCardList/DataCardList";
 import Modal from "../../modal/Modal";
 import { Box, Button, LinearProgress, Typography } from "@mui/material";
 import SelectableDataCardList from "../../dataCardList/SelectableDataCardList";
-import type { Exercise } from "../../../types/exercise";
+import type { Exercise } from "../../../types/exercises/exercise";
 import Toolbar from "../../toolbar/Toolbar";
 import ExercisesListFilters from "../ExercisesListFilters";
 import useExercisesSelect from "../../../hooks/exercises/useExercisesSelect";

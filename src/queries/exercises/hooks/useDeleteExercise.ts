@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteExercise } from "../../../services/exercisesService";
-import type { Exercise } from "../../../types/exercise";
+import type { Exercise } from "../../../types/exercises/exercise";
 
 export default function useDeleteExercise() {
     const queryClient = useQueryClient();

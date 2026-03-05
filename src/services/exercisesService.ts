@@ -1,8 +1,8 @@
 import api from './api.ts';
 import { handleApiError } from '../utils/handleApiError.ts';
-import type { Exercise } from '../types/exercise.ts';
+import type { Exercise } from '../types/exercises/exercise.ts';
 import { objectToQuery } from '../utils/queryHelpers.ts';
-import type { ExerciseCategory } from '../types/exerciseCategory.ts';
+import type { ExerciseCategory } from '../types/exercises/exerciseCategory.ts';
 
 export type ExercisesQuery = {
     cursor?: number;
