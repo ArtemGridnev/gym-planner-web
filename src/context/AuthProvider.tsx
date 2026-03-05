@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react"
-import type { User } from "../types/user"
+import type { User } from "../types/auth/user"
 import { logout as logoutService } from "../services/authService";
 import { getCurrentUser } from "../services/usersService";
 

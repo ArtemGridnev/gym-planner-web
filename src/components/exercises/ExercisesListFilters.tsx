@@ -3,7 +3,7 @@ import useFilters from '../../hooks/filters/useFilters'
 import ToolbarFilters from '../toolbar/ToolbarFilters';
 import { useExerciseCategories } from '../../queries/exercises/hooks/useExerciseCategories';
 import { getExerciseFilterFields } from '../../filters/exercisesFilter.schema';
-import type { ExerciseCategory } from '../../types/exerciseCategory';
+import type { ExerciseCategory } from '../../types/exercises/exerciseCategory';
 import type { SearchSelectOption } from '../../types/form/formFieldSchema';
 
 type ExercisesListFiltersProps = {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Card from "../layout/card/Card";
-import type { Train } from "../../types/train";
+import type { Train } from "../../types/trains/train";
 import { AddOutlined, DeleteOutline, EditOutlined, SportsMartialArtsOutlined } from "@mui/icons-material";
 import { cronToDays } from "../../utils/cron";
 import type { DataCardListColumnProps, DataCardListRowProps } from "../dataCardList/DataCardList";

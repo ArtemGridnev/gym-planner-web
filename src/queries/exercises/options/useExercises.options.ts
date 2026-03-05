@@ -1,6 +1,6 @@
 import type { InfiniteData, InfiniteQueryObserverOptions, QueryFunctionContext } from "@tanstack/react-query";
 import { getExercises, type ExercisesQuery } from "../../../services/exercisesService";
-import type { Exercise } from "../../../types/exercise";
+import type { Exercise } from "../../../types/exercises/exercise";
 
 export const exercisesQueryOptions = (filters?: Omit<ExercisesQuery, 'cursor'>): InfiniteQueryObserverOptions<Exercise[], Error, InfiniteData<Exercise[], number>> => ({
     queryKey: ['exercises', filters],

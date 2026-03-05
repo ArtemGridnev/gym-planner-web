@@ -1,6 +1,6 @@
 import type { ExerciseFormData } from "../hooks/exercises/useExerciseFormController";
 import type { CreateExercisePayload } from "../services/exercisesService";
-import type { Exercise } from "../types/exercise";
+import type { Exercise } from "../types/exercises/exercise";
 
 export const exerciseFormDataToCreatePayload = (exercise: ExerciseFormData): CreateExercisePayload => {
     return {
