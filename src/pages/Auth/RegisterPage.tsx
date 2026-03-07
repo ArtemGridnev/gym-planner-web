@@ -27,7 +27,7 @@ export default function RegisterPage() {
                         borderRadius: 2,
                     }}
                 >
-                    <Typography variant="h5" component="h1" gutterBottom>
+                    <Typography variant="h5" component="h1" sx={{ mb: 2 }}>
                         Sign up
                     </Typography>
                     <RegisterForm onSuccess={() => navigate('/train-sessions')} />

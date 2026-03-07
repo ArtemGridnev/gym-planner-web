@@ -69,8 +69,8 @@ Modal.Header = function Header({ children }: ModalHeaderProps) {
           sx={{
             display: 'flex',
             minHeight: 60,
-            px: 2,
-            py: 1,
+            p: 2,
+            // pb: 0,
             alignItems: 'center',
             justifyContent: 'space-between',
             flexShrink: 0
