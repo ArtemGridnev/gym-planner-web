@@ -1,0 +1,64 @@
+import { useMemo, useState } from "react";
+import type { SelectableDataCardListRowProps } from "../../../shared/components/dataCardList/SelectableDataCardList";
+import type { Exercise } from "../types/exercise";
+import { FitnessCenterOutlined } from "@mui/icons-material";
+import useExercises from "../queries/hooks/useExercises";
+import useInfiniteScroll from "../../../shared/hooks/useInfiniteScroll";
+import useSelectableListState from "../../../shared/hooks/useSelectableListState";
+
+type useExercisesSelectProps = {
+    onSubmit: (exercises: Exercise[]) => void;
+};
+
+export default function useExercisesSelect({ onSubmit }: useExercisesSelectProps) {
+    const [filters, setFilters] = useState<Record<string, string>>({});
+    const { 
+        isPending,
+        data,
+        hasNextPage,
+        isFetchingNextPage,
+        fetchNextPage,
+    } = useExercises({ filters });
+
+    const loadMoreRef = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
+
+    const rows = useMemo<SelectableDataCardListRowProps[] | null>(() => {
+        if (!data) return null;
+
+        return data.pages.flat().map(exercise => ({
+            id: exercise.id.toString(),
+            icon: FitnessCenterOutlined,
+            title: `${exercise.name} - ${exercise.category.name}`,
+            data: {
+                id: exercise.id,
+                description: exercise.description,
+                sets: exercise.sets,
+                reps: exercise.reps,
+                durationSeconds: exercise.durationSeconds && `${exercise.durationSeconds} sec`,
+                weight: exercise.weight && `${exercise.weight} kg`
+            }
+        }));
+    }, [data]);
+
+    const {
+        selected,
+        handleCheck,
+        cleanSelected
+    } = useSelectableListState<Exercise>({ list: data?.pages.flat() });
+
+    const handleSubmit = () => {
+        onSubmit(Object.values(selected));
+    };
+
+    return {
+        rows,
+        isPending,
+        hasNextPage,
+        selected,
+        loadMoreRef,
+        setFilters,
+        handleCheck,
+        handleSubmit,
+        cleanSelected
+    };
+}
