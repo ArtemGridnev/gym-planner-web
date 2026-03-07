@@ -1,15 +1,15 @@
 import './App.css';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import LoginPage from './pages/auth/LoginPage';
-import RegisterPage from './pages/auth/RegisterPage';
-import Dashboard from './pages/dashboard/Dashboard';
-import Exercises from './pages/dashboard/managment/Exercises';
-import AuthProvider from './context/AuthProvider';
-import ProtectedRoute from './components/routes/ProtectedRoute';
-import PublicRoute from './components/routes/PublicRoute';
-import Trains from './pages/dashboard/managment/Trains';
-import TrainSessions from './pages/dashboard/TrainSessions';
-import Train from './pages/dashboard/managment/Train';
+import Login from './features/auth/components/Login';
+import Register from './features/auth/components/Register';
+import Dashboard from './shared/components/layout/Dashboard';
+import Exercises from './features/exercises/components/ExercisesManager';
+import AuthProvider from './features/auth/context/AuthProvider';
+import ProtectedRoute from './shared/components/routes/ProtectedRoute';
+import PublicRoute from './shared/components/routes/PublicRoute';
+import Trains from './features/trains/components/TrainsManager';
+import TrainSessions from './features/trainSessions/components/TrainSessions';
+import Train from './features/trains/components/TrainManger';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
@@ -24,8 +24,8 @@ function App() {
 
           {/* Auth */}
           <Route element={<PublicRoute />}>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Route>
 
           {/* Dashboard */}
