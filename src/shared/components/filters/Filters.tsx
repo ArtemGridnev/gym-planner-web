@@ -32,9 +32,9 @@ export default function Filters({
                     key={index}
                     inputProps={{
                         placeholder: field.label,
-                        ...inputProps
+                        ...inputProps,
                     }}
-                ></FilterField>
+                />
             ))}
         </Box>
     );

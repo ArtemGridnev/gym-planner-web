@@ -1,23 +1,20 @@
-import { Box } from "@mui/material";
+import { Box, type BoxProps } from "@mui/material";
 
-type ContentCardProps = {
-    children: React.ReactNode;
-    width?: string;
-};
+type ContentCardProps = BoxProps;
 
-export default function ContentCard({ children, width = '100%' }: ContentCardProps) {
-    return (
-        <Box 
-            sx={{ 
-                display: 'flex',
-                width,
-                height: '100%',
-                background: 'white',
-                borderRadius: 3,
-                flexDirection: 'column'
-            }}
-        >
-            {children}
-        </Box>
-    );
+export default function ContentCard({ sx, ...props }: ContentCardProps) {
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        width: "100%",
+        height: "100%",
+        background: "white",
+        borderRadius: 3,
+        flexDirection: "column",
+        ...sx
+      }}
+      {...props}
+    />
+  );
 }

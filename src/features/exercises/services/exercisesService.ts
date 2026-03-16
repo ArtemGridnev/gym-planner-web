@@ -74,6 +74,8 @@ export const updateExercise = async (data: UpdateExercisePayload & { id: number 
 };
 
 export const deleteExercise = async (id: number) => {
+    console.log(`Service deleting exercise with id: ${id}`);
+
     try {
         const response = await api.delete(`/exercises/${id}`);
         return response.data;

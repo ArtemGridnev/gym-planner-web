@@ -7,10 +7,11 @@ import ExercisesListFilters from "./ExercisesListFilters";
 import DataCardList, { type DataCardListColumnProps, type DataCardListRowProps } from "../../../shared/components/dataCardList/DataCardList";
 import DataCardListSkeleton from "../../../shared/components/dataCardList/skeleton/DataCardListSkeleton";
 import { AddOutlined, DeleteOutline, EditOutlined, FitnessCenterOutlined } from "@mui/icons-material";
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import type { Exercise } from "../types/exercise";
 import ToolbarLoadingIndicator from "../../../shared/components/toolbar/ToolbarLoadingIndicator";
 import Alerts from "../../../shared/components/Alerts";
+import ListNoDataMessage from "../../../shared/components/ListNoDataMessage";
 
 const columns: DataCardListColumnProps[] = [
     { field: 'description', fullWidth: true },
@@ -63,20 +64,22 @@ export default function ExercisesCard({
                     { 
                         icon: EditOutlined, 
                         text: 'edit', 
-                        onClick: () => onEdit(exercise.id) 
+                        onClick: () => onEdit(exercise.id),
+                        testid: `edit-exercise-button`,
                     },
-                    { icon: DeleteOutline, text: 'delete', onClick: () => onDelete(exercise.id) },
+                    { 
+                        icon: DeleteOutline, 
+                        text: 'delete', 
+                        onClick: () => onDelete(exercise.id),
+                        testid: `delete-exercise-button`,
+                    },
                 ]
             };
         });
     }, [exercises]);
 
-    useEffect(() => {
-        console.log({ rows, isPending, hasNextPage });
-    }, [rows, isPending, hasNextPage]);
-
     return (
-        <Card>
+        <Card data-testid="exercises-page">
             <CardHeader 
                 title="Exercises"
                 actions={[
@@ -84,7 +87,8 @@ export default function ExercisesCard({
                         icon: AddOutlined,
                         label: 'Create Exercise',
                         tooltip: 'Create Exercise', 
-                        onClick: onAdd
+                        onClick: onAdd,
+                        testid: 'create-exercise-button'
                     }
                 ]}
             />
@@ -94,6 +98,7 @@ export default function ExercisesCard({
                         height: '100%',
                         overflowY: !rows ? 'hidden' : 'auto'
                     }}
+                    data-testid="exercises-list-container"
                 >
                     <Toolbar>
                         <ExercisesListFilters onChange={(filters) => onFiltersChange(filters)} />
@@ -101,8 +106,11 @@ export default function ExercisesCard({
                     </Toolbar>
                     <Box sx={{ display: 'flex', padding: 2, gap: 2, flexDirection: 'column' }}>
                         <Alerts error={error} sx={{ mb: 2 }} />
-                        {!isPending && rows?.length === 0 && <Typography variant="h6" sx={{ textAlign: "center", }}>{"No items here… yet."}</Typography>}
-                        {rows && <DataCardList columns={columns} rows={rows} />}
+
+                        {!isPending && rows?.length === 0 && <ListNoDataMessage message="No items here… yet." />}
+
+                        {rows && <DataCardList data-testid="exercises-list" columns={columns} rows={rows} />}
+
                         {((isPending && !rows) || hasNextPage) && <DataCardListSkeleton ref={loadMoreRef} columns={{ min: 3, max: 6 }} rows={6} icon={true} menuItems={true} />}
                     </Box>
                 </Box>

@@ -38,6 +38,7 @@ export default function ExercisesListFilters({ onChange }: ExercisesListFiltersP
             fields={fields} 
             filters={values} 
             handleChange={handleChange} 
+            data-testid="exercises-list-filters"
         />
     );
 }

@@ -63,6 +63,7 @@ export default function Exercises() {
                     {...formStates}
                     formFields={exerciseFormFields}
                     submitButtonText={isUpdate ? "Update Exercise" : "Create Exercise"}
+                    data-testid="exercise-form"
                 />
             </FormModal>
 
@@ -74,8 +75,8 @@ export default function Exercises() {
                 error={error?.message || ''}
                 onAdd={onAdd}
                 onEdit={onEdit}
-                onDelete={(id) => deleteExercise(id)}
-                onFiltersChange={(filters) => setFilters(filters)}
+                onDelete={deleteExercise}
+                onFiltersChange={setFilters}
             />
         </>
     );

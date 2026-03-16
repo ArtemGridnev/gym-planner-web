@@ -1,14 +1,13 @@
 import { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, type BoxProps } from "@mui/material";
 import Menu from "./menu/Menu";
 import type { MenuItemProps } from "./menu/MenuItem";
 
-type IconButtonMenuProps = {
+type IconButtonMenuProps = Omit<BoxProps, 'onClick' | 'component'> & {
     items: MenuItemProps[];
-    children: React.ReactNode;
 };
 
-export default function ButtonMenu({ items, children }: IconButtonMenuProps) {
+export default function ButtonMenu({ items, children, sx, ...props }: IconButtonMenuProps) {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const open = Boolean(anchorEl);
 
@@ -26,10 +25,20 @@ export default function ButtonMenu({ items, children }: IconButtonMenuProps) {
 
     return (
         <>
-            <Box onClick={(e) => toggleMenu(e)} sx={{ cursor: 'pointer' }}>
+            <Box 
+                role="button"
+                tabIndex={0}
+                onClick={(e) => toggleMenu(e)} 
+                sx={{ 
+                    cursor: 'pointer',
+                    textAlign: 'start',
+                    ...sx
+                }}
+                {...props}
+            >
                 {children}
             </Box>
-            <Menu anchorEl={anchorEl} items={items} open={open} onItemClick={onItemClick} onClose={() => closeMenu()}></Menu>
+            <Menu anchorEl={anchorEl} items={items} open={open} onItemClick={onItemClick} onClose={closeMenu}></Menu>
         </>
     );
 }

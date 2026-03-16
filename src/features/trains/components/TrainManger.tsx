@@ -12,6 +12,7 @@ import DraggableDataCardListSkeleton from "../../../shared/components/dataCardLi
 import useTrain from "../queries/hooks/useTrain";
 import useTrainExercisesController from "../hooks/useTrainExercisesController";
 import AlertsStack from "../../../shared/components/AlertsStack";
+import ListNoDataMessage from "../../../shared/components/ListNoDataMessage";
 
 const columns: DataCardListColumnProps[] = [
     { field: 'description', fullWidth: true },
@@ -117,6 +118,7 @@ export default function Train() {
                                 ]} 
                             />
                             {isPending && <DraggableDataCardListSkeleton columns={{ min: 3, max: 6 }} rows={8} icon={true} menuItems={true} />}
+                            {!isPending && rows.length === 0 && <ListNoDataMessage message="No exercises in this train… yet." />}
                             {train?.exercises && !isPending && (
                                 <DraggableDataCardList 
                                     columns={columns} 

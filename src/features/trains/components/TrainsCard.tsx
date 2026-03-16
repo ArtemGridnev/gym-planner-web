@@ -11,6 +11,7 @@ import DataCardListSkeleton from "../../../shared/components/dataCardList/skelet
 import DataCardList from "../../../shared/components/dataCardList/DataCardList";
 import Alerts from "../../../shared/components/Alerts";
 import { useNavigate } from "react-router-dom";
+import ListNoDataMessage from "../../../shared/components/ListNoDataMessage";
 
 type TrainsCardProps = {
     trains?: Train[];
@@ -80,6 +81,7 @@ export default function TrainsCard({ trains, isLoading, error, onAdd, onEdit, on
                 >
                     <Alerts error={error} sx={{ mb: 2 }} />
                     {isLoading && <DataCardListSkeleton columns={1} rows={8} icon={true} menuItems={true} />}
+                    {!isLoading && rows.length === 0 && (<ListNoDataMessage message="No items here… yet." />)}
                     {trains && !isLoading && <DataCardList columns={columns} rows={rows} />}
                 </Box>
             </CardContent>

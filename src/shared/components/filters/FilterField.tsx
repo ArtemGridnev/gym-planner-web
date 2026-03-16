@@ -27,6 +27,9 @@ export default function FilterField(props: FilterFieldProps) {
         case 'number':
             return (
                 <NumberField
+                    name={name}
+                    value={+value}
+                    onChange={(inputValue) => onChange(name, inputValue?.toString() || '')}
                     {...otherProps}
                     {...inputProps}
                 />  
@@ -35,6 +38,7 @@ export default function FilterField(props: FilterFieldProps) {
         case 'select':
             return (
                 <Select
+                    name={name}
                     value={value}
                     onChange={(inputValue) => onChange(name, inputValue.value)}
                     options={props.options}
@@ -45,7 +49,7 @@ export default function FilterField(props: FilterFieldProps) {
         case 'searchSelect':
             return (
                 <SearchSelect
-                    input={inputProps}
+                    input={{ ...inputProps, name }}
                     value={value ? props.options.find(o => o.value === value) : null}
                     onChange={(selectedOption) => onChange(name, selectedOption?.id.toString() || '')}
                     options={props.options}
@@ -61,7 +65,7 @@ export default function FilterField(props: FilterFieldProps) {
             return (
                 <SearchSelectMultiple 
                     sx={inputProps?.sx}
-                    input={inputProps}
+                    input={{ ...inputProps, name }}
                     value={selected}
                     onChange={(selectedOptions) => onChange(name, selectedOptions.map(o => o.id).join(','))}
                     options={props.options}
@@ -73,6 +77,7 @@ export default function FilterField(props: FilterFieldProps) {
         case 'search':
             return (
                 <TextField
+                    name={name}
                     type={type}
                     onChange={({ target: { value: inputValue } }) => onChange(name, inputValue)}
                     value={value}
