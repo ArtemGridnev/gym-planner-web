@@ -2,22 +2,22 @@ import { Box, IconButton, useMediaQuery, useTheme } from "@mui/material";
 import logo from '../../../assets/logo/logo.png';
 import UserProfile from "../../../features/users/components/UserProfile";
 import ButtonMenu from "../ButtonMenu";
-import { useAuthContext } from "../../../features/auth/context/AuthProvider";
 import { LogoutOutlined, MenuOutlined } from "@mui/icons-material";
 import type { MenuItemProps } from "../menu/MenuItem";
 import { useLayoutContext } from "../../context/layout/useLayoutContext";
+import useLogout from "../../../features/auth/hooks/useLogout";
 
 export default function Header() {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-    const { logout } = useAuthContext();
+    const logout = useLogout();
     const { toggleSidebar } = useLayoutContext();
 
     const profileMenuItems: MenuItemProps[] = [
         {
             icon: LogoutOutlined,
             text: 'logout',
-            onClick: () => logout()
+            onClick: logout
         }
     ];
 
@@ -52,7 +52,7 @@ export default function Header() {
                 <Box sx={{ flexGrow: 1 }}>
 
                 </Box>
-                <ButtonMenu items={profileMenuItems}>
+                <ButtonMenu items={profileMenuItems} data-testid="user-profile-button">
                     <UserProfile size="small" />
                 </ButtonMenu>
             </Box>

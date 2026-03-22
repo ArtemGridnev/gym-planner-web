@@ -5,11 +5,12 @@ export type MenuItemProps = {
     icon?: ElementType;
     text: string;
     onClick: () => void;
+    testid?: string;
 };
 
-export default function MenuItem({ icon: Icon, text, onClick }: MenuItemProps) {
+export default function MenuItem({ icon: Icon, text, onClick, testid }: MenuItemProps) {
     return (
-        <MenuItemMui sx={{ gap: 1 }} onClick={() => onClick()}>
+        <MenuItemMui sx={{ gap: 1 }} onClick={() => onClick()} data-testid={testid}>
             {Icon && <Icon sx={{ color: 'text.secondary' }} />}
             {text}
         </MenuItemMui>

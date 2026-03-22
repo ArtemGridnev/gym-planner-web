@@ -7,7 +7,7 @@ type ToggleButtonGroupProps = {
     value: string[];
 } & Omit<MuiToggleButtonGroupProps, 'onChange' | 'value'>;
 
-export default function ToggleButtonGroup({ label, options, onChange, value }: ToggleButtonGroupProps) {
+export default function ToggleButtonGroup({ label, options, onChange, value, ...props }: ToggleButtonGroupProps) {
   return (
     <FormControl fullWidth sx={{ mb: 2 }}>
         <FormLabel sx={{ mb: 1 }}>{label}</FormLabel>
@@ -18,6 +18,7 @@ export default function ToggleButtonGroup({ label, options, onChange, value }: T
             sx={{
                 flexWrap: "wrap",
             }}
+            {...props}
         >
             {options.map(({ value, name }) => (
                 <ToggleButton

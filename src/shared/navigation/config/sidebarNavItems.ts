@@ -6,15 +6,18 @@ export const sidebarNavItems: SidebarNavItemProps[] = [
         path: '/managment/exercises',
         text: "Exercises",
         icon: FitnessCenterOutlined,
+        testid: 'exercises-nav-item',
     },
     {
         path: '/managment/trains',
         text: "Trainings",
         icon: SportsMartialArtsOutlined,
+        testid: 'trains-nav-item',
     },
     {
         path: '/train-sessions',
         text: 'Train Sessions',
-        icon: ChecklistOutlined
+        icon: ChecklistOutlined,
+        testid: 'train-sessions-nav-item',
     },
 ];

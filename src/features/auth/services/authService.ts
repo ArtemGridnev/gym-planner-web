@@ -1,13 +1,8 @@
 import api from '../../../shared/api/apiClient.ts';
-import { handleApiError } from '../../../shared/utils/handleApiError.ts';
 
 export const login = async (email: string, password: string) => {
-    try {
-        const response = await api.post("/auth/login", { email, password });
-        return response.data;
-    } catch (error: any) {
-        handleApiError(error);
-    }
+    const response = await api.post("/auth/login", { email, password });
+    return response.data;
 };
 
 type RegisterData = {
@@ -18,19 +13,11 @@ type RegisterData = {
 };
 
 export const register = async (data: RegisterData) => {
-    try {
-        const response = await api.post("/auth/register", data);
-        return response.data;
-    } catch (error: any) {
-        handleApiError(error);
-    }
+    const response = await api.post("/auth/register", data);
+    return response.data;
 };
 
 export const logout = async () => {
-    try {
-        const response = await api.post("/auth/logout");
-        return response.data;
-    } catch (error: any) {
-        handleApiError(error);
-    }
+    const response = await api.post("/auth/logout");
+    return response.data;
 };

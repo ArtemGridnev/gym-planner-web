@@ -2,16 +2,21 @@ import { IconButton, Tooltip } from "@mui/material";
 import type { ElementType } from "react";
 
 export type CardHeaderActionProps = {
-    icon: ElementType,
+    icon: ElementType;
     label: string;
-    tooltip?: string,
-    onClick: () => void
+    tooltip?: string;
+    onClick: () => void;
+    testid?: string;
+    disabled?: boolean;
 };
 
-export default function CardHeaderAction({ icon: Icon, label, tooltip, onClick }: CardHeaderActionProps) {
+export default function CardHeaderAction({ icon: Icon, label, tooltip, onClick, testid, disabled }: CardHeaderActionProps) {
     return (
-        <Tooltip title={tooltip || ""}>
-            <IconButton onClick={() => onClick()} aria-label={label}>
+        <Tooltip 
+            title={tooltip || ""} 
+            data-testid={testid}
+        >
+            <IconButton onClick={() => onClick()} aria-label={label} disabled={disabled}>
                 <Icon />
             </IconButton>
         </Tooltip>

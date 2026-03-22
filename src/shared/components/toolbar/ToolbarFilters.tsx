@@ -1,9 +1,9 @@
-import { Box, CircularProgress, InputAdornment } from "@mui/material";
+import { Box, CircularProgress, InputAdornment, type BoxProps } from "@mui/material";
 import type { FilterFieldSchema } from "../../types/filterFieldSchema";
 import FilterField from "../filters/FilterField";
 import { SearchOutlined } from "@mui/icons-material";
 
-type ToolbarFiltersProps = {
+type ToolbarFiltersProps = BoxProps & {
     fields: FilterFieldSchema[];
     filters: Record<string, string>;
     handleChange: (field: string, value: string) => void,
@@ -13,7 +13,9 @@ type ToolbarFiltersProps = {
 export default function ToolbarFilters({
     fields,
     filters,
-    handleChange
+    handleChange,
+    sx,
+    ...props
 }: ToolbarFiltersProps) {
     return (
         <Box
@@ -23,7 +25,9 @@ export default function ToolbarFilters({
                 minHeight: 32,
                 gap: 2,
                 flexWrap: 'wrap',
+                ...sx
             }}
+            {...props}
         >
             {fields.length === 0 ? (
                 <Box

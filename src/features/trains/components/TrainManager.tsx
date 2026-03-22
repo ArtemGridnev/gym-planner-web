@@ -12,6 +12,8 @@ import DraggableDataCardListSkeleton from "../../../shared/components/dataCardLi
 import useTrain from "../queries/hooks/useTrain";
 import useTrainExercisesController from "../hooks/useTrainExercisesController";
 import AlertsStack from "../../../shared/components/AlertsStack";
+import ListNoDataMessage from "../../../shared/components/ListNoDataMessage";
+import CardError from "../../../shared/components/layout/card/CardError";
 
 const columns: DataCardListColumnProps[] = [
     { field: 'description', fullWidth: true },
@@ -35,7 +37,7 @@ export default function Train() {
         error: exercisesError,
         updateTrainExercisesOrder,
         addTrainExercises,
-        deleteTrainExercise
+        removeTrainExercise
     } = useTrainExercisesController(train);
 
     const [rows, setRows] = useState<DraggableDataCardListRowProps[]>([]);
@@ -51,7 +53,7 @@ export default function Train() {
                 return {
                     id: trainExercise.id.toString(),
                     icon: FitnessCenterOutlined,
-                    title: `${exercise.name} - ${exercise.category?.name} - ${trainExercise.id}`,
+                    title: `${exercise.name} - ${exercise.category?.name}`,
                     data: {
                         id: exercise.id,
                         description: exercise.description,
@@ -61,7 +63,12 @@ export default function Train() {
                         weight: exercise.weight && `${exercise.weight} kg`
                     },
                     menuItems: trainExercise.id > 0 ? [
-                        { icon: DeleteOutline, text: 'delete', onClick: () => deleteTrainExercise(trainExercise.id) },
+                        { 
+                            icon: DeleteOutline, 
+                            text: 'remove', 
+                            onClick: () => removeTrainExercise(trainExercise.id),
+                            testid: 'remove-exercise-button',
+                        },
                     ] : []
                 };
             }));
@@ -83,7 +90,7 @@ export default function Train() {
                 />
             )}
 
-            <Card>
+            <Card data-testid="train-page">
                 <CardHeader 
                     onBack={() => navigate('/managment/trains')}
                     title={`Training${train ? ` - ${train.name}` : ''}`}
@@ -92,7 +99,9 @@ export default function Train() {
                             icon: AddOutlined,
                             label: 'Add Exercises',
                             tooltip: 'Add Exercises',
-                            onClick: () => setFormOpen(true)
+                            onClick: () => setFormOpen(true),
+                            disabled: isPending || !train,
+                            testid: 'add-exercises-button',
                         }
                     ]}
                 />
@@ -110,13 +119,19 @@ export default function Train() {
                                 margin: 'auto',
                             }}
                         >
-                            <AlertsStack 
-                                alerts={[
-                                    ...(error?.message ? [{ message: error.message, severity: 'error' as const }] : []),
-                                    ...(exercisesError?.message ? [{ message: exercisesError.message, severity: 'error' as const }] : []),
-                                ]} 
-                            />
+                            {!train && !isPending && <CardError message="Train not found." data-testid="train-not-found" />}
+
+                            {train && (error || exercisesError) && (
+                                <AlertsStack 
+                                    alerts={[
+                                        ...(error?.message ? [{ message: error.message, severity: 'error' as const }] : []),
+                                        ...(exercisesError?.message ? [{ message: exercisesError.message, severity: 'error' as const }] : []),
+                                    ]} 
+                                />
+                            )}
+
                             {isPending && <DraggableDataCardListSkeleton columns={{ min: 3, max: 6 }} rows={8} icon={true} menuItems={true} />}
+                            {!isPending && train && rows.length === 0 && <ListNoDataMessage message="No items here… yet." />}
                             {train?.exercises && !isPending && (
                                 <DraggableDataCardList 
                                     columns={columns} 
@@ -125,6 +140,7 @@ export default function Train() {
                                         setRows(orderedRows);
                                         updateTrainExercisesOrder(orderedRows.map(row => +row.id))
                                     }}
+                                    data-testid="train-exercises-list"
                                 />
                             )}
                         </Box>

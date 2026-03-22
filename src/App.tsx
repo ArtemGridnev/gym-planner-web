@@ -9,10 +9,9 @@ import ProtectedRoute from './shared/components/routes/ProtectedRoute';
 import PublicRoute from './shared/components/routes/PublicRoute';
 import Trains from './features/trains/components/TrainsManager';
 import TrainSessions from './features/trainSessions/components/TrainSessions';
-import Train from './features/trains/components/TrainManger';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-const queryClient = new QueryClient();
+import Train from './features/trains/components/TrainManager';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from './lib/queryClient';
 
 function App() {
   return (

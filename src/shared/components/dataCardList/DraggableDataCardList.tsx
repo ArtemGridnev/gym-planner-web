@@ -14,7 +14,7 @@ type DraggableDataCardListProps = Omit<DataCardListProps, 'rows' | 'onChange'> &
     onChange: (rows: DraggableDataCardListRowProps[]) => void;
 };
 
-export default function DraggableDataCardList({ columns, rows, onChange, noDataMessage = "No items here… yet.", ...props }: DraggableDataCardListProps) {
+export default function DraggableDataCardList({ columns, rows, onChange, ...props }: DraggableDataCardListProps) {
     const handleDragEnd = (event: any) => {
         const {active, over} = event;
         
@@ -42,7 +42,6 @@ export default function DraggableDataCardList({ columns, rows, onChange, noDataM
                     }}
                     {...props}
                 >
-                    {rows.length === 0 && <Typography variant="h6" sx={{ textAlign: 'center', }}>{noDataMessage}</Typography>}
                     {rows.map((row) => (
                         <SortableItem key={row.id} id={row.id}>
                             {<DataCardListItem columns={columns} row={row} />}

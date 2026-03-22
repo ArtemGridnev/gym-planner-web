@@ -9,9 +9,10 @@ export type SidebarNavItemProps = {
     text: string;
     icon: ElementType;
     children?: SidebarNavItemProps[];
+    testid?: string;
 };
 
-export default function SidebarNavItem({ path, text, icon: Icon, children}: SidebarNavItemProps) {
+export default function SidebarNavItem({ path, text, icon: Icon, children, testid }: SidebarNavItemProps) {
     const { isSidebarOpen, openSidebar, closeMobileSidebar } = useLayoutContext();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -36,6 +37,7 @@ export default function SidebarNavItem({ path, text, icon: Icon, children}: Side
             <ListItem 
                 key={text} 
                 disablePadding
+                data-testid={testid}
             >
                 <ListItemButton 
                     onClick={() => handleClick()} 

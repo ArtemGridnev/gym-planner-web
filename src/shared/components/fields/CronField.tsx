@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ToggleButtonGroup from "./ToggleButtonGroup";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 type CronFieldProps = {
     fields: ('weekDays')[];
@@ -33,13 +33,14 @@ export default function CronField({ fields, onChange, value, label, disabled }: 
     }, [value]);
 
     return (
-        <>
-            <Typography variant="subtitle1" component="label">{label}</Typography>
+        <Box>
+            <Typography variant="subtitle1" component="label" gutterBottom>{label}</Typography>
             {fields.map((field) => {
                 switch (field) {
                     case 'weekDays':
                         return (
                             <ToggleButtonGroup
+                                data-testid="days-toogle-button-group"
                                 key={field}
                                 label="Days"
                                 options={[
@@ -58,6 +59,6 @@ export default function CronField({ fields, onChange, value, label, disabled }: 
                         );
                 }
             })}
-        </>
+        </Box>
     );
 }

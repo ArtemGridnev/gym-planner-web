@@ -67,6 +67,7 @@ export default function Trains() {
                     {...formStates}
                     formFields={trainFormFields}
                     submitButtonText={isUpdate ? "Update Train" : "Create Train"}
+                    data-testid="train-form"
                 />
             </FormModal>
 

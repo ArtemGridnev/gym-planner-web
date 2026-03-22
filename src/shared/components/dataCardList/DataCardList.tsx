@@ -1,4 +1,4 @@
-import { Typography, type BoxProps } from "@mui/material";
+import { type BoxProps } from "@mui/material";
 import DataCardListItem from "./DataCardListItem";
 import type { DataCardProps } from "./DataCard";
 import DataCardListBase from "./DataCardListBase";
@@ -16,15 +16,14 @@ export type DataCardListRowProps = DataCardProps & {
 export type DataCardListProps = BoxProps & {
     columns: DataCardListColumnProps[];
     rows: DataCardListRowProps[];
-    noDataMessage?: string;
 };
 
-export default function DataCardList({ columns, rows, noDataMessage = "No items here… yet.", ...props }: DataCardListProps) {
+export default function DataCardList({ columns, rows, ...props }: DataCardListProps) {
     return (
         <>
             <DataCardListBase {...props}>
                 {rows.map((row, index) => (
-                    <DataCardListItem columns={columns} row={row} key={index} />
+                    <DataCardListItem data-testid="" columns={columns} row={row} key={index} />
                 ))}
             </DataCardListBase>
         </>

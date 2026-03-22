@@ -5,7 +5,7 @@ type UserProfileProps = BoxProps & {
     size?: 'small' | 'medium';
 };
 
-export default function UserProfile({ size = 'medium' }: UserProfileProps) {
+export default function UserProfile({ size = 'medium', sx, ...props }: UserProfileProps) {
     const { user } = useAuthContext();
 
     if (!user) return;
@@ -17,8 +17,10 @@ export default function UserProfile({ size = 'medium' }: UserProfileProps) {
             sx={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: 1
+                gap: 1,
+                ...sx
             }}
+            {...props}
         >
             <Avatar 
                 sx={{

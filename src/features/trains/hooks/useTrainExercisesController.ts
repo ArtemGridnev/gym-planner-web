@@ -43,7 +43,7 @@ export default function useTrainExercisesController(train: Train | undefined) {
         });
     };
 
-    const deleteTrainExercise = async (trainExerciseId: number) => {
+    const removeTrainExercise = async (trainExerciseId: number) => {
         if (!train?.exercises) return;
 
         const updatedTrainExercises = train.exercises.filter(exercise => exercise.id !== trainExerciseId);
@@ -59,6 +59,6 @@ export default function useTrainExercisesController(train: Train | undefined) {
         error,
         addTrainExercises,
         updateTrainExercisesOrder,
-        deleteTrainExercise
+        removeTrainExercise
     }
 };
