@@ -43,12 +43,14 @@ export default function TrainsCard({ trains, isLoading, error, onAdd, onEdit, on
                     { 
                         icon: EditOutlined, 
                         text: 'edit', 
-                        onClick: () => onEdit(train.id)
+                        onClick: () => onEdit(train.id),
+                        testid: `edit-train-button`
                     },
                     { 
                         icon: DeleteOutline, 
                         text: 'delete', 
-                        onClick: () => onDelete(train.id) 
+                        onClick: () => onDelete(train.id),
+                        testid: `delete-train-button` 
                     },
                 ],
                 onClick: () => navigate(`/managment/trains/${train.id}`)
@@ -59,7 +61,7 @@ export default function TrainsCard({ trains, isLoading, error, onAdd, onEdit, on
     }, [trains]);
 
     return (
-        <Card>
+        <Card data-testid="trains-page">
             <CardHeader 
                 title="Trainings"
                 actions={[
@@ -67,7 +69,8 @@ export default function TrainsCard({ trains, isLoading, error, onAdd, onEdit, on
                         icon: AddOutlined,
                         label: 'Create Train',
                         tooltip: 'Create Train',
-                        onClick: onAdd
+                        onClick: onAdd,
+                        testid: 'create-train-button'
                     }
                 ]}
             />
@@ -82,7 +85,7 @@ export default function TrainsCard({ trains, isLoading, error, onAdd, onEdit, on
                     <Alerts error={error} sx={{ mb: 2 }} />
                     {isLoading && <DataCardListSkeleton columns={1} rows={8} icon={true} menuItems={true} />}
                     {!isLoading && rows.length === 0 && (<ListNoDataMessage message="No items here… yet." />)}
-                    {trains && !isLoading && <DataCardList columns={columns} rows={rows} />}
+                    {trains && !isLoading && <DataCardList data-testid="trains-list" columns={columns} rows={rows} />}
                 </Box>
             </CardContent>
         </Card>

@@ -12,7 +12,7 @@ type ModalProps = Omit<MuiModalProps, 'children'> & {
 
 const ModalContext = React.createContext<{ onClose: () => void } | null>(null);
 
-export default function Modal({ open, onClose, width, height, children }: ModalProps) {
+export default function Modal({ open, onClose, width, height, children, ...props }: ModalProps) {
     return (
         <ModalContext value={{ onClose }}>
             <MuiModal 
@@ -24,6 +24,7 @@ export default function Modal({ open, onClose, width, height, children }: ModalP
                     alignItems: 'center',
                     padding: { sm: 2 }
                 }}
+                {...props}
             >
                 <Paper
                     sx={{

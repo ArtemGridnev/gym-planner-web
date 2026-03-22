@@ -1,5 +1,4 @@
 import api from '../../../shared/api/apiClient.ts';
-import { handleApiError } from '../../../shared/utils/handleApiError.ts';
 import type { Exercise } from '../types/exercise.ts';
 import { objectToQuery } from '../../../shared/utils/queryHelpers.ts';
 import type { ExerciseCategory } from '../types/exerciseCategory.ts';
@@ -14,30 +13,18 @@ export type ExercisesQuery = {
 export const getExercises = async (filters?: ExercisesQuery) => {
     const query = filters ? objectToQuery(filters) : '';
 
-    try {
-        const response = await api.get(`/exercises${query ? `?${query}` : ''}`);
-        return response.data;
-    } catch (error: any) {
-        handleApiError(error);
-    }
+    const response = await api.get(`/exercises${query ? `?${query}` : ''}`);
+    return response.data;
 };
 
 export const getExercise = async (id: number): Promise<Exercise | undefined> => {
-    try {
-        const response = await api.get(`/exercises/${id}`);
-        return response.data;
-    } catch (error: any) {
-        handleApiError(error);
-    }
+    const response = await api.get(`/exercises/${id}`);
+    return response.data;
 };
 
 export const getExercisesCategories = async (): Promise<ExerciseCategory[] | undefined> => {
-    try {
-        const response = await api.get("/exercises/categories");
-        return response.data;
-    } catch (error: any) {
-        handleApiError(error);
-    }
+    const response = await api.get("/exercises/categories");
+    return response.data;
 };
 
 export type CreateExercisePayload = {
@@ -51,13 +38,8 @@ export type CreateExercisePayload = {
 };
 
 export const postExercise = async (data: CreateExercisePayload): Promise<Exercise | undefined> => {
-    try {
-        const response = await api.post("/exercises", data);
-
-        return response.data;
-    } catch (error: any) {
-        handleApiError(error);
-    }
+    const response = await api.post("/exercises", data);
+    return response.data;
 };
 
 type UpdateExercisePayload = Partial<CreateExercisePayload>;
@@ -65,21 +47,11 @@ type UpdateExercisePayload = Partial<CreateExercisePayload>;
 export const updateExercise = async (data: UpdateExercisePayload & { id: number }): Promise<Exercise | undefined>  => {
     const { id, ...payload } = data;
 
-    try {
-        const response = await api.patch(`/exercises/${id}`, payload);
-        return response.data;
-    } catch (error: any) {
-        handleApiError(error);
-    }
+    const response = await api.patch(`/exercises/${id}`, payload);
+    return response.data;
 };
 
 export const deleteExercise = async (id: number) => {
-    console.log(`Service deleting exercise with id: ${id}`);
-
-    try {
-        const response = await api.delete(`/exercises/${id}`);
-        return response.data;
-    } catch (error: any) {
-        handleApiError(error);
-    }
+    const response = await api.delete(`/exercises/${id}`);
+    return response.data;
 };

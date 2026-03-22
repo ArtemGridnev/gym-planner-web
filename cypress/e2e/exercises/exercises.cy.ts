@@ -138,8 +138,6 @@ describe('Exercises', () => {
             cy.get('button[type="submit"]').click();
         });
 
-        cy.get('[data-testid="exercises-list"] [data-testid="data-card"]').contains('Delete test exercise').should('exist');
-
         cy.get('[data-testid="exercises-list"] [data-testid="data-card"]')
             .contains('Delete test exercise')
             .closest('[data-testid="data-card"]')
@@ -149,10 +147,10 @@ describe('Exercises', () => {
 
         cy.get('[data-testid="delete-exercise-button"]').click();
 
-        cy.get('[data-testid="exercises-list"] [data-testid="data-card"]').contains('Delete test exercise').should('not.exist');
+        cy.get('[data-testid="exercises-list"]').should('not.contain', 'Delete test exercise');
         
         cy.reload();
 
-        cy.get('[data-testid="exercises-list"] [data-testid="data-card"]').contains('Delete test exercise').should('not.exist');
+        cy.get('[data-testid="exercises-list"]').should('not.contain', 'Delete test exercise');
     });
 });

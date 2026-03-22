@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+
+
 Cypress.Commands.add('login', (email: string, password: string = "Password123@") => {
     cy.visit('/login');
     cy.get('input[name="email"]').type(email);
@@ -26,16 +28,30 @@ Cypress.Commands.add('logout', () => {
 
 Cypress.Commands.add('addExercise', (exerciseData) => {
     cy.env(['CYPRESS_API_URL']).then((envVars) => {
-        const apiUrl = envVars.CYPRESS_API_URL;  // Extract from object
-        console.log("CYPRESS_API_URL test", envVars, apiUrl);
-
+        const apiUrl = envVars.CYPRESS_API_URL;
+        
         cy.request({
             method: 'POST',
             url: `${apiUrl}/exercises`,
             body: exerciseData,
             failOnStatusCode: false
         }).then((response) => {
-            // yes
+            expect(response.status).to.eq(201);
+            return response.body;
+        });
+    });
+});
+
+Cypress.Commands.add('addTrain', (trainData) => {
+    cy.env(['CYPRESS_API_URL']).then((envVars) => {
+        const apiUrl = envVars.CYPRESS_API_URL;
+        
+        cy.request({
+            method: 'POST',
+            url: `${apiUrl}/trains`,
+            body: trainData,
+            failOnStatusCode: false
+        }).then((response) => {
             expect(response.status).to.eq(201);
             return response.body;
         });
@@ -49,6 +65,25 @@ Cypress.Commands.add('verifyInfiniteScrollAddsItems', (selector, scrollContainer
         cy.get(selector).should(($newItems) => {
             expect($newItems.length).to.be.gte(beforeCount + minAdded);
         });
+    });
+});
+
+Cypress.Commands.add('drag', { prevSubject: 'element' }, (sourceEl, targetSelector) => {
+    cy.wrap(sourceEl)
+        .trigger('pointerdown', { force: true, isPrimary: true, button: 0 });
+
+    cy.get(targetSelector).then($target => {
+        const targetRect = $target[0].getBoundingClientRect();
+
+        cy.wrap(sourceEl)
+            .trigger('pointermove', {
+                clientX: targetRect.x + targetRect.width / 2,
+                clientY: targetRect.y + targetRect.height / 2,
+                force: true,
+                isPrimary: true,
+                button: 0,
+            })
+            .trigger('pointerup', { force: true, isPrimary: true, button: 0 });
     });
 });
 
@@ -76,10 +111,20 @@ declare global {
              */
             addExercise(exerciseData: object): Chainable<any>;
             /**
+             * Custom command to add a train via API
+             * @example cy.addTrain({ name: 'Back Day', recurrenceCron: "0 0 * * 1,3", ... })
+             */
+            addTrain(trainData: object): Chainable<any>;
+            /**
             * Custom command to verify infinite scroll loads more items
             * @example cy.verifyInfiniteScrollAddsItems('.exercise-item', '.exercise-list-container')
             */
             verifyInfiniteScrollAddsItems(selector: string, scrollContainerSelector: string, minAdded?: number): Chainable<void>;
+            /**
+             * Custom command to drag an element to a target
+             * @example cy.get('.draggable').drag('.drop-target')
+             */
+            drag(targetSelector: string): Chainable<void>;
         }
     }
 }

@@ -7,15 +7,16 @@ export type CardHeaderActionProps = {
     tooltip?: string;
     onClick: () => void;
     testid?: string;
+    disabled?: boolean;
 };
 
-export default function CardHeaderAction({ icon: Icon, label, tooltip, onClick, testid }: CardHeaderActionProps) {
+export default function CardHeaderAction({ icon: Icon, label, tooltip, onClick, testid, disabled }: CardHeaderActionProps) {
     return (
         <Tooltip 
             title={tooltip || ""} 
             data-testid={testid}
         >
-            <IconButton onClick={() => onClick()} aria-label={label}>
+            <IconButton onClick={() => onClick()} aria-label={label} disabled={disabled}>
                 <Icon />
             </IconButton>
         </Tooltip>

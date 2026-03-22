@@ -7,6 +7,7 @@ import Toolbar from "../../../../shared/components/toolbar/Toolbar";
 import ExercisesListFilters from "../ExercisesListFilters";
 import useExercisesSelect from "../../hooks/useExercisesSelect";
 import SelectableDataCardListSkeleton from "../../../../shared/components/dataCardList/skeleton/SelectableDataCardListSkeleton";
+import ListNoDataMessage from "../../../../shared/components/ListNoDataMessage";
 
 const exercisesColumns: DataCardListColumnProps[] = [
     { field: 'description', fullWidth: true },
@@ -41,6 +42,7 @@ export default function ExercisesSelectModal({ open, onClose, onSubmit }: Exerci
             onClose={() => onClose()} 
             width="50rem"
             height="100vh"
+            data-testid="exercises-select-modal"
         >
             <Modal.Header>Select exercises</Modal.Header>
             <Modal.Content>
@@ -65,13 +67,14 @@ export default function ExercisesSelectModal({ open, onClose, onSubmit }: Exerci
                         )}
                     </Toolbar>
                     <Box sx={{ display: 'flex', padding: 2, gap: 2, flexDirection: 'column' }}>
+                        {!isPending && rows?.length === 0 && <ListNoDataMessage message="No exercises in this train… yet." />}
                         {!isPending && rows && (
                             <SelectableDataCardList 
                                 selected={Object.keys(selected)}
                                 rows={rows} 
                                 columns={exercisesColumns} 
                                 onChange={handleCheck} 
-                                noDataMessage={"No items found."}
+                                data-testid="exercises-selectable-list"
                             />
                         )}
                         {(isPending || hasNextPage) && <SelectableDataCardListSkeleton ref={loadMoreRef} columns={{ min: 3, max: 6 }} rows={6} icon={true} menuItems={true} />}
@@ -89,7 +92,7 @@ export default function ExercisesSelectModal({ open, onClose, onSubmit }: Exerci
                 >
                     <Typography variant="body2" sx={{ flexGrow: 1 }}>{Object.values(selected).map(ex => ex.name).join(', ')}</Typography>
                     <Button sx={{ flexShrink: 0 }} variant="outlined" onClick={() => cleanSelected()}>Clean Selections</Button>
-                    <Button sx={{ flexShrink: 0 }} variant="contained" onClick={() => handleSubmit()}>Submit</Button>
+                    <Button type="submit" sx={{ flexShrink: 0 }} variant="contained" onClick={() => handleSubmit()}>Submit</Button>
                 </Box>
             </Modal.Footer>
         </Modal>
