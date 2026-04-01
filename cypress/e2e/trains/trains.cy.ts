@@ -60,9 +60,12 @@ describe('Trains', () => {
             cy.get('button[type="submit"]').click();
         });
 
-        cy.get('[data-testid="trains-list"] [data-testid="data-card"]').within(() => {
-            cy.get('[data-testid="data-card-actions-button"]').click();
-        });
+        cy.get('[data-testid="trains-list"] [data-testid="data-card"]')
+            .contains('Update test train')
+            .closest('[data-testid="data-card"]')
+            .within(() => {
+                cy.get('[data-testid="data-card-actions-button"]').click();
+            });
 
         cy.get('[data-testid="edit-train-button"]').click();
 
