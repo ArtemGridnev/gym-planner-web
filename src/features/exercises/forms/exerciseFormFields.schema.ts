@@ -31,7 +31,9 @@ export const getExerciseFormFields = (
             min: { value: 0, message: "Weight cannot be negative." },
             max: { value: 5000, message: "Weight cannot exceed 5000 kg." },
             validate: {
-                decimals: (value: number) => {
+                decimals: (value?: number) => {
+                    if (!value && value !== 0) return true; 
+
                     return Number.isInteger(value * 10000) || "Weight must have at most 4 decimal places.";
                 }
             }
