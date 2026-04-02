@@ -3,6 +3,10 @@
         {
             "source": "/(.*)",
             "destination": "/index.html"
+        },
+        {
+            "source": "/api/(.*)",
+            "destination": "https://gym-planner-api-production.up.railway.app/"
         }
     ]
 }
