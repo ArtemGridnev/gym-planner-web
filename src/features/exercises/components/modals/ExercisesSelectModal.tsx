@@ -41,7 +41,7 @@ export default function ExercisesSelectModal({ open, onClose, onSubmit }: Exerci
             open={open} 
             onClose={() => onClose()} 
             width="50rem"
-            height="100vh"
+            height="100dvh"
             data-testid="exercises-select-modal"
         >
             <Modal.Header>Select exercises</Modal.Header>
