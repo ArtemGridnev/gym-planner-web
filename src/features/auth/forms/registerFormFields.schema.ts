@@ -1,5 +1,5 @@
 import type { FormFieldSchema } from "../../../shared/types/form/formFieldSchema";
-import { minLength, validateEmail } from "../../../shared/utils/validation";
+import { validateEmail } from "../../../shared/utils/validation";
 
 const passwordValidators = [
     { fn: (p: string) => p.length >= 8, message: "Password must be at least 8 characters" },
@@ -15,58 +15,54 @@ export const registerFormFields: FormFieldSchema[] = [
         name: "firstName",
         type: "text",
         rules: {
-            required: { value: true, message: "This field is required." }
-        }
-        // validators: [
-        //     { fn: minLength(2), message: "First name should be at least two characters long." }
-        // ]
+            required: { value: true, message: "This field is required." },
+            minLength: { value: 2, message: "First name should be at least two characters long." },
+        },
     },
     {
         label: "Last name",
         name: "lastName",
         type: "text",
         rules: {
-            required: { value: true, message: "This field is required." }
-        }
-        // validators: [
-        //     { fn: minLength(2), message: "Last name should be at least two characters long." }
-        // ]
+            required: { value: true, message: "This field is required." },
+            minLength: { value: 2, message: "Last name should be at least two characters long." },
+        },
     },
     {
         label: "Email",
         name: "email",
         type: "email",
         rules: {
-            required: { value: true, message: "This field is required." }
-        }
-        // validators: [
-        //     { fn: validateEmail, message: "Not valid email." }
-        // ]
+            required: { value: true, message: "This field is required." },
+            validate: {
+                email: (value: string) => validateEmail(value) || "Not valid email.",
+            },
+        },
     },
     {
         label: "Password",
         name: "password",
         type: "password",
         rules: {
-            required: { value: true, message: "This field is required." }
-        }
-        // validators: [
-        //     ...passwordValidators
-        // ]
+            required: { value: true, message: "This field is required." },
+            validate: passwordValidators.reduce<Record<string, (value: string) => true | string>>(
+                (acc, { fn, message }, index) => {
+                    acc[`password_rule_${index}`] = (value: string) => fn(value) || message;
+                    return acc;
+                },
+                {}
+            ),
+        },
     },
     {
         label: "Validate Password",
         name: "validatePassword",
         type: "password",
         rules: {
-            required: { value: true, message: "This field is required." }
-        }
-        // validators: (formValues) => [
-        //     {
-        //         fn: (value: string) => value === formValues.password,
-        //         message: "Passwords do not match"
-        //     }
-        // ]
-    }
+            required: { value: true, message: "This field is required." },
+            validate: (value: string, formValues: any) => {
+                return value === formValues.password || "Passwords do not match";
+            },
+        },
+    },
 ];
-

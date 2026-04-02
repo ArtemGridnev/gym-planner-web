@@ -14,7 +14,7 @@ describe("DataCardList", () => {
             }
         ],
         noDataMessage: "No Data"
-    } as DataCardListProps;
+    } as Omit<DataCardListProps, "rows">;
 
     const rows = [
         {

@@ -1,8 +1,7 @@
-import { vi } from "vitest";
 import type { FormFieldSchema } from "../../types/form/formFieldSchema";
 import FormField from "./FormField";
 import { renderWithForm } from "../../utils/tests/renderWithForm";
-import { getByLabelText, screen } from "@testing-library/dom";
+import { screen } from "@testing-library/dom";
 
 describe('FormField', () => {
     const formFields: FormFieldSchema[] = [

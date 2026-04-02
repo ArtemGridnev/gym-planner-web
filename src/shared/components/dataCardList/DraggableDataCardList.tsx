@@ -2,7 +2,7 @@ import { SortableContext, arrayMove, verticalListSortingStrategy } from "@dnd-ki
 import { SortableItem } from "../dnd/SortableItem";
 import type { DataCardListProps, DataCardListRowProps } from "./DataCardList";
 import DataCardListItem from "./DataCardListItem";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import DndProvider from "../dnd/DndProvider";
 
 export type DraggableDataCardListRowProps = DataCardListRowProps & {
