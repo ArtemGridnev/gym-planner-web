@@ -27,7 +27,7 @@ export default function Layout({ children, sidebarNavItems, bottomNavigationItem
                 sx={{ 
                     display: 'flex', 
                     flexDirection: 'column', 
-                    height: '100vh', 
+                    height: '100dvh', 
                     background: "#f9fafd" 
                 }}
             >

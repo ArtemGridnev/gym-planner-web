@@ -17,7 +17,7 @@ export default function Login({ redirectPath = null } : LoginProps) {
                 maxWidth="sm"
                 sx={{ 
                     display: "flex",
-                    height: "100vh",
+                    height: "100dvh",
                     alignItems: "center",
                     justifyContent: "center" 
                 }}
