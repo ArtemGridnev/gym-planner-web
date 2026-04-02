@@ -1,4 +1,4 @@
-import { Box, type BoxProps } from "@mui/material";
+import { type BoxProps } from "@mui/material";
 import DataCardListItemSkeleton from "./DataCardListItemSkeleton";
 import DataCardListBase from "../DataCardListBase";
 

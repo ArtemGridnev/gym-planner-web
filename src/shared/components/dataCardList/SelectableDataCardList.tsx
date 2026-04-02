@@ -1,6 +1,6 @@
 import type { DataCardListProps, DataCardListRowProps } from "./DataCardList";
 import DataCardListItem from "./DataCardListItem";
-import { Box, Checkbox, Typography } from "@mui/material";
+import { Box, Checkbox } from "@mui/material";
 
 export type SelectableDataCardListRowProps = DataCardListRowProps & {
     id: string
@@ -12,7 +12,7 @@ export type SelectableDataCardListProps = Omit<DataCardListProps, 'rows' | 'onCh
     onChange: (id: string, checked: boolean) => void;
 };
 
-export default function SelectableDataCardList({ columns, rows, selected, onChange, noDataMessage = "No items here… yet.", ...props }: SelectableDataCardListProps) {
+export default function SelectableDataCardList({ columns, rows, selected, onChange, ...props }: SelectableDataCardListProps) {
     return (
         <Box
             sx={{
@@ -22,7 +22,6 @@ export default function SelectableDataCardList({ columns, rows, selected, onChan
             }}
             {...props}
         >
-            {rows.length === 0 && <Typography variant="h6" sx={{ textAlign: 'center'}}>{noDataMessage}</Typography>}
             {rows.map((row) => (
                 <Box 
                     sx={{

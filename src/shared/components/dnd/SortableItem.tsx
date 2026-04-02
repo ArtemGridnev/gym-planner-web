@@ -1,5 +1,4 @@
 import {useSortable} from '@dnd-kit/sortable';
-import {CSS} from '@dnd-kit/utilities';
 import { DragIndicatorOutlined } from '@mui/icons-material';
 import { Box } from '@mui/material';
 import type { ReactNode } from 'react';

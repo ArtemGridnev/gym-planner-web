@@ -5,12 +5,16 @@ export const loginFormFields: FormFieldSchema[] = [
         label: "Email",
         name: "email",
         type: "email",
-        required: true
+        rules: {
+            required: { value: true, message: "This field is required." }
+        }
     },
     {
         label: "Password",
         name: "password",
         type: "password",
-        required: true
+        rules: {
+            required: { value: true, message: "This field is required." }
+        }
     }
 ];

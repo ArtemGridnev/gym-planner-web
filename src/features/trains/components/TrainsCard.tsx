@@ -27,7 +27,7 @@ const columns: DataCardListColumnProps[] = [
     { field: 'weekDays', name: 'Recurrence Days', fullWidth: true }
 ];
 
-export default function TrainsCard({ trains, isLoading, error, onAdd, onEdit, onDelete, onFiltersChange }: TrainsCardProps) {
+export default function TrainsCard({ trains, isLoading, error, onAdd, onEdit, onDelete }: TrainsCardProps) {
     const navigate = useNavigate();
     const [rows, setRows] = useState<DataCardListRowProps[]>([]);
 

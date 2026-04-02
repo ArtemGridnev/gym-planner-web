@@ -78,7 +78,7 @@ export default function Trains() {
                 onAdd={onAdd}
                 onEdit={onEdit}
                 onDelete={deleteMutation.mutate}
-                onFiltersChange={(filters: Record<string, string>) => {
+                onFiltersChange={(_filters: Record<string, string>) => {
                     // Handle filter changes if necessary
                 }}
             />

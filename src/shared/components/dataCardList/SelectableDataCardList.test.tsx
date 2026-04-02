@@ -48,14 +48,6 @@ describe("SelectableDataCardList", () => {
         }
     ] as SelectableDataCardListProps["rows"];
 
-    it("renders placeholder when no data cards are provided", () => {
-        render(
-            <SelectableDataCardList {...baseProps} noDataMessage="No Data" />
-        );
-
-        expect(screen.getByText("No Data")).toBeInTheDocument();
-    });
-
     it("renders cards by the number of data rows provided", () => {
         render(
             <SelectableDataCardList {...baseProps} rows={rows} />

@@ -9,7 +9,7 @@ export default function TrainSessions() {
                 title="Train Sessions"
             />
             <CardContent>
-
+                
             </CardContent>
         </Card>
     );
