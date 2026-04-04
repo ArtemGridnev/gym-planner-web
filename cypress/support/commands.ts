@@ -32,7 +32,7 @@ Cypress.Commands.add('addExercise', (exerciseData) => {
         
         cy.request({
             method: 'POST',
-            url: `${apiUrl}/exercises`,
+            url: `/api/exercises`,
             body: exerciseData,
             failOnStatusCode: false
         }).then((response) => {
@@ -48,7 +48,7 @@ Cypress.Commands.add('addTrain', (trainData) => {
         
         cy.request({
             method: 'POST',
-            url: `${apiUrl}/trains`,
+            url: `/api/trains`,
             body: trainData,
             failOnStatusCode: false
         }).then((response) => {
