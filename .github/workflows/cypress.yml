@@ -32,10 +32,18 @@ jobs:
 
       - uses: cypress-io/github-action@v6
         with:
-          start: npm run dev
-          wait-on: 'http://localhost:5173'
-          wait-on-timeout: 120
+          start: npm run dev -- --host 127.0.0.1 --port 5173
+          wait-on: 'http://127.0.0.1:5173'
+          wait-on-timeout: 180
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
           CYPRESS_BASE_URL: ${{ secrets.CYPRESS_BASE_URL }}
           CYPRESS_API_URL: ${{ secrets.CYPRESS_API_URL }}
+
+      - name: Verify app HTML is served (not just port open)
+        run: |
+          set -e
+          echo "Fetching HTML..."
+          curl -fsSL http://127.0.0.1:5173/ | head -n 40
+          echo "Checking root element exists..."
+          curl -fsSL http://127.0.0.1:5173/ | grep -E "<div id=\"root\"|id=\"root\""
