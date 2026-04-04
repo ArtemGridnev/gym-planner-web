@@ -1,12 +1,12 @@
 {
     "rewrites": [
         {
-            "source": "/(.*)",
-            "destination": "/index.html"
+            "source": "/api/(.*)",
+            "destination": "https://gym-planner-api-production.up.railway.app/$1"
         },
         {
-            "source": "/api/(.*)",
-            "destination": "https://gym-planner-api-production.up.railway.app/"
+            "source": "/(.*)",
+            "destination": "/index.html"
         }
     ]
 }
