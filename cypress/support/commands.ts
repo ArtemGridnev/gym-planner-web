@@ -1,7 +1,5 @@
 /// <reference types="cypress" />
 
-
-
 Cypress.Commands.add('login', (email: string, password: string = "Password123@") => {
     cy.visit('/login');
     cy.get('input[name="email"]').type(email);
@@ -27,34 +25,26 @@ Cypress.Commands.add('logout', () => {
 });
 
 Cypress.Commands.add('addExercise', (exerciseData) => {
-    cy.env(['CYPRESS_API_URL']).then((envVars) => {
-        const apiUrl = envVars.CYPRESS_API_URL;
-        
-        cy.request({
-            method: 'POST',
-            url: `/api/exercises`,
-            body: exerciseData,
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(201);
-            return response.body;
-        });
+    cy.request({
+        method: 'POST',
+        url: `/api/exercises`,
+        body: exerciseData,
+        failOnStatusCode: false
+    }).then((response) => {
+        expect(response.status).to.eq(201);
+        return response.body;
     });
 });
 
 Cypress.Commands.add('addTrain', (trainData) => {
-    cy.env(['CYPRESS_API_URL']).then((envVars) => {
-        const apiUrl = envVars.CYPRESS_API_URL;
-        
-        cy.request({
-            method: 'POST',
-            url: `/api/trains`,
-            body: trainData,
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(201);
-            return response.body;
-        });
+    cy.request({
+        method: 'POST',
+        url: `/api/trains`,
+        body: trainData,
+        failOnStatusCode: false
+    }).then((response) => {
+        expect(response.status).to.eq(201);
+        return response.body;
     });
 });
 
