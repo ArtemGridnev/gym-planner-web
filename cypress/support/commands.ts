@@ -58,37 +58,39 @@ Cypress.Commands.add('verifyInfiniteScrollAddsItems', (selector, scrollContainer
     });
 });
 
-Cypress.Commands.add('dragBySelector', (sourceSelector, targetSelector) => {
-  cy.get(sourceSelector).trigger('pointerdown', {
-    force: true,
-    isPrimary: true,
-    button: 0,
-  });
-
-  cy.get(targetSelector).then($target => {
-    const targetRect = $target[0].getBoundingClientRect();
-    const x = targetRect.x + targetRect.width / 2;
-    const y = targetRect.y + targetRect.height / 2;
-
-    cy.get(sourceSelector)
-      .trigger('pointermove', {
-        clientX: x,
-        clientY: y,
+Cypress.Commands.add('drag', { prevSubject: 'element' }, (sourceEl, targetSelector) => {
+    cy.wrap(sourceEl).trigger('pointerdown', {
         force: true,
         isPrimary: true,
         button: 0,
-      });
+    });
 
-    cy.get(targetSelector)
-      .trigger('pointerup', {
-        force: true,
-        isPrimary: true,
-        button: 0,
-      });
-  });
+    cy.wait(100);
+
+    cy.get(targetSelector).then($target => {
+        const targetRect = $target[0].getBoundingClientRect();
+        const x = targetRect.x + targetRect.width / 2;
+        const y = targetRect.y + targetRect.height / 2;
+
+        cy.wrap(sourceEl)
+            .trigger('pointermove', {
+                clientX: x,
+                clientY: y,
+                force: true,
+                isPrimary: true,
+                button: 0,
+            });
+
+        cy.wait(100);
+
+        cy.get(targetSelector)
+            .trigger('pointerup', {
+                force: true,
+                isPrimary: true,
+                button: 0,
+            });
+    });
 });
-
-  
 
 declare global {
     namespace Cypress {
@@ -124,10 +126,10 @@ declare global {
             */
             verifyInfiniteScrollAddsItems(selector: string, scrollContainerSelector: string, minAdded?: number): Chainable<void>;
             /**
-             * Custom command to perform drag-and-drop by selectors
-             * @example cy.dragBySelector('.exercise-item', '.train-drop-area')
+             * Custom command to drag an element to a target
+             * @example cy.get('.draggable').drag('.drop-target')
              */
-            dragBySelector(sourceSelector: string, targetSelector: string): Chainable<void>;
+            drag(targetSelector: string): Chainable<void>;
         }
     }
 }
