@@ -159,7 +159,7 @@ describe('Train Exercises', () => {
                 button: 0,
             });
 
-        cy.get('[data-testid="sortable-item-drag-handle"]').first().drag('[data-testid="train-exercises-list"] [data-testid="data-card"]:last');
+        cy.dragBySelector('[data-testid="sortable-item-drag-handle"]:first', '[data-testid="train-exercises-list"] [data-testid="data-card"]:last');
 
         // Verify new order (Exercise 2, 3, 1)
         cy.get('@initialOrder').then(initialOrder => {
