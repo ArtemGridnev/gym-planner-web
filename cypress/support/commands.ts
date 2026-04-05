@@ -67,7 +67,7 @@ Cypress.Commands.add('drag', { prevSubject: 'element' }, (sourceEl, targetSelect
         button: 0,
     });
 
-    cy.wait(100);
+    cy.wait(1_000);
 
     cy.get(targetSelector).then($target => {
         const targetRect = $target[0].getBoundingClientRect();
@@ -83,7 +83,7 @@ Cypress.Commands.add('drag', { prevSubject: 'element' }, (sourceEl, targetSelect
                 button: 0,
             });
 
-        cy.wait(100);
+        cy.wait(1000);
 
         cy.get(targetSelector)
             .trigger('pointerup', {
