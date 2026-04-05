@@ -59,21 +59,32 @@ Cypress.Commands.add('verifyInfiniteScrollAddsItems', (selector, scrollContainer
 });
 
 Cypress.Commands.add('drag', { prevSubject: 'element' }, (sourceEl, targetSelector) => {
-    cy.wrap(sourceEl)
-        .trigger('pointerdown', { force: true, isPrimary: true, button: 0 });
+    cy.wrap(sourceEl).trigger('pointerdown', {
+        force: true,
+        isPrimary: true,
+        button: 0,
+    });
 
     cy.get(targetSelector).then($target => {
         const targetRect = $target[0].getBoundingClientRect();
+        const x = targetRect.x + targetRect.width / 2;
+        const y = targetRect.y + targetRect.height / 2;
 
         cy.wrap(sourceEl)
             .trigger('pointermove', {
-                clientX: targetRect.x + targetRect.width / 2,
-                clientY: targetRect.y + targetRect.height / 2,
+                clientX: x,
+                clientY: y,
                 force: true,
                 isPrimary: true,
                 button: 0,
-            })
-            .trigger('pointerup', { force: true, isPrimary: true, button: 0 });
+            });
+
+        cy.get(targetSelector)
+            .trigger('pointerup', {
+                force: true,
+                isPrimary: true,
+                button: 0,
+            });
     });
 });
 
