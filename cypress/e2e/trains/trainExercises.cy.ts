@@ -138,12 +138,15 @@ describe('Train Exercises', () => {
             .as('initialOrder');
 
         // Drag first item to bottom
-        cy.get('[data-testid="sortable-item-drag-handle"]').first().as('firstCardDragHandle');
+        cy.get(`[data-testid*="draggable-data-card-list-item-"]`).first().invoke('attr', 'data-testid').as('firstCardDataTestId');
         
-        cy.get('@firstCardDragHandle').should('exist').focus().should('have.focus').type('{enter}').wait(500);
-        cy.get('@firstCardDragHandle').should('exist').focus().should('have.focus').type('{downarrow}').wait(500);
-        cy.get('@firstCardDragHandle').should('exist').focus().should('have.focus').type('{downarrow}').wait(500);
-        cy.get('@firstCardDragHandle').should('exist').focus().should('have.focus').type('{enter}').wait(500);
+        cy.get('@firstCardDataTestId').then(firstCardDataTestId => {
+            cy.get(`[data-testid="${firstCardDataTestId}"] [data-testid="sortable-item-drag-handle"]`).should('exist').focus().should('have.focus').type('{enter}').wait(500);
+            cy.get(`[data-testid="${firstCardDataTestId}"] [data-testid="sortable-item-drag-handle"]`).should('exist').focus().should('have.focus').type('{downarrow}').wait(500);
+            cy.get(`[data-testid="${firstCardDataTestId}"] [data-testid="sortable-item-drag-handle"]`).should('exist').focus().should('have.focus').type('{downarrow}').wait(500);
+            cy.get(`[data-testid="${firstCardDataTestId}"] [data-testid="sortable-item-drag-handle"]`).should('exist').focus().should('have.focus').type('{enter}').wait(500);
+        });
+        
 
         // Verify new order (Exercise 2, 3, 1)
         cy.get('@initialOrder').then(initialOrder => {

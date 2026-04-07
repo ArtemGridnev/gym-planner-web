@@ -43,7 +43,7 @@ export default function DraggableDataCardList({ columns, rows, onChange, ...prop
                     {...props}
                 >
                     {rows.map((row) => (
-                        <SortableItem key={row.id} id={row.id}>
+                        <SortableItem key={row.id} id={row.id} data-testid={`draggable-data-card-list-item-${row.id}`}>
                             {<DataCardListItem columns={columns} row={row} />}
                         </SortableItem>
                     ))}

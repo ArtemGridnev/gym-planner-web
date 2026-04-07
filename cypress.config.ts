@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export default defineConfig({
+  video: true,
+  screenshotOnRunFailure: true,
   allowCypressEnv: false,
   env: {
     CYPRESS_API_URL: process.env.CYPRESS_API_URL,
