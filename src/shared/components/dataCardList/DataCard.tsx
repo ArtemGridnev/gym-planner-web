@@ -9,16 +9,18 @@ export type DataCardProps = Omit<BoxProps, 'onClick'> & {
     icon?: ElementType;
     title: string;
     menuItems?: MenuItemProps[];
+    testid?: string;
     onClick?: () => void;
 };
 
-export default function DataCard({ icon: Icon, title, children, menuItems, onClick }: DataCardProps) {
+export default function DataCard({ icon: Icon, title, children, menuItems, testid, onClick }: DataCardProps) {
     return (
         <DataCardBase 
             sx={{
-                ...(onClick && { cursor: 'pointer' })
+                ...(onClick && { cursor: 'pointer' })        
             }}
             {...(onClick && { onClick })}
+            data-testid={testid ?? "data-card"}
         >
             {Icon && (
                 <Icon 

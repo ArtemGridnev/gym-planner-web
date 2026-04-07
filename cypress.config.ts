@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export default defineConfig({
+  screenshotOnRunFailure: true,
   allowCypressEnv: false,
   env: {
     CYPRESS_API_URL: process.env.CYPRESS_API_URL,

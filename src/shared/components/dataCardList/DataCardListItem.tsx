@@ -14,6 +14,7 @@ export default function DataCardListItem({ columns, row }: DataCardListItemProps
             icon={row.icon}
             menuItems={row.menuItems}
             {...(row?.onClick && {onClick: () => row.onClick?.()})}
+            testid={row.testid}
         >
             <Box sx={{ 
                 containerName: 'DataCardContainer',

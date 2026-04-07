@@ -1,14 +1,12 @@
 import {useSortable} from '@dnd-kit/sortable';
 import { DragIndicatorOutlined } from '@mui/icons-material';
-import { Box } from '@mui/material';
-import type { ReactNode } from 'react';
+import { Box, type BoxProps } from '@mui/material';
 
-type SortableItemProps = {
+type SortableItemProps = Omit<BoxProps, 'id'> &{
     id: string,
-    children: ReactNode
 };
 
-export function SortableItem({ id, children }: SortableItemProps) {
+export function SortableItem({ id, children, ...props }: SortableItemProps) {
   const {
     attributes,
     listeners,
@@ -35,7 +33,7 @@ export function SortableItem({ id, children }: SortableItemProps) {
             zIndex: isDragging ? 10 : 1,
         }} 
         ref={setNodeRef}
-        
+        {...props}
     >
         <Box
             sx={{ 
@@ -45,6 +43,7 @@ export function SortableItem({ id, children }: SortableItemProps) {
             ref={setActivatorNodeRef}
             {...attributes} 
             {...listeners}
+            tabIndex={0}
             data-testid="sortable-item-drag-handle"
         >
             <DragIndicatorOutlined />

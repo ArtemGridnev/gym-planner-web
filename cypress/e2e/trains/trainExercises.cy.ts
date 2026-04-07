@@ -70,11 +70,11 @@ describe('Train Exercises', () => {
             cy.get('button[type="submit"]').click();
         });
 
-        cy.get('[data-testid="train-exercises-list"] [data-testid="data-card"]').should('exist');
+        cy.get('[data-testid="train-exercise-card"]').should('exist');
 
         cy.reload();
 
-        cy.get('[data-testid="train-exercises-list"] [data-testid="data-card"]').should('exist');
+        cy.get('[data-testid="train-exercise-card"]').should('exist');
     });
 
     it('Remove exercise: User can remove an exercise from the training.', () => {
@@ -97,19 +97,18 @@ describe('Train Exercises', () => {
             cy.get('button[type="submit"]').click();
         });
 
-        cy.get('[data-testid="train-exercises-list"] [data-testid="data-card"]')
-            .closest('[data-testid="data-card"]')
+        cy.get('[data-testid="train-exercise-card"]')
             .within(() => {
                 cy.get('[data-testid="data-card-actions-button"]').click();
             });
 
         cy.get('[data-testid="remove-exercise-button"]').click();
 
-        cy.get('[data-testid="train-exercises-list"] [data-testid="data-card"]').should('not.exist');
+        cy.get('[data-testid="train-exercise-card"]').should('not.exist');
 
         cy.reload();
 
-        cy.get('[data-testid="train-exercises-list"] [data-testid="data-card"]').should('not.exist');
+        cy.get('[data-testid="train-exercise-card"]').should('not.exist');
     });
 
     it('Reorder exercises: User can change the exercise order, and the new order is saved.', () => {
@@ -137,37 +136,23 @@ describe('Train Exercises', () => {
             .then($els => [...$els].map(el => el.innerText.trim()))
             .as('initialOrder');
 
+
+        // Wait for saving to complete before dragging
+        cy.get('[data-testid="train-exercise-card-unsaved"]').should('not.exist');
+
         // Drag first item to bottom
         cy.get('[data-testid="sortable-item-drag-handle"]').first()
-            .trigger('pointerdown', {
-                force: true,
-                isPrimary: true,
-                button: 0,
-            })
-            .wait(100)
-            .trigger('pointermove', {
-                clientX: 0,
-                clientY: 300,
-                force: true,
-                isPrimary: true,
-                button: 0,
-            })
-            .wait(100)
-            .trigger('pointerup', {
-                force: true,
-                isPrimary: true,
-                button: 0,
-            });
-
-        cy.get('[data-testid="sortable-item-drag-handle"]').first().drag('[data-testid="train-exercises-list"] [data-testid="data-card"]:last');
+            .focus()
+            .should('have.focus')
+            .type('{enter}{downarrow}{downarrow}{enter}');
 
         // Verify new order (Exercise 2, 3, 1)
         cy.get('@initialOrder').then(initialOrder => {
-            cy.get('[data-testid="train-exercises-list"] [data-testid="data-card"]').first().within(() => {
+            cy.get('[data-testid="train-exercise-card"]').first().within(() => {
                 cy.get('[data-testid="data-card-title"]').should('not.contain', initialOrder[0]);
             });
 
-            cy.get('[data-testid="train-exercises-list"] [data-testid="data-card"]').last().within(() => {
+            cy.get('[data-testid="train-exercise-card"]').last().within(() => {
                 cy.get('[data-testid="data-card-title"]').should('contain', initialOrder[0]);
             });
         });
@@ -176,7 +161,7 @@ describe('Train Exercises', () => {
         cy.reload();
 
         cy.get('@initialOrder').then(initialOrder => {
-            cy.get('[data-testid="train-exercises-list"] [data-testid="data-card"]').last().within(() => {
+            cy.get('[data-testid="train-exercise-card"]').last().within(() => {
                 cy.get('[data-testid="data-card-title"]').should('contain', initialOrder[0]);
             });
         });

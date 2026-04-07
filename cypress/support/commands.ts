@@ -58,25 +58,6 @@ Cypress.Commands.add('verifyInfiniteScrollAddsItems', (selector, scrollContainer
     });
 });
 
-Cypress.Commands.add('drag', { prevSubject: 'element' }, (sourceEl, targetSelector) => {
-    cy.wrap(sourceEl)
-        .trigger('pointerdown', { force: true, isPrimary: true, button: 0 });
-
-    cy.get(targetSelector).then($target => {
-        const targetRect = $target[0].getBoundingClientRect();
-
-        cy.wrap(sourceEl)
-            .trigger('pointermove', {
-                clientX: targetRect.x + targetRect.width / 2,
-                clientY: targetRect.y + targetRect.height / 2,
-                force: true,
-                isPrimary: true,
-                button: 0,
-            })
-            .trigger('pointerup', { force: true, isPrimary: true, button: 0 });
-    });
-});
-
 declare global {
     namespace Cypress {
         interface Chainable {
@@ -110,11 +91,6 @@ declare global {
             * @example cy.verifyInfiniteScrollAddsItems('.exercise-item', '.exercise-list-container')
             */
             verifyInfiniteScrollAddsItems(selector: string, scrollContainerSelector: string, minAdded?: number): Chainable<void>;
-            /**
-             * Custom command to drag an element to a target
-             * @example cy.get('.draggable').drag('.drop-target')
-             */
-            drag(targetSelector: string): Chainable<void>;
         }
     }
 }

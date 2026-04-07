@@ -54,6 +54,7 @@ export default function Train() {
                     id: trainExercise.id.toString(),
                     icon: FitnessCenterOutlined,
                     title: `${exercise.name} - ${exercise.category?.name}`,
+                    testid: trainExercise.id > 0 ? 'train-exercise-card' : 'train-exercise-card-unsaved',
                     data: {
                         id: exercise.id,
                         description: exercise.description,
