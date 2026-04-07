@@ -29,88 +29,88 @@ describe('Train Exercises', () => {
         cy.wait('@login');
     });
 
-    // it('Handle missing traininging: Display an appropriate message if the traininging is not found.', () => {
-    //     cy.visit('/managment/trains/9999');
+    it('Handle missing traininging: Display an appropriate message if the traininging is not found.', () => {
+        cy.visit('/managment/trains/9999');
 
-    //     cy.get('[data-testid="train-not-found"]').should('exist');
-    // });
+        cy.get('[data-testid="train-not-found"]').should('exist');
+    });
 
-    // it('Empty state: Show “No exercises yet” when there are no exercises in the training.', () => {
-    //     cy.addTrain({
-    //         name: 'No data message test training',
-    //         recurrenceCron: "0 0 * * 1,3",
-    //     });
+    it('Empty state: Show “No exercises yet” when there are no exercises in the training.', () => {
+        cy.addTrain({
+            name: 'No data message test training',
+            recurrenceCron: "0 0 * * 1,3",
+        });
 
-    //     cy.get('[data-testid="trains-nav-item"]').click();
+        cy.get('[data-testid="trains-nav-item"]').click();
 
-    //     cy.get('[data-testid="trains-list"] [data-testid="data-card"]').contains('No data message test training').click();
+        cy.get('[data-testid="trains-list"] [data-testid="data-card"]').contains('No data message test training').click();
 
-    //     cy.get('[data-testid="train-page"]').within(() => {
-    //         cy.get('[data-testid="list-no-data-message"]').should('exist');
-    //     });
-    // });
+        cy.get('[data-testid="train-page"]').within(() => {
+            cy.get('[data-testid="list-no-data-message"]').should('exist');
+        });
+    });
 
-    // it('Add exercise: User can add a new exercise to the training.', () => {
-    //     cy.addTrain({
-    //         name: 'Add test training',
-    //         recurrenceCron: "0 0 * * 1,3",
-    //     });
+    it('Add exercise: User can add a new exercise to the training.', () => {
+        cy.addTrain({
+            name: 'Add test training',
+            recurrenceCron: "0 0 * * 1,3",
+        });
 
-    //     cy.get('[data-testid="trains-nav-item"]').click();
+        cy.get('[data-testid="trains-nav-item"]').click();
 
-    //     cy.get('[data-testid="trains-list"] [data-testid="data-card"]').contains('Add test training').click();
+        cy.get('[data-testid="trains-list"] [data-testid="data-card"]').contains('Add test training').click();
 
-    //     cy.get('[data-testid="add-exercises-button"]').click();
+        cy.get('[data-testid="add-exercises-button"]').click();
 
-    //     cy.get('[data-testid="exercises-select-modal"]').within(() => {
-    //         cy.get('[data-testid="exercises-selectable-list"]').within(() => {
-    //             cy.get('input[type="checkbox"]').first().check();
-    //         });
+        cy.get('[data-testid="exercises-select-modal"]').within(() => {
+            cy.get('[data-testid="exercises-selectable-list"]').within(() => {
+                cy.get('input[type="checkbox"]').first().check();
+            });
 
-    //         cy.get('button[type="submit"]').click();
-    //     });
+            cy.get('button[type="submit"]').click();
+        });
 
-    //     cy.get('[data-testid="train-exercises-list"] [data-testid="data-card"]').should('exist');
+        cy.get('[data-testid="train-exercises-list"] [data-testid="data-card"]').should('exist');
 
-    //     cy.reload();
+        cy.reload();
 
-    //     cy.get('[data-testid="train-exercises-list"] [data-testid="data-card"]').should('exist');
-    // });
+        cy.get('[data-testid="train-exercises-list"] [data-testid="data-card"]').should('exist');
+    });
 
-    // it('Remove exercise: User can remove an exercise from the training.', () => {
-    //     cy.addTrain({
-    //         name: 'Remove test training',
-    //         recurrenceCron: "0 0 * * 1,3",
-    //     });
+    it('Remove exercise: User can remove an exercise from the training.', () => {
+        cy.addTrain({
+            name: 'Remove test training',
+            recurrenceCron: "0 0 * * 1,3",
+        });
 
-    //     cy.get('[data-testid="trains-nav-item"]').click();
+        cy.get('[data-testid="trains-nav-item"]').click();
 
-    //     cy.get('[data-testid="trains-list"] [data-testid="data-card"]').contains('Remove test training').click();
+        cy.get('[data-testid="trains-list"] [data-testid="data-card"]').contains('Remove test training').click();
 
-    //     cy.get('[data-testid="add-exercises-button"]').click();
+        cy.get('[data-testid="add-exercises-button"]').click();
 
-    //     cy.get('[data-testid="exercises-select-modal"]').within(() => {
-    //         cy.get('[data-testid="exercises-selectable-list"]').within(() => {
-    //             cy.get('input[type="checkbox"]').first().check();
-    //         });
+        cy.get('[data-testid="exercises-select-modal"]').within(() => {
+            cy.get('[data-testid="exercises-selectable-list"]').within(() => {
+                cy.get('input[type="checkbox"]').first().check();
+            });
 
-    //         cy.get('button[type="submit"]').click();
-    //     });
+            cy.get('button[type="submit"]').click();
+        });
 
-    //     cy.get('[data-testid="train-exercises-list"] [data-testid="data-card"]')
-    //         .closest('[data-testid="data-card"]')
-    //         .within(() => {
-    //             cy.get('[data-testid="data-card-actions-button"]').click();
-    //         });
+        cy.get('[data-testid="train-exercises-list"] [data-testid="data-card"]')
+            .closest('[data-testid="data-card"]')
+            .within(() => {
+                cy.get('[data-testid="data-card-actions-button"]').click();
+            });
 
-    //     cy.get('[data-testid="remove-exercise-button"]').click();
+        cy.get('[data-testid="remove-exercise-button"]').click();
 
-    //     cy.get('[data-testid="train-exercises-list"] [data-testid="data-card"]').should('not.exist');
+        cy.get('[data-testid="train-exercises-list"] [data-testid="data-card"]').should('not.exist');
 
-    //     cy.reload();
+        cy.reload();
 
-    //     cy.get('[data-testid="train-exercises-list"] [data-testid="data-card"]').should('not.exist');
-    // });
+        cy.get('[data-testid="train-exercises-list"] [data-testid="data-card"]').should('not.exist');
+    });
 
     it('Reorder exercises: User can change the exercise order, and the new order is saved.', () => {
         cy.addTrain({
@@ -140,10 +140,10 @@ describe('Train Exercises', () => {
         // Drag first item to bottom
         cy.get('[data-testid="sortable-item-drag-handle"]').first().as('firstCardDragHandle');
         
-        cy.get('@firstCardDragHandle').focus().should('have.focus').type('{enter}').wait(500);
-        cy.get('@firstCardDragHandle').focus().should('have.focus').type('{downarrow}').wait(500);
-        cy.get('@firstCardDragHandle').focus().should('have.focus').type('{downarrow}').wait(500);
-        cy.get('@firstCardDragHandle').focus().should('have.focus').type('{enter}').wait(500);
+        cy.get('@firstCardDragHandle').should('exist').focus().should('have.focus').type('{enter}').wait(500);
+        cy.get('@firstCardDragHandle').should('exist').focus().should('have.focus').type('{downarrow}').wait(500);
+        cy.get('@firstCardDragHandle').should('exist').focus().should('have.focus').type('{downarrow}').wait(500);
+        cy.get('@firstCardDragHandle').should('exist').focus().should('have.focus').type('{enter}').wait(500);
 
         // Verify new order (Exercise 2, 3, 1)
         cy.get('@initialOrder').then(initialOrder => {
