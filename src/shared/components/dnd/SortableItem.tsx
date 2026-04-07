@@ -45,6 +45,7 @@ export function SortableItem({ id, children }: SortableItemProps) {
             ref={setActivatorNodeRef}
             {...attributes} 
             {...listeners}
+            tabIndex={0}
             data-testid="sortable-item-drag-handle"
         >
             <DragIndicatorOutlined />

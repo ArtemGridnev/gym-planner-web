@@ -138,7 +138,9 @@ describe('Train Exercises', () => {
             .as('initialOrder');
 
         // Drag first item to bottom
-        cy.get('[data-testid="sortable-item-drag-handle"]').first().drag('[data-testid="train-exercises-list"] [data-testid="data-card"]:last');
+        cy.get('[data-testid="sortable-item-drag-handle"]').first().focus()
+            .type('{enter}{downarrow}{downarrow}{enter}');
+
 
         // Verify new order (Exercise 2, 3, 1)
         cy.get('@initialOrder').then(initialOrder => {
