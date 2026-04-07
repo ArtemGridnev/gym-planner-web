@@ -137,6 +137,8 @@ describe('Train Exercises', () => {
             .then($els => [...$els].map(el => el.innerText.trim()))
             .as('initialOrder');
 
+        cy.wait(2000);
+
         // Drag first item to bottom
         cy.get(`[data-testid*="draggable-data-card-list-item-"]`).first().invoke('attr', 'data-testid').as('firstCardDataTestId');
         
