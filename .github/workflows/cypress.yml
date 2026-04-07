@@ -32,8 +32,6 @@ jobs:
 
       - uses: cypress-io/github-action@v6
         with:
-          headed: true
-          browser: chrome
           start: npm run dev -- --host 127.0.0.1 --port 5173
           wait-on: 'http://127.0.0.1:5173'
           wait-on-timeout: 180
