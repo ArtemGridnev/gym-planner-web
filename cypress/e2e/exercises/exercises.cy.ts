@@ -142,7 +142,9 @@ describe('Exercises', () => {
             .contains('Delete test exercise')
             .closest('[data-testid="data-card"]')
             .within(() => {
-                cy.get('[data-testid="data-card-actions-button"]').click();
+                cy.get('[data-testid="data-card-actions-button"]')
+                    .scrollIntoView()
+                    .click();
             });
 
         cy.get('[data-testid="delete-exercise-button"]').click();
