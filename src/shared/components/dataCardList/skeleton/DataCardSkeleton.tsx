@@ -11,7 +11,7 @@ export type DataCardProps = {
 
 export default function DataCardSkeleton({ icon, children, menuItems }: DataCardProps) {
     return (
-        <DataCardBase>
+        <DataCardBase data-testid="card-data-skeleton">
             {icon && (
                 <Skeleton 
                     variant="circular"  

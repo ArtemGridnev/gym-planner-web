@@ -16,7 +16,6 @@ export default function DataCardBase({
                 borderRadius: 2,
                 ...sx,
             }}
-            data-testid="data-card"
             {...pops}
         >
             {children}
