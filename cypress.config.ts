@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export default defineConfig({
-  video: true,
   screenshotOnRunFailure: true,
   allowCypressEnv: false,
   env: {
