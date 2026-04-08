@@ -39,6 +39,11 @@ export function SortableItem({ id, children, ...props }: SortableItemProps) {
             sx={{ 
                 color: 'text.secondary',
                 cursor: isDragging ? "grabbing" : "grab",
+                touchAction: 'none',
+                userSelect: 'none',
+                WebkitUserSelect: 'none',
+                WebkitTouchCallout: 'none',
+                flexShrink: 0,
             }} 
             ref={setActivatorNodeRef}
             {...attributes} 
@@ -46,7 +51,12 @@ export function SortableItem({ id, children, ...props }: SortableItemProps) {
             tabIndex={0}
             data-testid="sortable-item-drag-handle"
         >
-            <DragIndicatorOutlined />
+            <DragIndicatorOutlined 
+                sx={{ 
+                    width: { xs: 32, sm: 24 }, 
+                    height: { xs: 32, sm: 24 }
+                }} 
+            />
         </Box>
         <Box sx={{ flexGrow: 1 }}>
             {children}

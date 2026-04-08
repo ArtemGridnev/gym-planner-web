@@ -42,7 +42,7 @@ export default function Train() {
 
     const [rows, setRows] = useState<DraggableDataCardListRowProps[]>([]);
     const [formOpen, setFormOpen] = useState(false);
-    
+
     useEffect(() => {
         if (train?.exercises) {
             const trainExercises = train.exercises;
@@ -64,9 +64,9 @@ export default function Train() {
                         weight: exercise.weight && `${exercise.weight} kg`
                     },
                     menuItems: trainExercise.id > 0 ? [
-                        { 
-                            icon: DeleteOutline, 
-                            text: 'remove', 
+                        {
+                            icon: DeleteOutline,
+                            text: 'remove',
                             onClick: () => removeTrainExercise(trainExercise.id),
                             testid: 'remove-exercise-button',
                         },
@@ -81,7 +81,7 @@ export default function Train() {
     return (
         <>
             {formOpen && (
-                <ExercisesSelectModal 
+                <ExercisesSelectModal
                     open={true}
                     onClose={() => setFormOpen(false)}
                     onSubmit={(exercises) => {
@@ -92,7 +92,7 @@ export default function Train() {
             )}
 
             <Card data-testid="train-page">
-                <CardHeader 
+                <CardHeader
                     onBack={() => navigate('/managment/trains')}
                     title={`Training${train ? ` - ${train.name}` : ''}`}
                     actions={[
@@ -107,43 +107,45 @@ export default function Train() {
                     ]}
                 />
                 <CardContent>
-                    <Box 
-                        sx={{ 
+                    <Box
+                        sx={{
                             height: '100%',
                             padding: 2,
                             overflowY: isPending ? 'hidden' : 'auto'
                         }}
                     >
-                        <Box
-                            sx={{
-                                maxWidth: '40rem',
-                                margin: 'auto',
-                            }}
-                        >
-                            {!train && !isPending && <CardError message="Train not found." data-testid="train-not-found" />}
+                        <Box sx={{ overflow: 'hidden' }}>
+                            <Box
+                                sx={{
+                                    maxWidth: '40rem',
+                                    margin: 'auto',
+                                }}
+                            >
+                                {!train && !isPending && <CardError message="Train not found." data-testid="train-not-found" />}
 
-                            {train && (error || exercisesError) && (
-                                <AlertsStack 
-                                    alerts={[
-                                        ...(error?.message ? [{ message: error.message, severity: 'error' as const }] : []),
-                                        ...(exercisesError?.message ? [{ message: exercisesError.message, severity: 'error' as const }] : []),
-                                    ]} 
-                                />
-                            )}
+                                {train && (error || exercisesError) && (
+                                    <AlertsStack
+                                        alerts={[
+                                            ...(error?.message ? [{ message: error.message, severity: 'error' as const }] : []),
+                                            ...(exercisesError?.message ? [{ message: exercisesError.message, severity: 'error' as const }] : []),
+                                        ]}
+                                    />
+                                )}
 
-                            {isPending && <DraggableDataCardListSkeleton columns={{ min: 3, max: 6 }} rows={8} icon={true} menuItems={true} />}
-                            {!isPending && train && rows.length === 0 && <ListNoDataMessage message="No items here… yet." />}
-                            {train?.exercises && !isPending && (
-                                <DraggableDataCardList 
-                                    columns={columns} 
-                                    rows={rows}
-                                    onChange={(orderedRows) => {
-                                        setRows(orderedRows);
-                                        updateTrainExercisesOrder(orderedRows.map(row => +row.id))
-                                    }}
-                                    data-testid="train-exercises-list"
-                                />
-                            )}
+                                {isPending && <DraggableDataCardListSkeleton columns={{ min: 3, max: 6 }} rows={8} icon={true} menuItems={true} />}
+                                {!isPending && train && rows.length === 0 && <ListNoDataMessage message="No items here… yet." />}
+                                {train?.exercises && !isPending && (
+                                    <DraggableDataCardList
+                                        columns={columns}
+                                        rows={rows}
+                                        onChange={(orderedRows) => {
+                                            setRows(orderedRows);
+                                            updateTrainExercisesOrder(orderedRows.map(row => +row.id))
+                                        }}
+                                        data-testid="train-exercises-list"
+                                    />
+                                )}
+                            </Box>
                         </Box>
                     </Box>
                 </CardContent>
