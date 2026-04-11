@@ -1,48 +1,24 @@
-import { Box, Container, Paper, Typography } from "@mui/material";
 import LoginForm from "./forms/LoginForm";
 import { Link, useNavigate } from "react-router-dom";
+import AuthCardLayout from "./AuthCardLayout";
 
 type LoginProps = {
     redirectPath?: string | null;
-};
-
-export default function Login({ redirectPath = null } : LoginProps) {
+  };
+  
+  export default function Login({ redirectPath = null }: LoginProps) {
     const navigate = useNavigate();
-    
+  
     return (
-        <Box 
-            sx={{ background: "#f1f1f1" }}
-        >
-            <Container
-                maxWidth="sm"
-                sx={{ 
-                    display: "flex",
-                    height: "100dvh",
-                    alignItems: "center",
-                    justifyContent: "center" 
-                }}
-            >
-                <Paper
-                    elevation={2}
-                    sx={{
-                        width: "100%",
-                        maxWidth: "25rem",
-                        p: 2,
-                        borderRadius: 2,
-                    }}
-                >
-                    <Typography variant="h5" component="h1" sx={{ mb: 2 }}>
-                        Sign in
-                    </Typography>
-                    <LoginForm onSuccess={() => navigate(redirectPath ?? '/train-sessions')} />
-                    <Typography
-                        sx={{ mt: 1.5, textAlign: 'center' }}
-                    >
-                        Don't have an account?{' '}
-                        <Link to="/register">Create account</Link>
-                    </Typography>
-                </Paper>
-            </Container>
-        </Box>
+      <AuthCardLayout
+        title="Sign in"
+        footer={
+          <>
+            Don't have an account? <Link to="/register">Create account</Link>
+          </>
+        }
+      >
+        <LoginForm onSuccess={() => navigate(redirectPath ?? "/train-sessions")} />
+      </AuthCardLayout>
     );
-}
+  }
