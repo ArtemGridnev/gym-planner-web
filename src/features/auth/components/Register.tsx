@@ -1,44 +1,20 @@
-import { Box, Container, Paper, Typography } from "@mui/material";
 import RegisterForm from "./forms/RegisterFrom";
 import { Link, useNavigate } from "react-router-dom";
+import AuthCardLayout from "./AuthCardLayout";
 
 export default function Register() {
     const navigate = useNavigate();
 
     return (
-        <Box 
-            sx={{ background: "#f1f1f1" }}
+        <AuthCardLayout
+            title="Sign up"
+            footer={
+                <>
+                    Already have an account? <Link to="/login">Sign in</Link>
+                </>
+            }
         >
-            <Container
-                maxWidth="sm"
-                sx={{ 
-                    display: "flex",
-                    height: "100dvh",
-                    alignItems: "center",
-                    justifyContent: "center" 
-                }}
-            >
-                <Paper
-                    elevation={2}
-                    sx={{
-                        width: "100%",
-                        maxWidth: "25rem",
-                        p: 2,
-                        borderRadius: 2,
-                    }}
-                >
-                    <Typography variant="h5" component="h1" sx={{ mb: 2 }}>
-                        Sign up
-                    </Typography>
-                    <RegisterForm onSuccess={() => navigate('/train-sessions')} />
-                    <Typography
-                        sx={{ mt: 1.5, textAlign: 'center' }}
-                    >
-                        Already have an account?{' '}
-                        <Link to="/login">Sign In</Link>
-                    </Typography>
-                </Paper>
-            </Container>
-        </Box>
+            <RegisterForm onSuccess={() => navigate("/train-sessions")} />
+        </AuthCardLayout>
     );
 }
