@@ -32,6 +32,8 @@ describe('Train Exercises', () => {
     it('Handle missing traininging: Display an appropriate message if the traininging is not found.', () => {
         cy.visit('/managment/trains/9999');
 
+        cy.get('[data-testid="train-page"]').should('exist');
+
         cy.get('[data-testid="train-not-found"]').should('exist');
     });
 
