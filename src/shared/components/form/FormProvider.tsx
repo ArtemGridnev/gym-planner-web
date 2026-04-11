@@ -10,7 +10,8 @@ export type FormProviderProps = {
 
 export default function FormProvider({ children, onSuccess, initialValues }: FormProviderProps) {
     const methods = useForm({ 
-        mode: 'onChange'
+        mode: 'onTouched',
+        reValidateMode: "onChange",
     });
 
     useEffect(() => {
