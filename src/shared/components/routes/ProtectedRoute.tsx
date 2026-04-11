@@ -1,6 +1,5 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useAuthContext } from "../../../features/auth/context/AuthProvider";
-import LoginPage from "../../../features/auth/components/Login";
 import { Box } from "@mui/material";
 
 export default function ProtectedRoute() {
@@ -8,7 +7,7 @@ export default function ProtectedRoute() {
 
     if (loading) return <Box>Loading...</Box>;
 
-    if (!user) return <LoginPage />;
+    if (!user) return <Navigate to="/login" />;
 
     return <Outlet />;
 }
