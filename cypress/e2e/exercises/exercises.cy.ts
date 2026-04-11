@@ -144,7 +144,7 @@ describe('Exercises', () => {
             .within(() => {
                 cy.get('[data-testid="data-card-actions-button"]')
                     .scrollIntoView()
-                    .click();
+                    .click({ force: true });
             });
 
         cy.get('[data-testid="delete-exercise-button"]').click();

@@ -38,7 +38,7 @@ export default function DraggableDataCardList({ columns, rows, onChange, ...prop
                     sx={{
                         display: 'flex',
                         gap: 2,
-                        flexDirection: 'column'
+                        flexDirection: 'column',
                     }}
                     {...props}
                 >

@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useRef, useState } from "react"
 import type { User } from "../../users/types/user"
 import { logout as logoutService } from "../services/authService";
 import { getCurrentUser } from "../../users/services/usersService";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface AuthContextType {
     user: User | null;
@@ -18,15 +19,22 @@ export default function AuthProvider({ children } : { children: React.ReactNode 
 
     const userRef = useRef<User | null>(null);
 
+    const queryClient = useQueryClient();
+
     useEffect(() => {
         userRef.current = user;
     }, [user]);
+
+    const clearAuthData = () => {
+        queryClient.clear();
+        setUser(null);
+    };
 
     const logout = async () => {
         try {
             await logoutService();
 
-            setUser(null);
+            clearAuthData();
             localStorage.setItem('logout', Date.now().toString());
         } catch (error) {
             console.error(error);
@@ -49,7 +57,7 @@ export default function AuthProvider({ children } : { children: React.ReactNode 
         if (e.newValue === e.oldValue) return;
 
         if (e.key === "logout") {
-            setUser(null);
+            clearAuthData();
         } 
         
         // else if (e.key === "login") {

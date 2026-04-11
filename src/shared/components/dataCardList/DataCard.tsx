@@ -28,6 +28,7 @@ export default function DataCard({ icon: Icon, title, children, menuItems, testi
                         width: 24,
                         height: 24,
                         color: 'text.secondary',
+                        flexShrink: 0,
                     }}
                  />
             )}
@@ -36,7 +37,10 @@ export default function DataCard({ icon: Icon, title, children, menuItems, testi
                 {children}
             </Box>
             {menuItems && (
-                <Box onClick={(e) => e.stopPropagation()}>
+                <Box 
+                    onClick={(e) => e.stopPropagation()}
+                    sx={{ flexShrink: 0 }}
+                >
                     <ButtonMenu items={menuItems} data-testid="data-card-actions-button">
                         <IconButton aria-label={`Actions for ${title}`}>
                             <MoreVertOutlined />
