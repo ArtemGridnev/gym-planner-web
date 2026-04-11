@@ -26,8 +26,8 @@ export default function FormField(props: FormFieldProps) {
                 const commonProps = {
                     label,
                     required,
-                    error: !!fieldState?.error,
-                    helperText: fieldState?.error?.message,
+                    error: fieldState.isDirty && !!fieldState?.error,
+                    helperText: fieldState.isDirty && !!fieldState?.error ? fieldState?.error?.message : undefined,
                     ...otherProps,
                 };
 
