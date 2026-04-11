@@ -43,7 +43,7 @@ export default function Header() {
                     <Box
                         component="img"
                         src={logo}
-                        alt="My Logo"
+                        alt="Gym planner logo"
                         sx={{ width: 40, height: 40 }}
                     />
                 </Box>
