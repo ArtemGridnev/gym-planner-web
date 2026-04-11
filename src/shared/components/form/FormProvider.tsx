@@ -10,7 +10,7 @@ export type FormProviderProps = {
 
 export default function FormProvider({ children, onSuccess, initialValues }: FormProviderProps) {
     const methods = useForm({ 
-        mode: 'onBlur'
+        mode: 'onChange'
     });
 
     useEffect(() => {
