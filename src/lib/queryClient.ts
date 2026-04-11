@@ -4,9 +4,9 @@ export const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
             retry: (failureCount, error: any) => {
-                console.log('error', error.response);
+                console.log('error', error);
 
-                if (error?.response?.status === 404) {
+                if (error?.statusCode === 404) {
                     return false;
                 }
 
