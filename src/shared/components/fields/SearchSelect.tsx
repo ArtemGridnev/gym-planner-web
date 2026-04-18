@@ -1,51 +1,69 @@
 import { Autocomplete, TextField, type AutocompleteProps, type TextFieldProps } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import type { SearchSelectOption } from "../../types/form/formFieldSchema";
+import type { BaseFieldProps } from "../../types/baseFieldProps";
 
-type SearchSelectProps = Omit<AutocompleteProps<SearchSelectOption, false, false, false>, 'onChange' | 'options' | 'renderInput' | 'value'> & {
-    options: SearchSelectOption[] | (() => Promise<SearchSelectOption[]>);
-    onChange: (selectedOption: SearchSelectOption | null) => void;
-    value?: SearchSelectOption | null;
-    input?: TextFieldProps;
-};
-
-export default function SearchSelect({ options, onChange, value, input, ...props }: SearchSelectProps) {
-    const [selectOptions, setSelectOptions] = useState<SearchSelectOption[]>([]);
-
-    const map = useMemo(() => {
-        const m = new Map();
-
-        selectOptions.forEach(option => {
-            m.set(option.id, option);
-        });
-
-        return m;
-    }, [selectOptions])
-
-    const fetchOptions = async (fun: () => Promise<SearchSelectOption[]>) => {
-        const options = await fun();
-
-        setSelectOptions(options);
+type SearchSelectProps =
+    BaseFieldProps<number | null> &
+    Omit<
+        AutocompleteProps<SearchSelectOption, false, false, false>,
+        "value" | "onChange" | "options" | "renderInput"
+    > & {
+        options: SearchSelectOption[];
+        textFieldProps?: Omit<TextFieldProps, "value" | "onChange">;
     };
 
-    useEffect(() => {
-        if (options instanceof Function) {
-            fetchOptions(options);
-        } else {
-            setSelectOptions(options);
-        }
-    }, [options]);
+export default function SearchSelect({ 
+    value,
+    onChange,
+    onBlur,
+    ref,
+    options,
+    textFieldProps,
+    name,
+    label,
+    required,
+    disabled,
+    error,
+    helperText,
+    ...props
+ }: SearchSelectProps) {
+    const selectedOption = useMemo(
+        () =>
+            value
+                ? options.find((option) => option.id === value) ?? null
+                : null,
+        [options, value]
+    );
+
+    const handleChange = (
+        _: React.SyntheticEvent,
+        option: SearchSelectOption | null
+    ) => {
+        onChange(option ? option.id : null);
+    };
 
     return (
         <Autocomplete<SearchSelectOption>
             {...props}
             disablePortal
-            options={selectOptions}
-            onChange={(_, option) => {
-                onChange(option);
-            }}
-            value={map.get(value?.id) ?? null}
-            renderInput={(params) => <TextField {...params} {...input} />}
+            options={options}
+            onChange={handleChange}
+            value={selectedOption}
+            disabled={disabled}
+            onBlur={onBlur}
+            ref={ref}
+            renderInput={(params) => (
+                <TextField 
+                    {...params}
+                    {...textFieldProps}
+                    name={name}
+                    label={label}
+                    required={required}
+                    error={error}
+                    helperText={helperText}
+                />
+            )}
         />
     );
 }

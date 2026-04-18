@@ -1,47 +1,33 @@
-import { TextField, type TextFieldProps } from "@mui/material";
-import { useEffect, useState } from "react";
+import { MenuItem, TextField, type TextFieldProps } from "@mui/material";
 import type { SelectOption } from "../../types/form/formFieldSchema";
+import type { BaseFieldProps } from "../../types/baseFieldProps";
 
-type SelectFieldProps = Omit<TextFieldProps, 'onChange'> & {
-    options: SelectOption[] | (() => Promise<SelectOption[]>);
-    onChange: (option: SelectOption) => void;
-};
+type SelectFieldProps =
+  BaseFieldProps<string> &
+  Omit<TextFieldProps, "value" | "onChange" | "select" | "type" | "children"> & {
+    options: SelectOption[];
+  };
 
-export default function Select({ options, onChange, ...props }: SelectFieldProps) {
-    const [selectOptions, setSelectOptions] = useState<SelectOption[]>([]);
-
-    const fetchOptions = async (fun: (() => Promise<SelectOption[]>)) => {
-        const options = await fun();
-        setSelectOptions(options);
-    };
-
-    const handleChnage = (inputValue: string) => {
-        const value = selectOptions.find(op => op.value === inputValue);
-
-        if (!value) return;
-
-        onChange(value);
-    }
-
-    useEffect(() => {
-        if (options instanceof Function) {
-            fetchOptions(options);
-        } else {
-            setSelectOptions(options);
-        }
-    }, [options]);
-
-    return (
-        <TextField
-            onChange={({ target: { value: inputValue } }) => handleChnage(inputValue)}
-            { ...props }
-            select
-        >
-            {selectOptions?.map(option => (
-                <option key={option.value} value={option.value}>
-                    {option.label}
-                </option>  
-            ))}
-        </TextField>
-    );
+export default function Select({
+  value,
+  onChange,
+  onBlur,
+  options,
+  ...props
+}: SelectFieldProps) {
+  return (
+    <TextField
+      {...props}
+      select
+      value={value ?? ""}
+      onBlur={onBlur}
+      onChange={(e) => onChange(e.target.value)}
+    >
+      {options.map((option) => (
+        <MenuItem key={option.value} value={option.value}>
+          {option.label}
+        </MenuItem>
+      ))}
+    </TextField>
+  );
 }

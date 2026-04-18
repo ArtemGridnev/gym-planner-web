@@ -4,8 +4,6 @@ import SearchSelect from "../fields/SearchSelect";
 import Select from "../fields/Select";
 import NumberField from "../fields/NumberField";
 import type { FilterFieldSchema } from "../../types/filterFieldSchema";
-import { useMemo } from "react";
-import type { SearchSelectOption } from "../../types/form/formFieldSchema";
 
 export type FilterFieldProps = FilterFieldSchema & {
     value: string;
@@ -40,7 +38,7 @@ export default function FilterField(props: FilterFieldProps) {
                 <Select
                     name={name}
                     value={value}
-                    onChange={(inputValue) => onChange(name, inputValue.value)}
+                    onChange={(inputValue) => onChange(name, inputValue)}
                     options={props.options}
                     {...inputProps}
                 />  
@@ -49,25 +47,22 @@ export default function FilterField(props: FilterFieldProps) {
         case 'searchSelect':
             return (
                 <SearchSelect
-                    input={{ ...inputProps, name }}
-                    value={value ? props.options.find(o => o.value === value) : null}
-                    onChange={(selectedOption) => onChange(name, selectedOption?.id.toString() || '')}
+                    name={name}
+                    textFieldProps={{ ...inputProps }}
+                    value={value ?? null}
+                    onChange={value => onChange(name, value || '')}
                     options={props.options}
                 />
             );
         
         case 'searchSelectMultiple':
-            const selected = useMemo(
-                () => value?.split(',').map(value => props.options.find(opt => opt.id === +value)).filter(Boolean) as SearchSelectOption[] || [],
-                [value, props.options]
-            );
-
             return (
                 <SearchSelectMultiple 
+                    name={name}
                     sx={inputProps?.sx}
-                    input={{ ...inputProps, name }}
-                    value={selected}
-                    onChange={(selectedOptions) => onChange(name, selectedOptions.map(o => o.id).join(','))}
+                    textFieldProps={{ ...inputProps }}
+                    value={value ? value?.split(',') : []}
+                    onChange={(selectedOptions) => onChange(name, selectedOptions.join(','))}
                     options={props.options}
                 />
             );

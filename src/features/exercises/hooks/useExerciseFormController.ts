@@ -2,11 +2,10 @@ import { getExercise, type CreateExercisePayload } from "../services/exercisesSe
 import { exerciseFormDataToCreatePayload, exerciseToFormData } from "../utils/formMappers";
 import useCreateExercise from "../queries/hooks/useCreateExercise";
 import useUpdateExercise from "../queries/hooks/useUpdateExercise";
-import type { ExerciseCategory } from "../types/exerciseCategory";
 import useFormController from "../../../shared/hooks/form/useFormController";
 
 export type ExerciseFormData = {
-    category: ExerciseCategory;
+    categoryId: number;
     name: string;
     description: string | null;
     sets: number | null;

@@ -4,7 +4,7 @@ import type { Exercise } from "../types/exercise";
 
 export const exerciseFormDataToCreatePayload = (exercise: ExerciseFormData): CreateExercisePayload => {
     return {
-        categoryId: exercise.category.id,
+        categoryId: exercise.categoryId,
         name: exercise.name,
         description: exercise.description ?? null,
         sets: exercise.sets?.toString() ?? null,
@@ -16,7 +16,7 @@ export const exerciseFormDataToCreatePayload = (exercise: ExerciseFormData): Cre
 
 export const exerciseToFormData = (exercise: Exercise): ExerciseFormData => {
     return {
-        category: exercise.category,
+        categoryId: exercise.category.id,
         name: exercise.name,
         description: exercise.description,
         sets: exercise.sets,

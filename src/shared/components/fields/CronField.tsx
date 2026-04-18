@@ -1,64 +1,100 @@
-import { useEffect, useState } from "react";
-import ToggleButtonGroup from "./ToggleButtonGroup";
 import { Box, Typography } from "@mui/material";
+import ToggleButtonGroup from "./ToggleButtonGroup";
 
-type CronFieldProps = {
-    fields: ('weekDays')[];
-    onChange: (cron: string) => void;
-    value: string;
-    label: string;
+type BaseFieldProps<T> = {
+    value: T;
+    onChange: (value: T) => void;
+    onBlur?: () => void;
+    name: string;
+    label?: string;
+    required?: boolean;
     disabled?: boolean;
+    error?: boolean;
+    helperText?: string;
 };
 
-export default function CronField({ fields, onChange, value, label, disabled }: CronFieldProps) {
-    const [weekDays, setWeekDays] = useState<string[]>([]);
+type CronFieldProps = BaseFieldProps<string> & {
+    fields: "weekDays"[];
+};
 
-    useEffect(() => {
-        const cron = `0 0 * * ${weekDays.length > 0 ? weekDays.join(',') : '*'}`;
+function parseWeekDaysFromCron(value: string): string[] {
+    if (!value) return [];
 
-        if (cron !== value) {
-            onChange(cron);
-        }
-    }, [weekDays]);
+    const parts = value.trim().split(" ");
+    const weekDayPart = parts[4];
 
-    useEffect(() => {
-        if (!value) return;
+    if (!weekDayPart || weekDayPart === "*") return [];
 
-        const parts = value?.trim()?.split(' ');
-        const valueWeekDays = !parts[4] || parts[4] === '*' ? [] : parts[4].replaceAll('*', '').split(',').filter(str => str !== '');
+    return weekDayPart
+        .split(",")
+        .map((day) => day.trim())
+        .filter(Boolean);
+}
 
-        if (valueWeekDays.join(',') !== weekDays.join(',')) {
-            setWeekDays(valueWeekDays);
-        }
-    }, [value]);
+function buildCronFromWeekDays(weekDays: string[]) {
+    return `0 0 * * ${weekDays.length > 0 ? weekDays.join(",") : "*"}`;
+}
+
+export default function CronField({
+    fields,
+    value,
+    onChange,
+    onBlur,
+    label,
+    disabled,
+    error,
+    helperText,
+}: CronFieldProps) {
+    const weekDays = parseWeekDaysFromCron(value);
 
     return (
         <Box>
-            <Typography variant="subtitle1" component="label" gutterBottom>{label}</Typography>
+            {label && (
+                <Typography variant="subtitle1" component="label" gutterBottom>
+                    {label}
+                </Typography>
+            )}
+
             {fields.map((field) => {
                 switch (field) {
-                    case 'weekDays':
+                    case "weekDays":
                         return (
                             <ToggleButtonGroup
-                                data-testid="days-toogle-button-group"
                                 key={field}
+                                data-testid="days-toggle-button-group"
                                 label="Days"
                                 options={[
-                                    { value: '0', name: 'Sun' },
-                                    { value: '1', name: 'Mon' },
-                                    { value: '2', name: 'Tue' },
-                                    { value: '3', name: 'Wed' },
-                                    { value: '4', name: 'Thu' },
-                                    { value: '5', name: 'Fri' },
-                                    { value: '6', name: 'Sat' }
+                                    { value: "0", name: "Sun" },
+                                    { value: "1", name: "Mon" },
+                                    { value: "2", name: "Tue" },
+                                    { value: "3", name: "Wed" },
+                                    { value: "4", name: "Thu" },
+                                    { value: "5", name: "Fri" },
+                                    { value: "6", name: "Sat" },
                                 ]}
                                 value={weekDays}
-                                onChange={(values) => setWeekDays(values)}
+                                onChange={(values) => {
+                                    onChange(buildCronFromWeekDays(values));
+                                    onBlur?.();
+                                }}
                                 disabled={disabled}
                             />
                         );
+
+                    default:
+                        return null;
                 }
             })}
+
+            {error && helperText && (
+                <Typography
+                    variant="caption"
+                    color="error"
+                    sx={{ mt: 0.5, display: "block" }}
+                >
+                    {helperText}
+                </Typography>
+            )}
         </Box>
     );
 }
