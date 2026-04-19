@@ -1,14 +1,15 @@
-import { TextField, type TextFieldProps } from "@mui/material";
 import SearchSelectMultiple from "../fields/SearchSelectMultiple";
 import SearchSelect from "../fields/SearchSelect";
 import Select from "../fields/Select";
 import NumberField from "../fields/NumberField";
-import type { FilterFieldSchema } from "../../types/filterFieldSchema";
+import type { FilterFieldSchema } from "../../types/filter/filterFieldSchema";
+import TextInputField from "../fields/TextInputField";
+import type { FieldTextUiProps } from "../../types/field/fieldTextUiProps";
 
 export type FilterFieldProps = FilterFieldSchema & {
     value: string;
     onChange: (name: string, value: string) => void;
-    inputProps?: Omit<TextFieldProps, 'value' | 'onChange' | 'type'>
+    textFieldProps?: FieldTextUiProps;
 };
 
 export default function FilterField(props: FilterFieldProps) {
@@ -17,7 +18,7 @@ export default function FilterField(props: FilterFieldProps) {
         type,
         value,
         onChange,
-        inputProps,
+        textFieldProps,
         ...otherProps
     } = props;
 
@@ -28,8 +29,8 @@ export default function FilterField(props: FilterFieldProps) {
                     name={name}
                     value={+value}
                     onChange={(inputValue) => onChange(name, inputValue?.toString() || '')}
-                    {...otherProps}
-                    {...inputProps}
+                    { ...otherProps }
+                    { ...textFieldProps }
                 />  
             );
 
@@ -40,7 +41,7 @@ export default function FilterField(props: FilterFieldProps) {
                     value={value}
                     onChange={(inputValue) => onChange(name, inputValue)}
                     options={props.options}
-                    {...inputProps}
+                    textFieldProps={{ ...textFieldProps }}
                 />  
             );
 
@@ -48,22 +49,21 @@ export default function FilterField(props: FilterFieldProps) {
             return (
                 <SearchSelect
                     name={name}
-                    textFieldProps={{ ...inputProps }}
-                    value={value ?? null}
-                    onChange={value => onChange(name, value || '')}
+                    value={+value ?? null}
+                    onChange={value => onChange(name, value?.toString() || '')}
                     options={props.options}
-                />
+                    textFieldProps={{ ...textFieldProps }}
+                    />
             );
         
         case 'searchSelectMultiple':
             return (
                 <SearchSelectMultiple 
                     name={name}
-                    sx={inputProps?.sx}
-                    textFieldProps={{ ...inputProps }}
                     value={value ? value?.split(',') : []}
                     onChange={(selectedOptions) => onChange(name, selectedOptions.join(','))}
                     options={props.options}
+                    textFieldProps={{ ...textFieldProps }}
                 />
             );
 
@@ -71,13 +71,12 @@ export default function FilterField(props: FilterFieldProps) {
         case 'email':
         case 'search':
             return (
-                <TextField
+                <TextInputField
                     name={name}
-                    type={type}
-                    onChange={({ target: { value: inputValue } }) => onChange(name, inputValue)}
+                    onChange={(value) => onChange(name, value)}
                     value={value}
-                    {...inputProps}
-                ></TextField>
+                    textFieldProps={{ ...textFieldProps }}
+                ></TextInputField>
             );
     }
 }

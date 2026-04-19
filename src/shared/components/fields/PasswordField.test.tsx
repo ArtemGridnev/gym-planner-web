@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 
 describe('PasswordField', () => {
     it('toggles password visibility when icon button is clicked', async () => {
-        render(<PasswordField label="Password" />);
+        render(<PasswordField value="" onChange={() => {}} name="" label="Password" />);
 
         const input = screen.getByLabelText('Password') as HTMLInputElement;
         const toggleButton = screen.getByRole('button', {
@@ -21,7 +21,7 @@ describe('PasswordField', () => {
     });
 
     it('renders the toogle button', () => {
-        render(<PasswordField label="Password" />);
+        render(<PasswordField value="" onChange={() => {}} name="" label="Password" />);
 
         const toggleButton = screen.getByRole('button', {
             name: /show password/i,

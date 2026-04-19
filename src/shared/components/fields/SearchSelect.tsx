@@ -1,7 +1,8 @@
-import { Autocomplete, TextField, type AutocompleteProps, type TextFieldProps } from "@mui/material";
+import { Autocomplete, TextField, type AutocompleteProps } from "@mui/material";
 import { useMemo } from "react";
 import type { SearchSelectOption } from "../../types/form/formFieldSchema";
-import type { BaseFieldProps } from "../../types/baseFieldProps";
+import type { BaseFieldProps } from "../../types/field/baseFieldProps";
+import type { FieldTextUiProps } from "../../types/field/fieldTextUiProps";
 
 type SearchSelectProps =
     BaseFieldProps<number | null> &
@@ -10,7 +11,7 @@ type SearchSelectProps =
         "value" | "onChange" | "options" | "renderInput"
     > & {
         options: SearchSelectOption[];
-        textFieldProps?: Omit<TextFieldProps, "value" | "onChange">;
+        textFieldProps?: FieldTextUiProps;
     };
 
 export default function SearchSelect({ 

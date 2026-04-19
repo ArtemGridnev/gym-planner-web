@@ -12,7 +12,7 @@ export type SearchSelectOption<T = any> = {
     label: string;
 };
 
-type BaseField = {
+export type BaseField = {
     name: string;
     label: string;
     rules?: RegisterOptions;
@@ -21,30 +21,30 @@ type BaseField = {
     endAdornment?: ElementType | string;
 };
 
-type TextField = BaseField & { type: "text" | "email" | "password" | "textarea" };
+export type TextField = BaseField & { type: "text" | "email" | "password" | "textarea" };
 
-type NumberField = BaseField & {
+export type NumberField = BaseField & {
     type: "number";
     step?: number;
     unit?: string;
 };
 
-type SelectField = BaseField & {
+export type SelectField = BaseField & {
     type: "select";
     options: SelectOption[];
 };
 
-type SearchSelectField = BaseField & {
+export type SearchSelectField = BaseField & {
     type: "searchSelect";
     options: SearchSelectOption[];
 };
 
-type SearchSelectMultipleField = BaseField & {
+export type SearchSelectMultipleField = BaseField & {
     type: "searchSelectMultiple";
     options: SearchSelectOption[];
 };
 
-type CronField = BaseField & {
+export type CronField = BaseField & {
     type: "cron";
     fields: "weekDays"[];
 };

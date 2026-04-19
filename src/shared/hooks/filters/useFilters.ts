@@ -1,5 +1,5 @@
 import useFiltersState from "./useFiltersState";
-import type { FilterFieldSchema } from "../../types/filterFieldSchema";
+import type { FilterFieldSchema } from "../../types/filter/filterFieldSchema";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 export default function useFilters(fields: FilterFieldSchema[]) {

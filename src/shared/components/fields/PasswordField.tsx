@@ -3,35 +3,37 @@ import {
   IconButton,
   InputAdornment,
   TextField,
-  type TextFieldProps,
 } from "@mui/material";
 import { useState } from "react";
-import type { BaseFieldProps } from "../../types/baseFieldProps";
+import type { BaseFieldProps } from "../../types/field/baseFieldProps";
+import type { FieldTextUiProps } from "../../types/field/fieldTextUiProps";
 
 type PasswordFieldProps =
-  BaseFieldProps<string> &
-  Omit<TextFieldProps, "type" | "value" | "onChange">;
+  BaseFieldProps<string> & {
+    textFieldProps?: FieldTextUiProps;
+  };
 
 export default function PasswordField({
   value,
   onChange,
   onBlur,
-  slotProps,
+  textFieldProps,
   ...props
 }: PasswordFieldProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
     <TextField
+      {...textFieldProps}
       {...props}
       type={showPassword ? "text" : "password"}
       value={value ?? ""}
       onBlur={onBlur}
       onChange={(e) => onChange(e.target.value)}
       slotProps={{
-        ...slotProps,
+        ...textFieldProps?.slotProps,
         input: {
-          ...slotProps?.input,
+          ...textFieldProps?.slotProps?.input,
           endAdornment: (
             <InputAdornment position="end">
               <IconButton

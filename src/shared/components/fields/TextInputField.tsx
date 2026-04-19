@@ -1,21 +1,10 @@
 import { TextField, type TextFieldProps } from "@mui/material";
-
-type BaseFieldProps<T> = {
-  value: T;
-  onChange: (value: T) => void;
-  onBlur?: () => void;
-  name: string;
-  label?: string;
-  required?: boolean;
-  disabled?: boolean;
-  error?: boolean;
-  helperText?: string;
-};
+import type { BaseFieldProps } from "../../types/field/baseFieldProps";
 
 type TextInputFieldProps =
-  BaseFieldProps<string> &
-  Omit<TextFieldProps, "value" | "onChange" | "type"> & {
+  BaseFieldProps<string> & {
     type?: "text" | "email";
+    textFieldProps?: TextFieldProps;
   };
 
 export default function TextInputField({
@@ -23,10 +12,12 @@ export default function TextInputField({
   onChange,
   onBlur,
   type = "text",
+  textFieldProps,
   ...props
 }: TextInputFieldProps) {
   return (
     <TextField
+      {...textFieldProps}
       {...props}
       type={type}
       value={value ?? ""}

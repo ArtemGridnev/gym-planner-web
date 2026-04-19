@@ -1,11 +1,12 @@
-import { MenuItem, TextField, type TextFieldProps } from "@mui/material";
+import { MenuItem, TextField } from "@mui/material";
 import type { SelectOption } from "../../types/form/formFieldSchema";
-import type { BaseFieldProps } from "../../types/baseFieldProps";
+import type { BaseFieldProps } from "../../types/field/baseFieldProps";
+import type { FieldTextUiProps } from "../../types/field/fieldTextUiProps";
 
 type SelectFieldProps =
-  BaseFieldProps<string> &
-  Omit<TextFieldProps, "value" | "onChange" | "select" | "type" | "children"> & {
+  BaseFieldProps<string> & {
     options: SelectOption[];
+    textFieldProps?: FieldTextUiProps;
   };
 
 export default function Select({
@@ -13,10 +14,12 @@ export default function Select({
   onChange,
   onBlur,
   options,
+  textFieldProps,
   ...props
 }: SelectFieldProps) {
   return (
     <TextField
+      {...textFieldProps}
       {...props}
       select
       value={value ?? ""}

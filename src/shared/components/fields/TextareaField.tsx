@@ -1,22 +1,12 @@
-import { TextField, type TextFieldProps } from "@mui/material";
-
-type BaseFieldProps<T> = {
-  value: T;
-  onChange: (value: T) => void;
-  onBlur?: () => void;
-  name: string;
-  label?: string;
-  required?: boolean;
-  disabled?: boolean;
-  error?: boolean;
-  helperText?: string;
-};
+import { TextField } from "@mui/material";
+import type { BaseFieldProps } from "../../types/field/baseFieldProps";
+import type { FieldTextUiProps } from "../../types/field/fieldTextUiProps";
 
 type TextareaFieldProps =
-  BaseFieldProps<string> &
-  Omit<TextFieldProps, "value" | "onChange" | "type" | "multiline"> & {
+  BaseFieldProps<string> & {
     minRows?: number;
     maxRows?: number;
+    textFieldProps?: FieldTextUiProps;
   };
 
 export default function TextareaField({
@@ -25,10 +15,12 @@ export default function TextareaField({
   onBlur,
   minRows = 4.5,
   maxRows = 6,
+  textFieldProps,
   ...props
 }: TextareaFieldProps) {
   return (
     <TextField
+      {...textFieldProps}
       {...props}
       multiline
       value={value ?? ""}

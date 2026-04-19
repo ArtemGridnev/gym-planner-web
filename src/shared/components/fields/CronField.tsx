@@ -1,17 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import ToggleButtonGroup from "./ToggleButtonGroup";
-
-type BaseFieldProps<T> = {
-    value: T;
-    onChange: (value: T) => void;
-    onBlur?: () => void;
-    name: string;
-    label?: string;
-    required?: boolean;
-    disabled?: boolean;
-    error?: boolean;
-    helperText?: string;
-};
+import type { BaseFieldProps } from "../../types/field/baseFieldProps";
 
 type CronFieldProps = BaseFieldProps<string> & {
     fields: "weekDays"[];

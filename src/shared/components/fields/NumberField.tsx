@@ -1,12 +1,12 @@
-import { InputAdornment, TextField, type TextFieldProps } from "@mui/material";
-import type { BaseFieldProps } from "../../types/baseFieldProps";
+import { InputAdornment, TextField } from "@mui/material";
+import type { BaseFieldProps } from "../../types/field/baseFieldProps";
+import type { FieldTextUiProps } from "../../types/field/fieldTextUiProps";
 
-type NumberFieldProps =
-  BaseFieldProps<number | undefined> &
-  Omit<TextFieldProps, "value" | "onChange" | "type"> & {
-    unit?: React.ReactNode;
-    step?: number;
-  };
+type NumberFieldProps = BaseFieldProps<number | undefined> & {
+  textFieldProps?: FieldTextUiProps;
+  unit?: React.ReactNode;
+  step?: number;
+};
 
 export default function NumberField({
   value,
@@ -14,10 +14,12 @@ export default function NumberField({
   onBlur,
   unit,
   step,
+  textFieldProps,
   ...props
 }: NumberFieldProps) {
   return (
     <TextField
+      {...textFieldProps}
       {...props}
       type="number"
       value={value ?? ""}
@@ -34,9 +36,9 @@ export default function NumberField({
         onChange(Number.isNaN(num) ? undefined : num);
       }}
       slotProps={{
-        ...props.slotProps,
+        ...textFieldProps?.slotProps,
         input: {
-          ...props.slotProps?.input,
+          ...textFieldProps?.slotProps?.input,
           ...(unit && {
             endAdornment: (
               <InputAdornment position="end">{unit}</InputAdornment>
@@ -44,7 +46,7 @@ export default function NumberField({
           }),
         },
         htmlInput: {
-          ...props.slotProps?.htmlInput,
+          ...textFieldProps?.slotProps?.htmlInput,
           ...(step !== undefined ? { step } : {}),
         },
       }}
