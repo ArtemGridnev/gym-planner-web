@@ -43,7 +43,7 @@ describe('Exercises', () => {
         cy.get('[data-testid="exercises-list"] [data-testid="data-card"]').should('have.length', 1);
         cy.get('[data-testid="exercises-list-filters"] [name="search"]').clear();
 
-        cy.get('[data-testid="exercises-list-filters"] [name="category"]').focus().type('Chest');
+        cy.get('[data-testid="exercises-list-filters"] input[name="category"]').focus().type('Chest');
         cy.get('[role="listbox"] li[data-option-index="0"]').click();
         cy.get('[data-testid="exercises-list"] [data-testid="data-card"]').should('have.length', 12);
     });
@@ -58,7 +58,7 @@ describe('Exercises', () => {
         });
 
         cy.get('[data-testid="exercise-form"]').within(() => {
-            cy.get('[name="category"] input')
+            cy.get('input[name="categoryId"]')
                 .focus()
                 .type('Chest');
   
@@ -125,7 +125,7 @@ describe('Exercises', () => {
         });
 
         cy.get('[data-testid="exercise-form"]').within(() => {
-            cy.get('[name="category"] input')
+            cy.get('input[name="categoryId"]')
                 .focus()
                 .type('Chest');
 

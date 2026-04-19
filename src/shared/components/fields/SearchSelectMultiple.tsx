@@ -29,7 +29,6 @@ export default function SearchSelectMultiple({
 
   return (
     <Autocomplete<SearchSelectOption, true, false, false>
-      {...props}
       multiple
       options={options}
       value={selectedOptions}
