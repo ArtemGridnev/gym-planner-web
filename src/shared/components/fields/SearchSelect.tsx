@@ -14,7 +14,6 @@ export default function SearchSelect({
     value,
     onChange,
     onBlur,
-    ref,
     options,
     textFieldProps,
     name,
@@ -49,7 +48,6 @@ export default function SearchSelect({
             value={selectedOption}
             disabled={disabled}
             onBlur={onBlur}
-            ref={ref}
             renderInput={(params) => (
                 <TextField 
                     {...params}
