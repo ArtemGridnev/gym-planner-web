@@ -1,5 +1,5 @@
 import { Box, CircularProgress, InputAdornment, type BoxProps } from "@mui/material";
-import type { FilterFieldSchema } from "../../types/filterFieldSchema";
+import type { FilterFieldSchema } from "../../types/filter/filterFieldSchema";
 import FilterField from "../filters/FilterField";
 import { SearchOutlined } from "@mui/icons-material";
 
@@ -49,7 +49,7 @@ export default function ToolbarFilters({
                             onChange: handleChange
                         }} 
                         key={index}
-                        inputProps={{
+                        textFieldProps={{
                             placeholder: field.label,
                             variant: 'outlined',
                             size: 'small',

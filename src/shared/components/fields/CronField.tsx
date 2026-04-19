@@ -1,64 +1,89 @@
-import { useEffect, useState } from "react";
-import ToggleButtonGroup from "./ToggleButtonGroup";
 import { Box, Typography } from "@mui/material";
+import ToggleButtonGroup from "./ToggleButtonGroup";
+import type { BaseFieldProps } from "../../types/field/baseFieldProps";
 
-type CronFieldProps = {
-    fields: ('weekDays')[];
-    onChange: (cron: string) => void;
-    value: string;
-    label: string;
-    disabled?: boolean;
+type CronFieldProps = BaseFieldProps<string> & {
+    fields: "weekDays"[];
 };
 
-export default function CronField({ fields, onChange, value, label, disabled }: CronFieldProps) {
-    const [weekDays, setWeekDays] = useState<string[]>([]);
+function parseWeekDaysFromCron(value: string): string[] {
+    if (!value) return [];
 
-    useEffect(() => {
-        const cron = `0 0 * * ${weekDays.length > 0 ? weekDays.join(',') : '*'}`;
+    const parts = value.trim().split(" ");
+    const weekDayPart = parts[4];
 
-        if (cron !== value) {
-            onChange(cron);
-        }
-    }, [weekDays]);
+    if (!weekDayPart || weekDayPart === "*") return [];
 
-    useEffect(() => {
-        if (!value) return;
+    return weekDayPart
+        .split(",")
+        .map((day) => day.trim())
+        .filter(Boolean);
+}
 
-        const parts = value?.trim()?.split(' ');
-        const valueWeekDays = !parts[4] || parts[4] === '*' ? [] : parts[4].replaceAll('*', '').split(',').filter(str => str !== '');
+function buildCronFromWeekDays(weekDays: string[]) {
+    return `0 0 * * ${weekDays.length > 0 ? weekDays.join(",") : "*"}`;
+}
 
-        if (valueWeekDays.join(',') !== weekDays.join(',')) {
-            setWeekDays(valueWeekDays);
-        }
-    }, [value]);
+export default function CronField({
+    fields,
+    value,
+    onChange,
+    onBlur,
+    label,
+    disabled,
+    error,
+    helperText,
+}: CronFieldProps) {
+    const weekDays = parseWeekDaysFromCron(value);
 
     return (
         <Box>
-            <Typography variant="subtitle1" component="label" gutterBottom>{label}</Typography>
+            {label && (
+                <Typography variant="subtitle1" component="label" gutterBottom>
+                    {label}
+                </Typography>
+            )}
+
             {fields.map((field) => {
                 switch (field) {
-                    case 'weekDays':
+                    case "weekDays":
                         return (
                             <ToggleButtonGroup
-                                data-testid="days-toogle-button-group"
                                 key={field}
+                                data-testid="days-toggle-button-group"
                                 label="Days"
                                 options={[
-                                    { value: '0', name: 'Sun' },
-                                    { value: '1', name: 'Mon' },
-                                    { value: '2', name: 'Tue' },
-                                    { value: '3', name: 'Wed' },
-                                    { value: '4', name: 'Thu' },
-                                    { value: '5', name: 'Fri' },
-                                    { value: '6', name: 'Sat' }
+                                    { value: "0", name: "Sun" },
+                                    { value: "1", name: "Mon" },
+                                    { value: "2", name: "Tue" },
+                                    { value: "3", name: "Wed" },
+                                    { value: "4", name: "Thu" },
+                                    { value: "5", name: "Fri" },
+                                    { value: "6", name: "Sat" },
                                 ]}
                                 value={weekDays}
-                                onChange={(values) => setWeekDays(values)}
+                                onChange={(values) => {
+                                    onChange(buildCronFromWeekDays(values));
+                                    onBlur?.();
+                                }}
                                 disabled={disabled}
                             />
                         );
+
+                    default:
+                        return null;
                 }
             })}
+
+            {error && helperText && (
+                <Typography
+                    variant="caption"
+                    color="error"
+                    sx={{ mt: 0.5, display: "block" }}
+                >
+                    {helperText}
+                </Typography>
+            )}
         </Box>
     );
 }

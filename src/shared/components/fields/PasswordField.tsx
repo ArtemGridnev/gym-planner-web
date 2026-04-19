@@ -1,26 +1,44 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { IconButton, InputAdornment, TextField, type TextFieldProps } from "@mui/material";
+import {
+  IconButton,
+  InputAdornment,
+  TextField,
+} from "@mui/material";
 import { useState } from "react";
+import type { BaseFieldProps } from "../../types/field/baseFieldProps";
+import type { FieldTextUiProps } from "../../types/field/fieldTextUiProps";
 
-type PasswordFieldProps = Omit<TextFieldProps, 'type'>;
+type PasswordFieldProps =
+  BaseFieldProps<string> & {
+    textFieldProps?: FieldTextUiProps;
+  };
 
-export default function PasswordField({ slotProps, ...props }: PasswordFieldProps) {
+export default function PasswordField({
+  value,
+  onChange,
+  onBlur,
+  textFieldProps,
+  ...props
+}: PasswordFieldProps) {
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
 
   return (
     <TextField
+      {...textFieldProps}
       {...props}
-      type={showPassword ? 'text' : 'password'}
+      type={showPassword ? "text" : "password"}
+      value={value ?? ""}
+      onBlur={onBlur}
+      onChange={(e) => onChange(e.target.value)}
       slotProps={{
-        ...slotProps,
+        ...textFieldProps?.slotProps,
         input: {
+          ...textFieldProps?.slotProps?.input,
           endAdornment: (
             <InputAdornment position="end">
               <IconButton
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
-                onClick={handleClickShowPassword}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                onClick={() => setShowPassword((prev) => !prev)}
                 edge="end"
               >
                 {showPassword ? <VisibilityOff /> : <Visibility />}

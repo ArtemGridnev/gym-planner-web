@@ -5,7 +5,7 @@ export const getExerciseFormFields = (
 ): FormFieldSchema[] => [
     {
         label: "Category",
-        name: "category",
+        name: "categoryId",
         type: "searchSelect",
         options: categories,
         rules: {

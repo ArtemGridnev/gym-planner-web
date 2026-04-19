@@ -1,5 +1,5 @@
 import type { ExerciseCategory } from '../types/exerciseCategory';
-import type { FilterFieldSchema } from '../../../shared/types/filterFieldSchema';
+import type { FilterFieldSchema } from '../../../shared/types/filter/filterFieldSchema';
 import type { SearchSelectOption } from '../../../shared/types/form/formFieldSchema';
 
 export const getExerciseFilterFields = (categories: SearchSelectOption<ExerciseCategory>[]): FilterFieldSchema[] => [

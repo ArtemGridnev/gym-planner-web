@@ -1,10 +1,10 @@
 import { Box, type BoxProps } from "@mui/material";
 import Alerts from "../Alerts.tsx";
-import FormField from "./FormField.tsx";
 import FormProvider, { type FormProviderProps } from "./FormProvider.tsx";
 import LoadingButton from "../LoadingButton.tsx";
 import type { FormStates } from "../../hooks/form/useFormController.ts";
 import type { FormFieldSchema } from "../../types/form/formFieldSchema.ts";
+import FormField from "./FormField.tsx";
 
 export type FormProps = BoxProps & Omit<FormProviderProps, 'children'> & FormStates & {
     formFields: FormFieldSchema[];
@@ -40,7 +40,7 @@ export default function Form({
                     {...props}
                 >
                     {formFields.map((field, index) => (
-                        <FormField 
+                        <FormField
                             disabled={disabled}
                             {...field} 
                             key={index}

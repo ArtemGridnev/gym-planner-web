@@ -16,51 +16,43 @@ export type BaseField = {
     name: string;
     label: string;
     rules?: RegisterOptions;
+    disabled?: boolean;
     startAdornment?: ElementType | string;
     endAdornment?: ElementType | string;
 };
 
-export type TextField = {
-    type: "text";
-};
+export type TextField = BaseField & { type: "text" | "email" | "password" | "textarea" };
 
-export type Textarea = {
-    type: "textarea";
-}
-
-export type EmailField = {
-    type: "email";
-}
-
-export type PasswordField = {
-    type: "password"
-}
-
-export type NumberField = {
+export type NumberField = BaseField & {
     type: "number";
     step?: number;
     unit?: string;
 };
 
-export type SelectField = {
+export type SelectField = BaseField & {
     type: "select";
     options: SelectOption[];
 };
 
-export type SearchSelectField = {
+export type SearchSelectField = BaseField & {
     type: "searchSelect";
     options: SearchSelectOption[];
 };
 
-export type SearchSelectMultipleField = {
+export type SearchSelectMultipleField = BaseField & {
     type: "searchSelectMultiple";
     options: SearchSelectOption[];
 };
 
-export type CronField = {
+export type CronField = BaseField & {
     type: "cron";
-    fields: ('weekDays')[];
+    fields: "weekDays"[];
 };
 
-export type FormFieldSchema = BaseField & (TextField | Textarea | EmailField | PasswordField | SelectField | SearchSelectField | SearchSelectMultipleField | NumberField | CronField);
-
+export type FormFieldSchema =
+    | TextField
+    | NumberField
+    | SelectField
+    | SearchSelectField
+    | SearchSelectMultipleField
+    | CronField;

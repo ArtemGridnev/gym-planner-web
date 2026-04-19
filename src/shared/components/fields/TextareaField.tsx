@@ -1,36 +1,33 @@
-import { MenuItem, TextField } from "@mui/material";
-import type { SelectOption } from "../../types/form/formFieldSchema";
+import { TextField } from "@mui/material";
 import type { BaseFieldProps } from "../../types/field/baseFieldProps";
 import type { FieldTextUiProps } from "../../types/field/fieldTextUiProps";
 
-type SelectFieldProps =
+type TextareaFieldProps =
   BaseFieldProps<string> & {
-    options: SelectOption[];
+    minRows?: number;
+    maxRows?: number;
     textFieldProps?: FieldTextUiProps;
   };
 
-export default function Select({
+export default function TextareaField({
   value,
   onChange,
   onBlur,
-  options,
+  minRows = 4.5,
+  maxRows = 6,
   textFieldProps,
   ...props
-}: SelectFieldProps) {
+}: TextareaFieldProps) {
   return (
     <TextField
       {...textFieldProps}
       {...props}
-      select
+      multiline
       value={value ?? ""}
+      minRows={minRows}
+      maxRows={maxRows}
       onBlur={onBlur}
       onChange={(e) => onChange(e.target.value)}
-    >
-      {options.map((option) => (
-        <MenuItem key={option.value} value={option.value}>
-          {option.label}
-        </MenuItem>
-      ))}
-    </TextField>
+    />
   );
 }
