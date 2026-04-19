@@ -30,7 +30,7 @@ export default function FilterField(props: FilterFieldProps) {
                     value={+value}
                     onChange={(inputValue) => onChange(name, inputValue?.toString() || '')}
                     { ...otherProps }
-                    { ...textFieldProps }
+                    textFieldProps={{ ...textFieldProps }}
                 />  
             );
 
@@ -49,11 +49,11 @@ export default function FilterField(props: FilterFieldProps) {
             return (
                 <SearchSelect
                     name={name}
-                    value={+value ?? null}
+                    value={+value}
                     onChange={value => onChange(name, value?.toString() || '')}
                     options={props.options}
                     textFieldProps={{ ...textFieldProps }}
-                    />
+                />
             );
         
         case 'searchSelectMultiple':

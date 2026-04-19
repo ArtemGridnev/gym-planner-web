@@ -2,7 +2,6 @@ import {
   Autocomplete,
   Chip,
   TextField,
-  type AutocompleteProps,
 } from "@mui/material";
 import { useMemo } from "react";
 import type { SearchSelectOption } from "../../types/form/formFieldSchema";
@@ -10,11 +9,7 @@ import type { BaseFieldProps } from "../../types/field/baseFieldProps";
 import type { FieldTextUiProps } from "../../types/field/fieldTextUiProps";
 
 type SearchSelectMultipleProps =
-  BaseFieldProps<string[]> &
-  Omit<
-    AutocompleteProps<SearchSelectOption, true, false, false>,
-    "value" | "onChange" | "options" | "renderInput"
-  > & {
+  BaseFieldProps<string[]> & {
     options: SearchSelectOption[];
     textFieldProps?: FieldTextUiProps;
   };
@@ -67,7 +62,6 @@ export default function SearchSelectMultiple({
         "& .MuiAutocomplete-input": {
           width: "auto !important",
         },
-        ...props.sx,
       }}
     />
   );
