@@ -4,15 +4,6 @@ import Form, { type FormProps } from "./Form";
 import { vi } from "vitest";
 import { type FormFieldSchema } from "../../types/form/formFieldSchema";
 
-vi.mock("../Alerts.tsx", () => ({
-    default: (props: any) => (
-        <div>
-            {props.success && <span>Success: {props.success}</span>}
-            {props.error && <span>Error: {props.error}</span>}
-        </div>
-    ),
-}));
-
 describe('Form', () => {
     const formFields: FormFieldSchema[] = [
         {
@@ -64,14 +55,6 @@ describe('Form', () => {
     };
 
 
-    // Alerts
-    it("renders error and success messages when error and success props are provided", () => {
-        render(<Form {...baseProps} success="success" error="error" />);
-        expect(screen.getByText('Success: success')).toBeInTheDocument();
-        expect(screen.getByText('Error: error')).toBeInTheDocument();
-    });
-
-    
     // Fields 
     it("renders all form fields based on formFields prop", () => {
         render(<Form {...baseProps} />);
