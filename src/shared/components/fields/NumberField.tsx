@@ -1,8 +1,8 @@
 import { InputAdornment, TextField } from "@mui/material";
-import type { BaseFieldProps } from "../../types/field/baseFieldProps";
+import type { InputLikeFieldProps } from "../../types/field/baseFieldProps";
 import type { FieldTextUiProps } from "../../types/field/fieldTextUiProps";
 
-type NumberFieldProps = BaseFieldProps<number | undefined> & {
+type NumberFieldProps = InputLikeFieldProps<number | undefined> & {
   textFieldProps?: FieldTextUiProps;
   unit?: React.ReactNode;
   step?: number;

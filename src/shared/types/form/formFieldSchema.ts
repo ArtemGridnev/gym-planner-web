@@ -21,9 +21,15 @@ export type BaseField = {
     endAdornment?: ElementType | string;
 };
 
-export type TextField = BaseField & { type: "text" | "email" | "password" | "textarea" };
+export type InputLikeField = BaseField & {
+    autoComplete?: string;
+};
 
-export type NumberField = BaseField & {
+export type TextField = InputLikeField & {
+    type: "text" | "email" | "password" | "textarea";
+};
+
+export type NumberField = InputLikeField & {
     type: "number";
     step?: number;
     unit?: string;
