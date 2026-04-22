@@ -9,3 +9,7 @@ export type BaseFieldProps<T> = {
   error?: boolean;
   helperText?: string;
 };
+
+export type InputLikeFieldProps<T> = BaseFieldProps<T> & {
+  autoComplete?: string;
+};

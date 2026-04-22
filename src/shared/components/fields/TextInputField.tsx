@@ -1,8 +1,8 @@
 import { TextField, type TextFieldProps } from "@mui/material";
-import type { BaseFieldProps } from "../../types/field/baseFieldProps";
+import type { InputLikeFieldProps } from "../../types/field/baseFieldProps";
 
 type TextInputFieldProps =
-  BaseFieldProps<string> & {
+  InputLikeFieldProps<string> & {
     type?: "text" | "email";
     textFieldProps?: TextFieldProps;
   };

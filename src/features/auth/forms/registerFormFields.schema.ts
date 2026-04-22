@@ -14,6 +14,7 @@ export const registerFormFields: FormFieldSchema[] = [
         label: "First name",
         name: "firstName",
         type: "text",
+        autoComplete: "given-name",
         rules: {
             required: { value: true, message: "This field is required." },
             minLength: { value: 2, message: "First name should be at least two characters long." },
@@ -23,6 +24,7 @@ export const registerFormFields: FormFieldSchema[] = [
         label: "Last name",
         name: "lastName",
         type: "text",
+        autoComplete: "family-name",
         rules: {
             required: { value: true, message: "This field is required." },
             minLength: { value: 2, message: "Last name should be at least two characters long." },
@@ -32,6 +34,7 @@ export const registerFormFields: FormFieldSchema[] = [
         label: "Email",
         name: "email",
         type: "email",
+        autoComplete: "email",
         rules: {
             required: { value: true, message: "This field is required." },
             validate: {
@@ -43,6 +46,7 @@ export const registerFormFields: FormFieldSchema[] = [
         label: "Password",
         name: "password",
         type: "password",
+        autoComplete: "new-password",
         rules: {
             required: { value: true, message: "This field is required." },
             validate: passwordValidators.reduce<Record<string, (value: string) => true | string>>(
@@ -58,6 +62,7 @@ export const registerFormFields: FormFieldSchema[] = [
         label: "Validate Password",
         name: "validatePassword",
         type: "password",
+        autoComplete: "new-password",
         rules: {
             required: { value: true, message: "This field is required." },
             validate: (value: string, formValues: any) => {
