@@ -29,8 +29,8 @@ describe('Trains', () => {
             cy.get('input[name="name"]').type('Create test train');
 
             cy.get('[data-testid="days-toggle-button-group"]').within(() => {
-                cy.get('button[value="0"]').click();
-                cy.get('button[value="3"]').click();
+                cy.get('button[value="0"]').click().should('have.class', 'Mui-selected');
+                cy.get('button[value="3"]').click().should('have.class', 'Mui-selected');
             });
             
             cy.get('button[type="submit"]').click();
@@ -53,8 +53,8 @@ describe('Trains', () => {
             cy.get('input[name="name"]').type('Update test train');
 
             cy.get('[data-testid="days-toggle-button-group"]').within(() => {
-                cy.get('button[value="0"]').click();
-                cy.get('button[value="3"]').click();
+                cy.get('button[value="0"]').click().should('have.class', 'Mui-selected');
+                cy.get('button[value="3"]').click().should('have.class', 'Mui-selected');
             });
             
             cy.get('button[type="submit"]').click();
@@ -70,7 +70,7 @@ describe('Trains', () => {
         cy.get('[data-testid="edit-train-button"]').click();
 
         cy.get('[data-testid="train-form"]').within(() => {
-            cy.get('input[name="name"]').clear().type('Update test train 1');
+            cy.get('input[name="name"]').clear().type('Update test train 1').should('have.value', 'Update test train 1');
             cy.get('button[type="submit"]').click();
         });
 
@@ -94,8 +94,8 @@ describe('Trains', () => {
             cy.get('input[name="name"]').type('Delete test train');
 
             cy.get('[data-testid="days-toggle-button-group"]').within(() => {
-                cy.get('button[value="0"]').click();
-                cy.get('button[value="3"]').click();
+                cy.get('button[value="0"]').click().should('have.class', 'Mui-selected');
+                cy.get('button[value="3"]').click().should('have.class', 'Mui-selected');
             });
             
             cy.get('button[type="submit"]').click();
@@ -128,8 +128,8 @@ describe('Trains', () => {
             cy.get('input[name="name"]').type('Details test train');
 
             cy.get('[data-testid="days-toggle-button-group"]').within(() => {
-                cy.get('button[value="0"]').click();
-                cy.get('button[value="3"]').click();
+                cy.get('button[value="0"]').click().should('have.class', 'Mui-selected');
+                cy.get('button[value="3"]').click().should('have.class', 'Mui-selected');
             });
             
             cy.get('button[type="submit"]').click();

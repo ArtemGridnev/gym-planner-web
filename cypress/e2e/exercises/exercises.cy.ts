@@ -70,7 +70,7 @@ describe('Exercises', () => {
             cy.get('input[name="sets"]').type('3');
             cy.get('input[name="reps"]').type('12');
             cy.get('input[name="durationSeconds"]').type('60');
-            cy.get('input[name="weight"]').type('20');
+            cy.get('input[name="weight"]').type('20').should('have.value', '20');
             cy.get('button[type="submit"]').click();
         });
 
@@ -100,7 +100,7 @@ describe('Exercises', () => {
         cy.get('[data-testid="edit-exercise-button"]').click();
 
         cy.get('[data-testid="exercise-form"]').within(() => {
-            cy.get('input[name="name"]').clear().type('Updated Exercise Name');
+            cy.get('input[name="name"]').clear().type('Updated Exercise Name').should('have.value', 'Updated Exercise Name');;
             cy.get('button[type="submit"]').click();
         });
 
@@ -134,7 +134,7 @@ describe('Exercises', () => {
 
             cy.get('input[name="name"]').type('Delete test exercise');
             cy.get('textarea[name="description"]').type('A bodyweight exercise that primarily targets the chest, shoulders, and triceps.');
-            cy.get('input[name="weight"]').type('20');
+            cy.get('input[name="weight"]').type('20').should('have.value', '20');
             cy.get('button[type="submit"]').click();
         });
 
