@@ -5,11 +5,11 @@ import {
   TextField,
 } from "@mui/material";
 import { useState } from "react";
-import type { BaseFieldProps } from "../../types/field/baseFieldProps";
+import type { InputLikeFieldProps } from "../../types/field/baseFieldProps";
 import type { FieldTextUiProps } from "../../types/field/fieldTextUiProps";
 
 type PasswordFieldProps =
-  BaseFieldProps<string> & {
+  InputLikeFieldProps<string> & {
     textFieldProps?: FieldTextUiProps;
   };
 

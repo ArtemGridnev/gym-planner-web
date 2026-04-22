@@ -1,9 +1,9 @@
 import { TextField } from "@mui/material";
-import type { BaseFieldProps } from "../../types/field/baseFieldProps";
+import type { InputLikeFieldProps } from "../../types/field/baseFieldProps";
 import type { FieldTextUiProps } from "../../types/field/fieldTextUiProps";
 
 type TextareaFieldProps =
-  BaseFieldProps<string> & {
+  InputLikeFieldProps<string> & {
     minRows?: number;
     maxRows?: number;
     textFieldProps?: FieldTextUiProps;
