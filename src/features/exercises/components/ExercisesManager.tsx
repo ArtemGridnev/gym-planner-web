@@ -34,7 +34,8 @@ export default function Exercises() {
         isUpdate,
         edit: editExercise,
         create: createExercise,
-        formStates
+        formStates,
+        initialValues
     } = useExerciseFormController();
 
     const onAdd = () => {
@@ -62,6 +63,7 @@ export default function Exercises() {
             >
                 <Alerts success={formStates.success} error={formStates.error} sx={{ mb: 2 }} />
                 <Form
+                    initialValues={initialValues}
                     onSuccess={formStates.onSuccess}
                     disabled={formStates.disabled}
                     isLoading={formStates.isLoading}

@@ -151,13 +151,13 @@ export default function useFormController<
 
     return {
         formStates: {
-            initialValues,
             onSuccess,
             disabled,
             isLoading,
             success,
             error
         } as FormStates,
+        initialValues,
         isUpdate: !!editId,
         create,
         edit,

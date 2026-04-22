@@ -25,7 +25,8 @@ export default function Trains() {
         isUpdate,
         edit: editTrain,
         create: createTrain,
-        formStates
+        formStates,
+        initialValues
     } = useFormController<TrainData>({
         createMutation: useCreateTrain(),
         updateMutation: useUpdateTrain(),
@@ -66,6 +67,7 @@ export default function Trains() {
             >
                 <Alerts success={formStates.success} error={formStates.error} sx={{ mb: 2 }} />
                 <Form
+                    initialValues={initialValues}
                     onSuccess={formStates.onSuccess}
                     disabled={formStates.disabled}
                     isLoading={formStates.isLoading}
