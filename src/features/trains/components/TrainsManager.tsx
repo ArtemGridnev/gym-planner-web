@@ -10,6 +10,7 @@ import useUpdateTrain from "../queries/hooks/useUpdateTrain";
 import { trainFormFields } from "../forms/trainFormFields.schema";
 import { getTrain, type TrainData } from "../services/trainsService";
 import { trainToFormData } from "../utils/formMappers";
+import Alerts from "../../../shared/components/Alerts";
 
 export default function Trains() {
     const { 
@@ -24,7 +25,8 @@ export default function Trains() {
         isUpdate,
         edit: editTrain,
         create: createTrain,
-        formStates
+        formStates,
+        initialValues
     } = useFormController<TrainData>({
         createMutation: useCreateTrain(),
         updateMutation: useUpdateTrain(),
@@ -63,8 +65,12 @@ export default function Trains() {
                 open={formOpen} 
                 onClose={() => setFormOpen(false)} 
             >
+                <Alerts success={formStates.success} error={formStates.error} sx={{ mb: 2 }} />
                 <Form
-                    {...formStates}
+                    initialValues={initialValues}
+                    onSuccess={formStates.onSuccess}
+                    disabled={formStates.disabled}
+                    isLoading={formStates.isLoading}
                     formFields={trainFormFields}
                     submitButtonText={isUpdate ? "Update Train" : "Create Train"}
                     data-testid="train-form"

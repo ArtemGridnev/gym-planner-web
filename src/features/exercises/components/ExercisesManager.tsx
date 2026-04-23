@@ -7,6 +7,7 @@ import Form from "../../../shared/components/form/Form";
 import useExerciseFormController from "../hooks/useExerciseFormController";
 import useInfiniteScroll from "../../../shared/hooks/useInfiniteScroll";
 import useExerciseFormFields from "../hooks/useExerciseFormFields";
+import Alerts from "../../../shared/components/Alerts";
 
 export default function Exercises() {
     const [filters, setFilters] = useState<Record<string, string>>();
@@ -33,7 +34,8 @@ export default function Exercises() {
         isUpdate,
         edit: editExercise,
         create: createExercise,
-        formStates
+        formStates,
+        initialValues
     } = useExerciseFormController();
 
     const onAdd = () => {
@@ -59,8 +61,12 @@ export default function Exercises() {
                 title={isUpdate ? "Update Exercise" : "Create Exercise"}
                 onClose={() => setFormOpen(false)} 
             >
+                <Alerts success={formStates.success} error={formStates.error} sx={{ mb: 2 }} />
                 <Form
-                    {...formStates}
+                    initialValues={initialValues}
+                    onSuccess={formStates.onSuccess}
+                    disabled={formStates.disabled}
+                    isLoading={formStates.isLoading}
                     formFields={exerciseFormFields}
                     submitButtonText={isUpdate ? "Update Exercise" : "Create Exercise"}
                     data-testid="exercise-form"

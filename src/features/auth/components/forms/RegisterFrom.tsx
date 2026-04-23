@@ -1,6 +1,7 @@
 import useRegister from "../../hooks/useRegister";
 import Form from "../../../../shared/components/form/Form";
 import { useEffect } from "react";
+import Alerts from "../../../../shared/components/Alerts";
 
 type RegisterFormProps = {
     onSuccess: () => void;
@@ -21,13 +22,12 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
 
     return (
         <>
+            <Alerts success={success} error={error} sx={{ mb: 2 }} />
             <Form 
                 formFields={formFields} 
                 submitButtonText="Sign up" 
                 onSuccess={handleSubmit} 
                 isLoading={loading} 
-                success={success} 
-                error={error}
             />
         </>
     )
