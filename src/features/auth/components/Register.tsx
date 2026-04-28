@@ -14,7 +14,7 @@ export default function Register() {
                 </>
             }
         >
-            <RegisterForm onSuccess={() => navigate("/train-sessions")} />
+            <RegisterForm onSuccess={() => navigate("/managment/trains")} />
         </AuthCardLayout>
     );
 }

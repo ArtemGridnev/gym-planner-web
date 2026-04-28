@@ -19,7 +19,7 @@ function App() {
       <AuthProvider>
         <Routes>
           {/* Default redirect */}
-          <Route path="/" element={<Navigate to="/train-sessions" replace />} />
+          <Route path="/" element={<Navigate to="/managment/trains" replace />} />
 
           {/* Auth */}
           <Route element={<PublicRoute />}>

@@ -1,75 +1,119 @@
-# React + TypeScript + Vite
+# Gym Planner
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A production-style full-stack workout management app for managing workouts, exercises, and training flows.
 
-Currently, two official plugins are available:
+Built with React, TypeScript, and modern frontend architecture patterns.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Live Demo
 
-## React Compiler
+- [Live app](https://gym-planner-web.vercel.app/)
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+### Demo credentials
 
-Note: This will impact Vite dev & build performances.
+- Email: `demo@gym.com`
+- Password: `P@ssw0rd123`
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Authentication with protected routes using cookie-based sessions.
+- Real-time-like UX with optimistic updates.
+- Dynamic form system with reusable field components.
+- Infinite scrolling with TanStack Query.
+- Drag-and-drop exercise management with dnd-kit.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Frontend
+- React
+- TypeScript
+- TanStack Query
+- React Hook Form
+- MUI (Material UI)
+- dnd-kit
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Backend
+- NestJS
+- PostgreSQL
+
+### Testing
+- Cypress for end-to-end tests
+- Vitest and React Testing Library for unit and component tests
+
+### Deployment
+- Vercel for the frontend
+- Railway for the backend
+
+## Architecture
+
+This project follows a scalable, feature-based structure.
+
+- Reusable form system built with configuration-driven fields.
+- Clear separation between UI, logic, and API layers.
+- Custom hooks for data fetching and business logic.
+- Centralized API handling with Axios.
+- Modular and extensible component design.
+
+## Work in Progress
+
+The Training Sessions feature is currently under development.
+
+Planned capabilities:
+- Automatic session creation from training plans.
+- Step-by-step workout flow.
+- Progress tracking during sessions.
+
+The rest of the application is fully functional and demonstrates the core architecture and main features.
+
+## Running Locally
+
+### Prerequisites
+- Node.js
+- npm
+
+### Clone the repository
+
+```bash
+git clone https://github.com/ArtemGridnev/gym-planner-web.git
+cd gym-planner-web
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Environment variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Create a `.env` file in the project root:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```env
+VITE_API_URL=https://gym-planner-api-production.up.railway.app/
+CYPRESS_BASE_URL=http://localhost:5173
 ```
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Start the development server
+
+```bash
+npm run dev
+```
+
+## Testing
+
+### E2E tests
+
+Cypress E2E tests cover:
+- Authentication flow.
+- Exercise management.
+- Training creation.
+
+### Run tests
+
+```bash
+npm run test:e2e
+```
+
+## Notes
+
+- Some features are still in progress, especially Training Sessions.
+- The app is designed as a showcase of scalable frontend architecture and a modern full-stack workflow.

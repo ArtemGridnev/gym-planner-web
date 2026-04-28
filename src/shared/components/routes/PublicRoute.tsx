@@ -10,7 +10,7 @@ export default function PublicRoute() {
     if (loading && showSplash) return <SplashScreen />;
     if (loading) return null;
 
-    if (user) return <Navigate to="/train-sessions" />
+    if (user) return <Navigate to="/managment/trains" />
 
     return <Outlet />;
 }
