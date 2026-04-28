@@ -18,7 +18,7 @@ type LoginProps = {
           </>
         }
       >
-        <LoginForm onSuccess={() => navigate(redirectPath ?? "/train-sessions")} />
+        <LoginForm onSuccess={() => navigate(redirectPath ?? "/managment/trains")} />
       </AuthCardLayout>
     );
   }

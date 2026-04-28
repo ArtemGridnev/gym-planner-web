@@ -1,6 +1,7 @@
 import Card from "../../../shared/components/layout/card/Card";
 import CardHeader from "../../../shared/components/layout/card/CardHeader";
 import CardContent from "../../../shared/components/layout/card/CardContent";
+import TrainSessionsComingSoon from "./TrainSessionsComingSoon";
 
 export default function TrainSessions() {
     return (
@@ -9,7 +10,7 @@ export default function TrainSessions() {
                 title="Train Sessions"
             />
             <CardContent>
-                
+                <TrainSessionsComingSoon />
             </CardContent>
         </Card>
     );
