@@ -15,7 +15,7 @@ Cypress.Commands.add('registerFreshUser', (email: string, password: string = "Pa
     cy.get('input[name="password"]').type(password);
     cy.get('input[name="validatePassword"]').type(password);
     cy.get('button[type="submit"]').click();
-    cy.url().should('include', '/train-sessions');
+    cy.url().should('include', '/managment/trains');
 });
 
 Cypress.Commands.add('logout', () => {

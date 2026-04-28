@@ -82,7 +82,7 @@ cd gym-planner-web
 Create a `.env` file in the project root:
 
 ```env
-VITE_API_URL=http://localhost:3000
+VITE_API_URL=https://gym-planner-api-production.up.railway.app/
 CYPRESS_BASE_URL=http://localhost:5173
 ```
 

@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { ChecklistOutlined } from "@mui/icons-material";
 
 export default function TrainingSessionsComingSoon() {
