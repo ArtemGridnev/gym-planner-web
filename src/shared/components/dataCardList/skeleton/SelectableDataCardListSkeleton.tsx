@@ -31,8 +31,9 @@ export default function SelectableDataCardListSkeleton({ columns, rows, icon, me
                         <Skeleton
                             variant="rectangular"
                             sx={{
-                                width: 3,
-                                height: 3
+                                width: 24,
+                                height: 24,
+                                borderRadius: 1,
                             }} 
                         />
                     </Box>
