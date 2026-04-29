@@ -20,7 +20,7 @@ export default function DraggableDataCardListSkeleton({ columns, rows, icon, men
         >
             {Array.from({ length: rows }).map((_, index) => (
                 <SortableItemSkeleton key={index} >
-                    {<DataCardListItemSkeleton columns={columns}icon={icon} menuItems={menuItems} />}
+                    <DataCardListItemSkeleton columns={columns} icon={icon} menuItems={menuItems} />
                 </SortableItemSkeleton>
             ))}
         </Box>
