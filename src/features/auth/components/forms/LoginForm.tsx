@@ -1,7 +1,7 @@
 import useLogin from "../../hooks/useLogin";
 import { useEffect } from "react";
 import Form from "../../../../shared/components/form/Form";
-import Alerts from "../../../../shared/components/Alerts";
+import Alerts from "../../../../shared/components/alerts/Alerts";
 
 type LoginFormProps = {
     onSuccess: () => void;

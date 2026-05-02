@@ -20,7 +20,10 @@ export default function useExercisesSelect({ onSubmit }: useExercisesSelectProps
         fetchNextPage,
     } = useExercises({ filters });
 
-    const loadMoreRef = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
+    const {
+        loadMoreRef,
+        rootRef: listRootRef
+    } = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
 
     const rows = useMemo<SelectableDataCardListRowProps[] | null>(() => {
         if (!data) return null;
@@ -53,9 +56,11 @@ export default function useExercisesSelect({ onSubmit }: useExercisesSelectProps
     return {
         rows,
         isPending,
+        isFetchingNextPage,
         hasNextPage,
         selected,
         loadMoreRef,
+        listRootRef,
         setFilters,
         handleCheck,
         handleSubmit,

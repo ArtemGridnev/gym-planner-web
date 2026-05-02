@@ -10,8 +10,7 @@ import { AddOutlined, DeleteOutline, EditOutlined, FitnessCenterOutlined } from 
 import React, { useMemo } from "react";
 import type { Exercise } from "../types/exercise";
 import ToolbarLoadingIndicator from "../../../shared/components/toolbar/ToolbarLoadingIndicator";
-import Alerts from "../../../shared/components/Alerts";
-import ListNoDataMessage from "../../../shared/components/ListNoDataMessage";
+import InfiniteListState from "../../../shared/components/list/InfiniteListState";
 
 const columns: DataCardListColumnProps[] = [
     { field: 'description', fullWidth: true },
@@ -22,11 +21,12 @@ const columns: DataCardListColumnProps[] = [
 ];
 
 type ExercisesCardProps = {
-    loadMoreRef?: React.RefObject<HTMLDivElement | null>;
+    loadMoreRef: React.RefObject<HTMLDivElement | null>;
+    rootListRef: React.RefObject<HTMLDivElement | null>;
     exercises?: Exercise[];
     isPending: boolean;
-    isFetchingNextPage?: boolean;
-    hasNextPage?: boolean;
+    isFetchingNextPage: boolean;
+    hasNextPage: boolean;
     error: string | null;
     onAdd: () => void;
     onEdit: (id: number) => void;
@@ -36,8 +36,10 @@ type ExercisesCardProps = {
 
 export default function ExercisesCard({ 
     loadMoreRef, 
+    rootListRef,
     exercises, 
     isPending, 
+    isFetchingNextPage,
     hasNextPage, 
     error, 
     onAdd, 
@@ -48,34 +50,32 @@ export default function ExercisesCard({
     const rows = useMemo<DataCardListRowProps[] | null>(() => {
         if (!exercises) return null;
 
-        return exercises?.map(exercise => { 
-            return {
-                icon: FitnessCenterOutlined,
-                title: `${exercise.name} - ${exercise.category?.name}`,
-                data: {
-                    id: exercise.id,
-                    description: exercise.description,
-                    sets: exercise.sets,
-                    reps: exercise.reps,
-                    durationSeconds: exercise.durationSeconds && `${exercise.durationSeconds.toLocaleString()} sec`,
-                    weight: exercise.weight && `${exercise.weight.toLocaleString()} kg`
+        return exercises?.map(exercise => ({
+            icon: FitnessCenterOutlined,
+            title: `${exercise.name} - ${exercise.category?.name}`,
+            data: {
+                id: exercise.id,
+                description: exercise.description,
+                sets: exercise.sets,
+                reps: exercise.reps,
+                durationSeconds: exercise.durationSeconds && `${exercise.durationSeconds.toLocaleString()} sec`,
+                weight: exercise.weight && `${exercise.weight.toLocaleString()} kg`
+            },
+            menuItems: [
+                { 
+                    icon: EditOutlined, 
+                    text: 'edit', 
+                    onClick: () => onEdit(exercise.id),
+                    testid: `edit-exercise-button`,
                 },
-                menuItems: [
-                    { 
-                        icon: EditOutlined, 
-                        text: 'edit', 
-                        onClick: () => onEdit(exercise.id),
-                        testid: `edit-exercise-button`,
-                    },
-                    { 
-                        icon: DeleteOutline, 
-                        text: 'delete', 
-                        onClick: () => onDelete(exercise.id),
-                        testid: `delete-exercise-button`,
-                    },
-                ]
-            };
-        });
+                { 
+                    icon: DeleteOutline, 
+                    text: 'delete', 
+                    onClick: () => onDelete(exercise.id),
+                    testid: `delete-exercise-button`,
+                },
+            ]
+        }));
     }, [exercises]);
 
     return (
@@ -99,19 +99,27 @@ export default function ExercisesCard({
                         overflowY: !rows ? 'hidden' : 'auto'
                     }}
                     data-testid="exercises-list-container"
+                    ref={rootListRef}
                 >
                     <Toolbar>
                         <ExercisesListFilters onChange={(filters) => onFiltersChange(filters)} />
                         {isPending && rows && <ToolbarLoadingIndicator />}
                     </Toolbar>
-                    <Box sx={{ display: 'flex', padding: 2, gap: 2, flexDirection: 'column' }}>
-                        <Alerts error={error} sx={{ mb: 2 }} />
+                    <Box sx={{ padding: 2 }}>
+                        <InfiniteListState 
+                            isInitialLoading={isPending && !rows}
+                            isFetchingNextPage={isFetchingNextPage}
+                            hasNextPage={hasNextPage}
+                            loadMoreRef={loadMoreRef}
+                            errors={error ? [error] : []}
+                            isEmpty={rows ? rows.length === 0 : false}
+                            skeleton={<DataCardListSkeleton columns={{ min: 3, max: 6 }} rows={6} icon={true} menuItems={true} />}
+                        >
+                            {rows && (
+                                <DataCardList data-testid="exercises-list" columns={columns} rows={rows} />
+                            )}
+                        </InfiniteListState>
 
-                        {!isPending && rows?.length === 0 && <ListNoDataMessage message="No items here… yet." />}
-
-                        {rows && <DataCardList data-testid="exercises-list" columns={columns} rows={rows} />}
-
-                        {((isPending && !rows) || hasNextPage) && <DataCardListSkeleton ref={loadMoreRef} columns={{ min: 3, max: 6 }} rows={6} icon={true} menuItems={true} />}
                     </Box>
                 </Box>
             </CardContent>

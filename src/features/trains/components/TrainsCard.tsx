@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import Card from "../../../shared/components/layout/card/Card";
 import type { Train } from "../types/train";
 import { AddOutlined, DeleteOutline, EditOutlined, SportsMartialArtsOutlined } from "@mui/icons-material";
@@ -9,9 +9,8 @@ import CardHeader from "../../../shared/components/layout/card/CardHeader";
 import CardContent from "../../../shared/components/layout/card/CardContent";
 import DataCardListSkeleton from "../../../shared/components/dataCardList/skeleton/DataCardListSkeleton";
 import DataCardList from "../../../shared/components/dataCardList/DataCardList";
-import Alerts from "../../../shared/components/Alerts";
 import { useNavigate } from "react-router-dom";
-import ListNoDataMessage from "../../../shared/components/ListNoDataMessage";
+import ListState from "../../../shared/components/list/ListState";
 
 type TrainsCardProps = {
     trains?: Train[];
@@ -29,36 +28,33 @@ const columns: DataCardListColumnProps[] = [
 
 export default function TrainsCard({ trains, isLoading, error, onAdd, onEdit, onDelete }: TrainsCardProps) {
     const navigate = useNavigate();
-    const [rows, setRows] = useState<DataCardListRowProps[]>([]);
 
-    useEffect(() => {
-        if (trains) {
-            setRows(trains?.map(train => ({
-                icon: SportsMartialArtsOutlined,
-                title: train.name,
-                data: {
-                    weekDays: cronToDays(train.recurrenceCron)
+    const rows = useMemo<DataCardListRowProps[] | null>(() => {
+        if (!trains) return [];
+
+        return trains?.map(train => ({
+            icon: SportsMartialArtsOutlined,
+            title: train.name,
+            data: {
+                weekDays: cronToDays(train.recurrenceCron)
+            },
+            menuItems: [
+                { 
+                    icon: EditOutlined, 
+                    text: 'edit', 
+                    onClick: () => onEdit(train.id),
+                    testid: `edit-train-button`
                 },
-                menuItems: [
-                    { 
-                        icon: EditOutlined, 
-                        text: 'edit', 
-                        onClick: () => onEdit(train.id),
-                        testid: `edit-train-button`
-                    },
-                    { 
-                        icon: DeleteOutline, 
-                        text: 'delete', 
-                        onClick: () => onDelete(train.id),
-                        testid: `delete-train-button` 
-                    },
-                ],
-                onClick: () => navigate(`/managment/trains/${train.id}`)
-            })));
-        } else {
-            setRows([]);
-        }
-    }, [trains]);
+                { 
+                    icon: DeleteOutline, 
+                    text: 'delete', 
+                    onClick: () => onDelete(train.id),
+                    testid: `delete-train-button` 
+                },
+            ],
+            onClick: () => navigate(`/managment/trains/${train.id}`)
+        }));
+    }, [trains])
 
     return (
         <Card data-testid="trains-page">
@@ -67,8 +63,8 @@ export default function TrainsCard({ trains, isLoading, error, onAdd, onEdit, on
                 actions={[
                     {
                         icon: AddOutlined,
-                        label: 'Create Train',
-                        tooltip: 'Create Train',
+                        label: 'Create Training',
+                        tooltip: 'Create Training',
                         onClick: onAdd,
                         testid: 'create-train-button'
                     }
@@ -82,10 +78,17 @@ export default function TrainsCard({ trains, isLoading, error, onAdd, onEdit, on
                         overflowY: isLoading ? 'hidden' : 'auto'
                     }}
                 >
-                    <Alerts error={error} sx={{ mb: 2 }} />
-                    {isLoading && <DataCardListSkeleton columns={1} rows={8} icon={true} menuItems={true} />}
-                    {!isLoading && rows.length === 0 && (<ListNoDataMessage message="No items here… yet." />)}
-                    {trains && !isLoading && <DataCardList data-testid="trains-list" columns={columns} rows={rows} />}
+                    <ListState 
+                        errors={error ? [error] : []} 
+                        isLoading={isLoading} 
+                        isEmpty={rows ? rows.length === 0 : false}
+                        skeleton={<DataCardListSkeleton columns={1} rows={8} icon={true} menuItems={true} />}
+                        emptyMessage="No trainings here… yet."
+                    >
+                        {rows && (
+                            <DataCardList data-testid="trains-list" columns={columns} rows={rows} />
+                        )}
+                    </ListState>
                 </Box>
             </CardContent>
         </Card>

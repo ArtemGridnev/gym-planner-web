@@ -1,7 +1,7 @@
 import useRegister from "../../hooks/useRegister";
 import Form from "../../../../shared/components/form/Form";
 import { useEffect } from "react";
-import Alerts from "../../../../shared/components/Alerts";
+import Alerts from "../../../../shared/components/alerts/Alerts";
 
 type RegisterFormProps = {
     onSuccess: () => void;
