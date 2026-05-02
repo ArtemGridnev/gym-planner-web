@@ -9,7 +9,7 @@ import CardHeader from "../../../shared/components/layout/card/CardHeader";
 import CardContent from "../../../shared/components/layout/card/CardContent";
 import DataCardListSkeleton from "../../../shared/components/dataCardList/skeleton/DataCardListSkeleton";
 import DataCardList from "../../../shared/components/dataCardList/DataCardList";
-import Alerts from "../../../shared/components/Alerts";
+import Alerts from "../../../shared/components/alerts/Alerts";
 import { useNavigate } from "react-router-dom";
 
 type TrainsCardProps = {
@@ -64,8 +64,8 @@ export default function TrainsCard({ trains, isLoading, error, onAdd, onEdit, on
                 actions={[
                     {
                         icon: AddOutlined,
-                        label: 'Create Train',
-                        tooltip: 'Create Train',
+                        label: 'Create Training',
+                        tooltip: 'Create Training',
                         onClick: onAdd
                     }
                 ]}

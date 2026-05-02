@@ -7,7 +7,7 @@ import Toolbar from "../../../../shared/components/toolbar/Toolbar";
 import ExercisesListFilters from "../ExercisesListFilters";
 import useExercisesSelect from "../../hooks/useExercisesSelect";
 import SelectableDataCardListSkeleton from "../../../../shared/components/dataCardList/skeleton/SelectableDataCardListSkeleton";
-import ListNoDataMessage from "../../../../shared/components/ListNoDataMessage";
+import InfiniteListState from "../../../../shared/components/list/InfiniteListState";
 
 const exercisesColumns: DataCardListColumnProps[] = [
     { field: 'description', fullWidth: true },
@@ -27,9 +27,11 @@ export default function ExercisesSelectModal({ open, onClose, onSubmit }: Exerci
     const {
         rows,
         isPending,
+        isFetchingNextPage,
         hasNextPage,
         selected,
         loadMoreRef,
+        listRootRef,
         setFilters,
         handleCheck,
         handleSubmit,
@@ -51,6 +53,7 @@ export default function ExercisesSelectModal({ open, onClose, onSubmit }: Exerci
                         height: '100%',
                         overflowY: !rows ? 'hidden' : 'auto'
                     }}
+                    ref={listRootRef}
                 >
                     <Toolbar>
                         <ExercisesListFilters onChange={setFilters} />
@@ -67,17 +70,27 @@ export default function ExercisesSelectModal({ open, onClose, onSubmit }: Exerci
                         )}
                     </Toolbar>
                     <Box sx={{ display: 'flex', padding: 2, gap: 2, flexDirection: 'column' }}>
-                        {!isPending && rows?.length === 0 && <ListNoDataMessage message="No exercises in this train… yet." />}
-                        {!isPending && rows && (
-                            <SelectableDataCardList 
-                                selected={Object.keys(selected)}
-                                rows={rows} 
-                                columns={exercisesColumns} 
-                                onChange={handleCheck} 
-                                data-testid="exercises-selectable-list"
-                            />
-                        )}
-                        {(isPending || hasNextPage) && <SelectableDataCardListSkeleton ref={loadMoreRef} columns={{ min: 3, max: 6 }} rows={6} icon={true} menuItems={true} />}
+                        <InfiniteListState
+                            isInitialLoading={isPending && !rows}
+                            isFetchingNextPage={isFetchingNextPage}
+                            hasNextPage={hasNextPage}
+                            emptyMessage="No exercises found with the current filters."
+                            loadMoreRef={loadMoreRef}
+                            errors={[]}
+                            isEmpty={rows ? rows.length === 0 : false}
+                            skeleton={<SelectableDataCardListSkeleton columns={{ min: 3, max: 6 }} rows={6} icon={true} menuItems={true} />}
+                        >
+                            {rows && (
+                                <SelectableDataCardList 
+                                    selected={Object.keys(selected)}
+                                    rows={rows} 
+                                    columns={exercisesColumns} 
+                                    onChange={handleCheck} 
+                                    data-testid="exercises-selectable-list"
+                                />
+                            )}
+                        </InfiniteListState>
+
                     </Box>
                 </Box>
             </Modal.Content>

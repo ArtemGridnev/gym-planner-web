@@ -10,7 +10,7 @@ import useUpdateTrain from "../queries/hooks/useUpdateTrain";
 import { trainFormFields } from "../forms/trainFormFields.schema";
 import { getTrain, type TrainData } from "../services/trainsService";
 import { trainToFormData } from "../utils/formMappers";
-import Alerts from "../../../shared/components/Alerts";
+import Alerts from "../../../shared/components/alerts/Alerts";
 
 export default function Trains() {
     const { 
@@ -61,7 +61,7 @@ export default function Trains() {
     return (
         <>
             <FormModal
-                title={isUpdate ? "Update Train" : "Create Train"}
+                title={isUpdate ? "Update Training" : "Create Training"}
                 open={formOpen} 
                 onClose={() => setFormOpen(false)} 
             >
@@ -72,7 +72,7 @@ export default function Trains() {
                     disabled={formStates.disabled}
                     isLoading={formStates.isLoading}
                     formFields={trainFormFields}
-                    submitButtonText={isUpdate ? "Update Train" : "Create Train"}
+                    submitButtonText={isUpdate ? "Update Training" : "Create Training"}
                     data-testid="train-form"
                 />
             </FormModal>

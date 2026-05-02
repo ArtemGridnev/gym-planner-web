@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export type useInfiniteScrollProps = {
+export type UseInfiniteScrollProps = {
     hasNextPage: boolean;
     isFetchingNextPage: boolean;
     fetchNextPage: () => void;
@@ -11,30 +11,34 @@ export default function useInfiniteScroll({
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
-    rootMargin = "200px"
-}: useInfiniteScrollProps) {
-    const ref = useRef<HTMLDivElement | null>(null);
+    rootMargin = "0px 0px 200px 0px",
+}: UseInfiniteScrollProps) {
+    const loadMoreRef = useRef<HTMLDivElement | null>(null);
+    const rootRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        if (!hasNextPage || isFetchingNextPage) return;
+        const target = loadMoreRef.current;
+        const root = rootRef.current;
+
+        if (!target || !root || !hasNextPage || isFetchingNextPage) return;
 
         const observer = new IntersectionObserver(
             ([entry]) => {
-                if (entry.isIntersecting && !isFetchingNextPage) {
+                if (entry.isIntersecting) {
                     fetchNextPage();
                 }
             },
-            { rootMargin }
+            {
+                root,
+                rootMargin,
+                threshold: 0,
+            }
         );
 
-        const el = ref.current;
-        if (el) observer.observe(el);
+        observer.observe(target);
 
-        return () => {
-            if (el) observer.unobserve(el);
-            observer.disconnect();
-        };
-    }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+        return () => observer.disconnect();
+    }, [hasNextPage, isFetchingNextPage, fetchNextPage, rootMargin]);
 
-    return ref;
+    return { loadMoreRef, rootRef };
 }

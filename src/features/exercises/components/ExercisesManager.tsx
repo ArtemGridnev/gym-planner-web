@@ -7,7 +7,7 @@ import Form from "../../../shared/components/form/Form";
 import useExerciseFormController from "../hooks/useExerciseFormController";
 import useInfiniteScroll from "../../../shared/hooks/useInfiniteScroll";
 import useExerciseFormFields from "../hooks/useExerciseFormFields";
-import Alerts from "../../../shared/components/Alerts";
+import Alerts from "../../../shared/components/alerts/Alerts";
 
 export default function Exercises() {
     const [filters, setFilters] = useState<Record<string, string>>();
@@ -20,7 +20,10 @@ export default function Exercises() {
         fetchNextPage
     } = useExercises({ filters });
 
-    const loadMoreRef = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
+    const {
+        loadMoreRef,
+        rootRef: listRootRef
+    } = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
 
     const [formOpen, setFormOpen] = useState(false);
 
@@ -75,7 +78,9 @@ export default function Exercises() {
 
             <ExercisesCard 
                 loadMoreRef={loadMoreRef}
-                exercises={data?.pages.flat() || []}
+                rootListRef={listRootRef}
+                exercises={data?.pages.flat()}
+                isFetchingNextPage={isFetchingNextPage}
                 hasNextPage={hasNextPage}
                 isPending={isPending}
                 error={error?.message || ''}
