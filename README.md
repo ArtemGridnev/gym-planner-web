@@ -82,6 +82,7 @@ Create a `.env` file in the project root:
 ```env
 VITE_API_URL=https://gym-planner-api-production.up.railway.app/
 CYPRESS_BASE_URL=http://localhost:5173
+VITE_TRAINING_SESSIONS_REMOTE_URL=https://gym-planner-mf-training-sessions.vercel.app/assets/remoteEntry.js
 ```
 
 ### Install dependencies
