@@ -1,16 +1,19 @@
 import Card from "../../../shared/components/layout/card/Card";
 import CardHeader from "../../../shared/components/layout/card/CardHeader";
 import CardContent from "../../../shared/components/layout/card/CardContent";
-import TrainSessionsComingSoon from "./TrainSessionsComingSoon";
+import TrainingSessionsWidget from "../remotes/TrainingSessionsWidget";
+import { Container } from "@mui/material";
 
 export default function TrainSessions() {
     return (
         <Card>
             <CardHeader
-                title="Train Sessions"
+                title="Today's Sessions"
             />
             <CardContent>
-                <TrainSessionsComingSoon />
+                <Container maxWidth="sm">
+                    <TrainingSessionsWidget />
+                </Container>
             </CardContent>
         </Card>
     );

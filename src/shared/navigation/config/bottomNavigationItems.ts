@@ -3,18 +3,18 @@ import type { BottomNavigationItemProps } from "../../components/layout/bottomNa
 
 export const bottomNavigationItems: BottomNavigationItemProps[] = [
     {
-        path: '/managment/exercises',
-        label: 'Exercises',
+        path: "/managment/exercises",
+        label: "Exercises",
         icon: FitnessCenterOutlined,
     },
     {
-        path: '/train-sessions',
-        label: 'Train Sessions',
+        path: "/train-sessions",
+        label: "Today's Sessions",
         icon: ChecklistOutlined,
     },
     {
-        path: '/managment/trains',
-        label: 'Trainings',
+        path: "/managment/trains",
+        label: "Trainings",
         icon: SportsMartialArtsOutlined,
     },
 ];

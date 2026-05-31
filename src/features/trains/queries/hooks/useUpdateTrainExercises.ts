@@ -19,13 +19,13 @@ export default function useUpdateTrainExercises() {
             return await updateTrainExercises({ id, exercises: trainExerciseUpdates });
         },
         onMutate: async ({ id, trainExercises }) => {
-            await queryClient.cancelQueries({ queryKey: ['train', id] });
+            await queryClient.cancelQueries({ queryKey: ['trains', id] });
 
-            const previousTrain = queryClient.getQueryData<Train>(['train', id]);
+            const previousTrain = queryClient.getQueryData<Train>(['trains', id]);
 
             if (!previousTrain) return { previousTrain: null };
 
-            queryClient.setQueryData(['train', id], (old: Train | undefined) => {
+            queryClient.setQueryData(['trains', id], (old: Train | undefined) => {
                 if (!old) return old;
 
                 return {
@@ -38,11 +38,11 @@ export default function useUpdateTrainExercises() {
         },
         onError: (_error, variables, context) => {
             if (context?.previousTrain) {
-                queryClient.setQueryData(['train', variables.id], context.previousTrain);
+                queryClient.setQueryData(['trains', variables.id], context.previousTrain);
             }
         },
         onSuccess: (data, { id }) => {
-            queryClient.setQueryData(['train', id], (old: Train | undefined) => {
+            queryClient.setQueryData(['trains', id], (old: Train | undefined) => {
                 if (!old) return old;
 
                 return {
@@ -50,9 +50,13 @@ export default function useUpdateTrainExercises() {
                     exercises: data
                 };
             });
+
+            queryClient.invalidateQueries({
+                queryKey: ['exercises'],
+            });
         },
         onSettled: (_, __, variables) => {
-            queryClient.invalidateQueries({ queryKey: ['train', variables.id] });
+            queryClient.invalidateQueries({ queryKey: ['trains', variables.id] });
           }
     });
 }

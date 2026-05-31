@@ -20,6 +20,11 @@ Built with React, TypeScript, and modern frontend architecture patterns.
 - Dynamic form system with reusable field components.
 - Infinite scrolling with TanStack Query.
 - Drag-and-drop exercise management with dnd-kit.
+- Training planning and workout management.
+- Today's Training Sessions:
+  - Automatically displays sessions scheduled for today.
+  - Start and complete workout sessions.
+  - Track exercise progress during a session.
 
 ## Tech Stack
 
@@ -53,16 +58,9 @@ This project follows a scalable, feature-based structure.
 - Centralized API handling with Axios.
 - Modular and extensible component design.
 
-## Work in Progress
+## Microfrontends
 
-The Training Sessions feature is currently under development.
-
-Planned capabilities:
-- Automatic session creation from training plans.
-- Step-by-step workout flow.
-- Progress tracking during sessions.
-
-The rest of the application is fully functional and demonstrates the core architecture and main features.
+The Training Sessions feature is delivered as a separate microfrontend and integrated into the host application through Module Federation.
 
 ## Running Locally
 
@@ -115,5 +113,4 @@ npm run test:e2e
 
 ## Notes
 
-- Some features are still in progress, especially Training Sessions.
 - The app is designed as a showcase of scalable frontend architecture and a modern full-stack workflow.

@@ -4,7 +4,7 @@ import type { Train } from "../../types/train";
 
 export default function useTrain({ id }: { id: number }) {
     return useQuery<Train>({
-        queryKey: ['train', id],
+        queryKey: ['trains', id],
         queryFn: () => getTrain(id)
     })
 }

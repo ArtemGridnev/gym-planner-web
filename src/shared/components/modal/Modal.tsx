@@ -1,4 +1,4 @@
-import { Modal as MuiModal, Paper, type ModalProps as MuiModalProps, Box, Typography, IconButton } from "@mui/material";
+import { Modal as MuiModal, Paper, type ModalProps as MuiModalProps, Box, Typography, IconButton, Skeleton } from "@mui/material";
 import { CloseOutlined } from "@mui/icons-material";
 import React from "react";
 
@@ -53,17 +53,19 @@ export default function Modal({ open, onClose, width, height, children, ...props
 
 type ModalHeaderProps = {
     children: React.ReactNode;
+    titleAdornment?: React.ReactNode;
+    loading?: boolean;
 };
 
-Modal.Header = function Header({ children }: ModalHeaderProps) {
+Modal.Header = function Header({ children, titleAdornment, loading }: ModalHeaderProps) {
     const ctx = React.useContext(ModalContext);
-  
+
     if (!ctx) {
       throw new Error("Modal.Header must be used inside <Modal>");
     }
-  
+
     const { onClose } = ctx;
-  
+
     return (
       <>
         <Box
@@ -71,16 +73,34 @@ Modal.Header = function Header({ children }: ModalHeaderProps) {
             display: 'flex',
             minHeight: 60,
             p: 2,
-            // pb: 0,
-            alignItems: 'center',
+            gap: 1,
+            alignItems: 'flex-start',
             justifyContent: 'space-between',
             flexShrink: 0
           }}
         >
-          <Typography px="1" variant="h6">
-            {children}
-          </Typography>
-  
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: 1,
+              minWidth: 0,
+              minHeight: 40
+            }}
+          >
+            {loading ? (
+              <Skeleton variant="text" width={180} sx={{ fontSize: '1.25rem', mx: 1 }} />
+            ) : (
+              <>
+                <Typography px="1" variant="h6">
+                  {children}
+                </Typography>
+                {titleAdornment}
+              </>
+            )}
+          </Box>
+
           <IconButton onClick={onClose} aria-label="Close popup">
             <CloseOutlined />
           </IconButton>
