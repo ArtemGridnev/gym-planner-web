@@ -41,6 +41,7 @@ jobs:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
           CYPRESS_BASE_URL: ${{ secrets.CYPRESS_BASE_URL }}
           CYPRESS_API_URL: ${{ secrets.CYPRESS_API_URL }}
+          VITE_TRAINING_SESSIONS_REMOTE_URL: ${{ secrets.VITE_TRAINING_SESSIONS_REMOTE_URL }}
 
       - name: Upload Cypress screenshots
         if: always()
