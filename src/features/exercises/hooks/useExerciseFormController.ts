@@ -19,7 +19,7 @@ export default function useExerciseFormController() {
         createMutation: useCreateExercise(),
         updateMutation: useUpdateExercise(),
         formDataToPayload: exerciseFormDataToCreatePayload,
-        editQueryKey: (id: number) => ['train', id],
+        editQueryKey: (id: number) => ['trains', id],
         editQueryFn: async (id: number) => {
             const exercise = await getExercise(id);
 

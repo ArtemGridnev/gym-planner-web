@@ -26,6 +26,7 @@ export default function useDeleteTrain() {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['trains'] });
+            queryClient.invalidateQueries({ queryKey: ['trainSessions'] });
         }
     })
 }

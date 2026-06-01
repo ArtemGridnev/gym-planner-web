@@ -8,6 +8,7 @@ export default function useUpdateTrain() {
         mutationFn: updateTrain,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['trains'] });
+            queryClient.invalidateQueries({ queryKey: ['trainSessions'] });
         }
     });
 }

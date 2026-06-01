@@ -24,11 +24,13 @@ jobs:
           [ -n "$VITE_API_URL" ] || (echo "Missing VITE_API_URL (Actions secret VITE_API_URL)"; exit 1)
           [ -n "$CYPRESS_BASE_URL" ] || (echo "Missing CYPRESS_BASE_URL (Actions secret CYPRESS_BASE_URL)"; exit 1)
           [ -n "$CYPRESS_API_URL" ] || (echo "Missing CYPRESS_API_URL (Actions secret CYPRESS_API_URL)"; exit 1)
+          [ -n "$VITE_TRAINING_SESSIONS_REMOTE_URL" ] || (echo "Missing VITE_TRAINING_SESSIONS_REMOTE_URL (Actions secret VITE_TRAINING_SESSIONS_REMOTE_URL)"; exit 1)
           echo "All required env vars are present."
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
           CYPRESS_BASE_URL: ${{ secrets.CYPRESS_BASE_URL }}
           CYPRESS_API_URL: ${{ secrets.CYPRESS_API_URL }}
+          VITE_TRAINING_SESSIONS_REMOTE_URL: ${{ secrets.VITE_TRAINING_SESSIONS_REMOTE_URL }}
 
       - uses: cypress-io/github-action@v6
         with:
@@ -39,6 +41,7 @@ jobs:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
           CYPRESS_BASE_URL: ${{ secrets.CYPRESS_BASE_URL }}
           CYPRESS_API_URL: ${{ secrets.CYPRESS_API_URL }}
+          VITE_TRAINING_SESSIONS_REMOTE_URL: ${{ secrets.VITE_TRAINING_SESSIONS_REMOTE_URL }}
 
       - name: Upload Cypress screenshots
         if: always()

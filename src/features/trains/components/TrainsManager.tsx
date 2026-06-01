@@ -30,7 +30,7 @@ export default function Trains() {
     } = useFormController<TrainData>({
         createMutation: useCreateTrain(),
         updateMutation: useUpdateTrain(),
-        editQueryKey: (id: number) => ['train', id],
+        editQueryKey: (id: number) => ['trains', id],
         editQueryFn: async (id: number) => {
             const train = await getTrain(id);
 
