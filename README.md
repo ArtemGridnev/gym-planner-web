@@ -60,7 +60,14 @@ This project follows a scalable, feature-based structure.
 
 ## Microfrontends
 
-The Training Sessions feature is delivered as a separate microfrontend and integrated into the host application through Module Federation.
+The Training Sessions feature is delivered as a separate microfrontend and integrated into this host application through Module Federation.
+
+### Training Sessions remote
+
+The Training Sessions widget is its own project, [gym-planner-mf-training-sessions](https://github.com/ArtemGridnev/gym-planner-mf-training-sessions), built and deployed independently and loaded into this host at runtime through Module Federation.
+
+- **Host:** owns the shell — routing, authentication, layout, navigation, and theme — and embeds the remote, sharing its data cache with it.
+- **Remote:** owns the training-sessions experience and its own data, stays fully isolated from the host, and communicates only through props and callbacks.
 
 ## Running Locally
 
