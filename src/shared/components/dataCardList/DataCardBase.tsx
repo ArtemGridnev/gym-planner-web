@@ -3,20 +3,20 @@ import { Box, type BoxProps } from "@mui/material";
 export default function DataCardBase({
     children,
     sx,
-    ...pops
+    ...props
 }: BoxProps) {
     return (
         <Box
             sx={{
-                display: "flex",
-                background: "#f0f4f9",
-                gap: 2,
-                padding: 2,
-                alignItems: "flex-start",
+                overflow: 'hidden',
                 borderRadius: 2,
+                border: '1px solid',
+                borderColor: 'grey.200',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+                bgcolor: 'background.paper',
                 ...sx,
             }}
-            {...pops}
+            {...props}
         >
             {children}
         </Box>

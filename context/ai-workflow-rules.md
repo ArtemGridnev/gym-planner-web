@@ -58,6 +58,15 @@ Update the relevant context file whenever implementation changes affect:
 
 Progress state in `progress-tracker.md` must reflect the actual implementation state, not the intended state.
 
+## Reuse Before Creation
+
+Before writing new code:
+
+- Search for an existing component, hook, utility, skeleton, or abstraction that can be reused.
+- Prefer reuse and extension over duplication.
+- Do not create new reusable components when an existing one can satisfy the requirement with reasonable changes.
+- Create new abstractions only when there is a clear need that cannot be addressed by existing code.
+
 ## After Implementation
 
 1. Run `npm run lint` to check for linting errors.

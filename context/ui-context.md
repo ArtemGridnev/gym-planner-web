@@ -33,6 +33,20 @@ MUI (Material UI) v7. All UI components come from `@mui/material` and icons from
 
 There is no custom design token layer — all tokens flow from the MUI theme.
 
+## MUI Customization Rules
+
+- Prefer existing MUI component APIs before introducing custom styling.
+- When a visual requirement can be achieved through built-in MUI props, use those props instead of custom CSS.
+- Use `sx` only for component-specific styling that cannot be achieved through existing MUI APIs or theme configuration.
+- Keep `sx` small and localized to the component that needs it.
+- Do not override default MUI styles without a clear product or UX requirement.
+
+## Reusable Patterns
+
+- If a customization is reused across multiple places, prefer extending the MUI theme or creating a shared component rather than duplicating styling.
+- Reusable customizations should be exposed through component APIs (such as props, theme configuration, or shared components) instead of repeated `sx` blocks.
+- Avoid creating reusable abstractions for one-off use cases.
+
 ## Layout Patterns
 
 - Desktop uses a persistent sidebar navigation.
@@ -41,6 +55,16 @@ There is no custom design token layer — all tokens flow from the MUI theme.
 - Create/edit flows are presented in modal dialogs.
 - Lists provide filtering and search controls near the top of the page.
 - Success and error feedback is shown inline near the relevant action.
+
+## Skeletons
+
+Skeleton loading states should closely match the final rendered content.
+
+- Use skeletons that preserve the expected layout, spacing, and visual hierarchy of the loaded UI.
+- Match the approximate size and shape of the real elements, such as cards, titles, metadata rows, buttons, and list items.
+- Prefer multiple smaller skeleton elements over one large generic block when the final content has distinct parts.
+- Avoid skeleton layouts that cause visible layout shift when data appears.
+- Keep skeleton styling consistent with MUI defaults unless there is a clear UX reason to customize it.
 
 ## Forms
 

@@ -4,6 +4,7 @@ import ExercisesSelectModal from "../../exercises/components/modals/ExercisesSel
 import useTrain from "../queries/hooks/useTrain";
 import useTrainExercisesController from "../hooks/useTrainExercisesController";
 import TrainCard from "./TrainCard";
+import { useExerciseDetails } from "../../exercises/context/ExerciseDetailsContext";
 
 export default function Train() {
     const { id } = useParams();
@@ -22,6 +23,7 @@ export default function Train() {
     } = useTrainExercisesController(train);
 
     const [formOpen, setFormOpen] = useState(false);
+    const { openExerciseDetails } = useExerciseDetails();
 
     return (
         <>
@@ -36,11 +38,12 @@ export default function Train() {
                 />
             )}
 
-            <TrainCard 
+            <TrainCard
                 train={train}
                 isPending={isPending}
                 error={error ? 'Failed to load train' : null}
                 exercisesError={exercisesError ? 'Failed to load train exercises' : null}
+                onDetailsOpen={openExerciseDetails}
                 updateTrainExercisesOrder={updateTrainExercisesOrder}
                 removeTrainExercise={removeTrainExercise}
                 setFormOpen={setFormOpen}

@@ -67,3 +67,4 @@
 6. Libraries declared as `shared` in `vite.config.ts` must never be separately bundled in the host.
 7. The API client normalizes all errors to `ApiError`; services throw — they never `console.error`.
 8. No new state-management libraries, styling libraries, or UI libraries may be introduced.
+9. Skeleton loading states should be colocated with the component they represent and should closely match the final rendered UI. Avoid rendering unrelated or generic skeletons from parent components.
