@@ -103,6 +103,8 @@ describe('Trains', () => {
 
         cy.get('[data-testid="trains-list"] [data-testid="data-card"]').contains('Delete test train').should('exist');
 
+        cy.intercept('DELETE', '**/trains/*').as('deleteTrain');
+
         cy.get('[data-testid="trains-list"] [data-testid="data-card"]')
             .contains('Delete test train')
             .closest('[data-testid="data-card"]')
@@ -113,7 +115,9 @@ describe('Trains', () => {
         cy.get('[data-testid="delete-train-button"]').click();
 
         cy.get('[data-testid="trains-list"]').should('not.contain', 'Delete test train');
-        
+
+        cy.wait('@deleteTrain');
+
         cy.reload();
         
         cy.get('[data-testid="trains-list"]').should('not.contain', 'Delete test train');

@@ -8,6 +8,7 @@ import useExerciseFormController from "../hooks/useExerciseFormController";
 import useInfiniteScroll from "../../../shared/hooks/useInfiniteScroll";
 import useExerciseFormFields from "../hooks/useExerciseFormFields";
 import Alerts from "../../../shared/components/alerts/Alerts";
+import { useExerciseDetails } from "../context/ExerciseDetailsContext";
 
 export default function Exercises() {
     const [filters, setFilters] = useState<Record<string, string>>();
@@ -26,6 +27,7 @@ export default function Exercises() {
     } = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
 
     const [formOpen, setFormOpen] = useState(false);
+    const { openExerciseDetails } = useExerciseDetails();
 
     const {
         mutate: deleteExercise
@@ -62,7 +64,7 @@ export default function Exercises() {
             <FormModal
                 open={formOpen}
                 title={isUpdate ? "Update Exercise" : "Create Exercise"}
-                onClose={() => setFormOpen(false)} 
+                onClose={() => setFormOpen(false)}
             >
                 <Alerts success={formStates.success} error={formStates.error} sx={{ mb: 2 }} />
                 <Form
@@ -76,7 +78,7 @@ export default function Exercises() {
                 />
             </FormModal>
 
-            <ExercisesCard 
+            <ExercisesCard
                 loadMoreRef={loadMoreRef}
                 rootListRef={listRootRef}
                 exercises={data?.pages.flat()}
@@ -87,6 +89,7 @@ export default function Exercises() {
                 onAdd={onAdd}
                 onEdit={onEdit}
                 onDelete={deleteExercise}
+                onDetailsOpen={openExerciseDetails}
                 onFiltersChange={setFilters}
             />
         </>

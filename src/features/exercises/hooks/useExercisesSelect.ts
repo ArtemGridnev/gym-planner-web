@@ -1,7 +1,5 @@
-import { useMemo, useState } from "react";
-import type { SelectableDataCardListRowProps } from "../../../shared/components/dataCardList/SelectableDataCardList";
+import { useState } from "react";
 import type { Exercise } from "../types/exercise";
-import { FitnessCenterOutlined } from "@mui/icons-material";
 import useExercises from "../queries/hooks/useExercises";
 import useInfiniteScroll from "../../../shared/hooks/useInfiniteScroll";
 import useSelectableListState from "../../../shared/hooks/useSelectableListState";
@@ -12,7 +10,7 @@ type useExercisesSelectProps = {
 
 export default function useExercisesSelect({ onSubmit }: useExercisesSelectProps) {
     const [filters, setFilters] = useState<Record<string, string>>({});
-    const { 
+    const {
         isPending,
         data,
         hasNextPage,
@@ -25,23 +23,7 @@ export default function useExercisesSelect({ onSubmit }: useExercisesSelectProps
         rootRef: listRootRef
     } = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
 
-    const rows = useMemo<SelectableDataCardListRowProps[] | null>(() => {
-        if (!data) return null;
-
-        return data.pages.flat().map(exercise => ({
-            id: exercise.id.toString(),
-            icon: FitnessCenterOutlined,
-            title: `${exercise.name} - ${exercise.category.name}`,
-            data: {
-                id: exercise.id,
-                description: exercise.description,
-                sets: exercise.sets,
-                reps: exercise.reps,
-                durationSeconds: exercise.durationSeconds && `${exercise.durationSeconds} sec`,
-                weight: exercise.weight && `${exercise.weight} kg`
-            }
-        }));
-    }, [data]);
+    const exercises = data ? data.pages.flat() : null;
 
     const {
         selected,
@@ -54,7 +36,7 @@ export default function useExercisesSelect({ onSubmit }: useExercisesSelectProps
     };
 
     return {
-        rows,
+        exercises,
         isPending,
         isFetchingNextPage,
         hasNextPage,

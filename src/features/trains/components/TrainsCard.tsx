@@ -1,16 +1,15 @@
-import { useMemo } from "react";
+import { Box, Skeleton, Typography } from "@mui/material";
 import Card from "../../../shared/components/layout/card/Card";
 import type { Train } from "../types/train";
-import { AddOutlined, DeleteOutline, EditOutlined, SportsMartialArtsOutlined } from "@mui/icons-material";
+import { AddOutlined, DeleteOutline, EditOutlined } from "@mui/icons-material";
 import { cronToDays } from "../../../shared/utils/cron";
-import type { DataCardListColumnProps, DataCardListRowProps } from "../../../shared/components/dataCardList/DataCardList";
-import { Box } from "@mui/material";
 import CardHeader from "../../../shared/components/layout/card/CardHeader";
 import CardContent from "../../../shared/components/layout/card/CardContent";
-import DataCardListSkeleton from "../../../shared/components/dataCardList/skeleton/DataCardListSkeleton";
-import DataCardList from "../../../shared/components/dataCardList/DataCardList";
 import { useNavigate } from "react-router-dom";
 import ListState from "../../../shared/components/list/ListState";
+import DataCard from "../../../shared/components/dataCardList/DataCard";
+import DataCardSkeleton from "../../../shared/components/dataCardList/skeleton/DataCardSkeleton";
+import DataCardListBase from "../../../shared/components/dataCardList/DataCardListBase";
 
 type TrainsCardProps = {
     trains?: Train[];
@@ -22,43 +21,14 @@ type TrainsCardProps = {
     onFiltersChange: (filters: Record<string, string>) => void;
 };
 
-const columns: DataCardListColumnProps[] = [
-    { field: 'weekDays', name: 'Recurrence Days', fullWidth: true }
-];
+const SKELETON_COUNT = 8;
 
 export default function TrainsCard({ trains, isLoading, error, onAdd, onEdit, onDelete }: TrainsCardProps) {
     const navigate = useNavigate();
 
-    const rows = useMemo<DataCardListRowProps[] | null>(() => {
-        if (!trains) return [];
-
-        return trains?.map(train => ({
-            icon: SportsMartialArtsOutlined,
-            title: train.name,
-            data: {
-                weekDays: cronToDays(train.recurrenceCron)
-            },
-            menuItems: [
-                { 
-                    icon: EditOutlined, 
-                    text: 'edit', 
-                    onClick: () => onEdit(train.id),
-                    testid: `edit-train-button`
-                },
-                { 
-                    icon: DeleteOutline, 
-                    text: 'delete', 
-                    onClick: () => onDelete(train.id),
-                    testid: `delete-train-button` 
-                },
-            ],
-            onClick: () => navigate(`/managment/trains/${train.id}`)
-        }));
-    }, [trains])
-
     return (
         <Card data-testid="trains-page">
-            <CardHeader 
+            <CardHeader
                 title="Trainings"
                 actions={[
                     {
@@ -66,27 +36,66 @@ export default function TrainsCard({ trains, isLoading, error, onAdd, onEdit, on
                         label: 'Create Training',
                         tooltip: 'Create Training',
                         onClick: onAdd,
-                        testid: 'create-train-button'
-                    }
+                        testid: 'create-train-button',
+                    },
                 ]}
             />
             <CardContent>
-                <Box 
-                    sx={{ 
+                <Box
+                    sx={{
                         height: '100%',
                         padding: 2,
-                        overflowY: isLoading ? 'hidden' : 'auto'
+                        overflowY: isLoading ? 'hidden' : 'auto',
                     }}
                 >
-                    <ListState 
-                        errors={error ? [error] : []} 
-                        isLoading={isLoading} 
-                        isEmpty={rows ? rows.length === 0 : false}
-                        skeleton={<DataCardListSkeleton columns={1} rows={8} icon={true} menuItems={true} />}
+                    <ListState
+                        errors={error ? [error] : []}
+                        isLoading={isLoading}
+                        isEmpty={trains ? trains.length === 0 : false}
+                        skeleton={
+                            <DataCardListBase>
+                                {Array.from({ length: SKELETON_COUNT }).map((_, i) => (
+                                    <DataCardSkeleton key={i} menuItems>
+                                        <Skeleton variant="text" width="60%" sx={{ fontSize: '0.75rem' }} />
+                                    </DataCardSkeleton>
+                                ))}
+                            </DataCardListBase>
+                        }
                         emptyMessage="No trainings here… yet."
                     >
-                        {rows && (
-                            <DataCardList data-testid="trains-list" columns={columns} rows={rows} />
+                        {trains && (
+                            <DataCardListBase data-testid="trains-list">
+                                {trains.map(train => {
+                                    const weekDays = cronToDays(train.recurrenceCron);
+                                    return (
+                                        <DataCard
+                                            key={train.id}
+                                            title={train.name}
+                                            onClick={() => navigate(`/managment/trains/${train.id}`)}
+                                            menuItems={[
+                                                {
+                                                    icon: EditOutlined,
+                                                    text: 'edit',
+                                                    onClick: () => onEdit(train.id),
+                                                    testid: `edit-train-button`,
+                                                },
+                                                {
+                                                    icon: DeleteOutline,
+                                                    text: 'delete',
+                                                    onClick: () => onDelete(train.id),
+                                                    testid: `delete-train-button`,
+                                                },
+                                            ]}
+                                        >
+                                            {weekDays && (
+                                                <Typography variant="caption" color="text.secondary">
+                                                    {weekDays}
+                                                </Typography>
+                                            )}
+                                        </DataCard>
+                                    );
+                                })}
+                            </DataCardListBase>
                         )}
                     </ListState>
                 </Box>

@@ -23,6 +23,17 @@
 - React Compiler (`babel-plugin-react-compiler`) is active — do not add manual `useMemo`/`useCallback` unless there is a specific, documented reason the compiler cannot handle it.
 - Component files: PascalCase (`ExercisesManager.tsx`). Hook files: camelCase prefixed with `use` (`useExercises.ts`).
 
+## Comments
+
+- Prefer self-documenting code over comments.
+- Do not add comments that restate what the code already does.
+- Do not comment JSX structure, styling choices, layout behavior, or obvious implementation details.
+- Keep comments only when they explain:
+  - business rules
+  - architectural decisions
+  - framework/library workarounds
+  - non-obvious constraints that could cause future regressions
+
 ## Styling
 
 - All UI uses MUI components. Never write raw HTML tags: no `div`, `span`, `ul`, `li`, `button`, `input`, `form`, `label`.

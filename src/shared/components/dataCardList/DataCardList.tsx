@@ -23,7 +23,7 @@ export default function DataCardList({ columns, rows, ...props }: DataCardListPr
         <>
             <DataCardListBase {...props}>
                 {rows.map((row, index) => (
-                    <DataCardListItem data-testid="" columns={columns} row={row} key={index} />
+                    <DataCardListItem columns={columns} row={row} key={index} />
                 ))}
             </DataCardListBase>
         </>
