@@ -142,6 +142,8 @@ describe('Train Exercises', () => {
         // Wait for saving to complete before dragging
         cy.get('[data-testid="train-exercise-card-unsaved"]').should('not.exist');
 
+        cy.intercept('PATCH', '**/trains/*/exercises').as('reorderExercises');
+
         // Drag first item to bottom
         cy.get('[data-testid="sortable-item-drag-handle"]').first()
             .focus()
@@ -158,6 +160,8 @@ describe('Train Exercises', () => {
                 cy.get('[data-testid="data-card-title"]').should('contain', initialOrder[0]);
             });
         });
+
+        cy.wait('@reorderExercises');
 
         // Verify persists after reload
         cy.reload();
